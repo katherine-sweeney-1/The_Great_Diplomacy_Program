@@ -373,24 +373,24 @@ cmdrs_7_1909b = {
 
 cmdrs_7_1910 = {
     "Mercy" : {"Country": "AU", 
-                   "Unit Members": ["AU01", "AU02", "AU03", "AU04", "AU05"],
+                   "Unit Members": ["AU01", "AU02", "AU03", "AU04", "AU05", "AU06"],
                    "Dots Owned": ["Vie", "Bud", "Ser", "Gre", "Bul", "Rum"]
                    },
     "Kamran" : {"Country": "UK", 
-                   "Unit Members": ["UK01", "UK02"],
-                   "Dots Owned": ["Lvp", "Stp"]
+                   "Unit Members": ["UK01"],
+                   "Dots Owned": ["Stp"]
                    },
     "Will" : {"Country": "FR",
-                    "Unit Members": ["FR01", "FR02", "FR03", "FR04", "FR05", "FR06", "FR07", "FR08", "FR09"],
-                    "Dots Owned": ["Par", "Bre", "Mar", "Lon", "Edi", "Bel", "Hol", "Por", "Mun"]
+                    "Unit Members": ["FR01", "FR02", "FR03", "FR04", "FR05", "FR06", "FR07", "FR08"],
+                    "Dots Owned": ["Par", "Bre", "Mar", "Lon", "Edi", "Bel", "Hol", "Por"]
                     },
     "Katherine" : {"Country": "GE", 
-                   "Unit Members": ["GE01", "GE02", "GE03", "GE04"],
-                   "Dots Owned": ["Kie", "Edi", "Den", "Swe"]
+                   "Unit Members": ["GE01", "GE02", "GE03", "GE04", "GE05"],
+                   "Dots Owned": ["Kie", "Mun", "Ber", "Den", "Swe", "Nwy"]
                    },
     "Adam" : {"Country": "IT", 
-                   "Unit Members": ["IT01", "IT02", "IT03", "IT04", "IT05"],
-                   "Dots Owned": ["Rom", "Nap", "Ven", "Spa", "Tun", "Tri"]
+                   "Unit Members": ["IT01", "IT02", "IT03", "IT04", "IT05", "IT06", "IT07"],
+                   "Dots Owned": ["Rom", "Nap", "Ven", "Spa", "Tun", "Tri", "Smy"]
                    },
     "Elling" : {"Country": "RU", 
                    "Unit Members": ["RU01", "RU02", "RU03"],
@@ -398,6 +398,6 @@ cmdrs_7_1910 = {
                    },
     "Sunny" : {"Country": "TU", 
                    "Unit Members": ["TU01", "TU02"],
-                   "Dots Owned": ["Smy", "Ank", "Con"]
+                   "Dots Owned": ["Ank", "Con"]
                    }
 }
