@@ -133,14 +133,14 @@ def check_other_attacks(command_id, command, commands, destination_command_id, c
                                 
         # check if another command attacks the same destination as the command in question
         else:
-            for other_command_id in commands:
-                other_command = commands[other_command_id]
+            for relevant_attack_id in commands:
+                relevant_attack = commands[relevant_attack_id]
                 # another attack on destination => check other attacks
                 if command.destination.is_occupied:
                     destination_unit_id = command.destination.is_occupied.id
                     destination_command = commands[destination_unit_id]
-                    if other_command.destination == command.destination and other_command.location == other_command.origin and other_command.origin != other_command.destination:
-                        outcome = check_if_other_attack_is_on_destination(command_id, command, other_command, destination_command)
+                    if relevant_attack.destination == command.destination and relevant_attack.location == relevant_attack.origin and relevant_attack.origin != relevant_attack.destination:
+                        outcome = check_if_other_attack_is_on_destination(command_id, command, relevant_attack, destination_command)
                     else:
                         if command.strength > destination_command.strength:
                             outcome = True
@@ -149,17 +149,16 @@ def check_other_attacks(command_id, command, commands, destination_command_id, c
                     if outcome == False:
                         break
                 else:
-                    if other_command.destination == command.destination and other_command != command:
-                        if other_command.location == other_command.origin and other_command.origin != other_command.destination:
+                    if relevant_attack.destination == command.destination and relevant_attack != command:
+                        if relevant_attack.location == relevant_attack.origin and relevant_attack.origin != relevant_attack.destination:
                     # error with check if other attack is on destination function
-                            outcome = check_if_other_attack_is_on_destination(command_id, command, other_command)
+                            outcome = check_if_other_attack_is_on_destination(command_id, command, relevant_attack)
                         else:
                             outcome = True
                     else:
                         outcome = True
                 if outcome == False:
                     break
-            
         command.success(outcome)
         command.checking_other_attacks(True)
         return command.succeed
