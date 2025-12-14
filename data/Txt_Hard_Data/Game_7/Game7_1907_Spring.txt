@@ -1,0 +1,59 @@
+﻿AU
+Mercy
+A Bud - Rum  SUCCEEDS
+A Mun H  SUCCEEDS
+A Ser S Bud - Rum  SUCCEEDS
+A Tri - Tyr  SUCCEEDS
+F Tun - Naf  FAILS
+A Vie - Boh  FAILS
+
+
+UK
+Kamran
+A Lvn - Pru  SUCCEEDS
+F Wal - Lvp  SUCCEEDS
+
+
+FR
+Will
+A Boh H  SUCCEEDS
+F ENG H  SUCCEEDS
+A Gas H  SUCCEEDS
+A Hol H  SUCCEEDS
+F Lon H  SUCCEEDS
+F Mar H  SUCCEEDS
+A Pie H  SUCCEEDS
+A Ruh H  SUCCEEDS
+
+
+GE
+Katherine
+A Ber S Mun  SUCCEEDS
+A Den S Kie  SUCCEEDS
+F Kie H  SUCCEEDS
+F NTH - Edi  SUCCEEDS
+
+
+IT
+Adam
+A Apu S Ven  SUCCEEDS
+F Bre - Pic  SUCCEEDS
+F Spa/sc - WES  FAILS
+F Tus - TYS  SUCCEEDS
+A Ven S Pie - Tyr  FAILS
+F WES - Naf  FAILS
+
+
+RU
+Elling
+F Sev H  SUCCEEDS
+A Ukr H  SUCCEEDS
+A War H  SUCCEEDS
+
+
+TU
+Sunny
+A Arm H  SUCCEEDS
+A Bul H  SUCCEEDS
+A Con H  SUCCEEDS
+F Rum H  FAILS

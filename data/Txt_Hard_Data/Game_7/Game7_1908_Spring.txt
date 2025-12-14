@@ -1,0 +1,57 @@
+﻿AU
+Mercy
+A Boh - Vie  SUCCEEDS
+A Bul - Gre  SUCCEEDS
+F Naf - MAO  FAILS
+A Rum - Ser  SUCCEEDS
+A Tyr - Tri  FAILS
+
+
+UK
+Kamran
+A Ber - Kie  SUCCEEDS
+F Lvp - NAO  SUCCEEDS
+
+
+FR
+Will
+A Gas - Bre  SUCCEEDS
+A Hol S Ber - Kie  SUCCEEDS
+F Lon - NTH  SUCCEEDS
+F Mar - LYO  SUCCEEDS
+A Mun S Ber - Kie  SUCCEEDS
+F NTH - Edi  SUCCEEDS
+A Ruh S Mun  SUCCEEDS
+
+
+GE
+Katherine
+A Den S Kie  SUCCEEDS
+F Edi - NWG  SUCCEEDS
+F Kie S Sil - Ber  FAILS
+A Sil - Ber  SUCCEEDS
+
+
+IT
+Adam
+F ENG - MAO  FAILS
+A Nap - Apu  SUCCEEDS
+A Rom - Ven  FAILS
+A Tri - Alb  SUCCEEDS
+F Tun S WES - Naf  SUCCEEDS
+F TYS - ION  SUCCEEDS
+A Ven - Tri  FAILS
+F WES - Naf  SUCCEEDS
+
+
+RU
+Elling
+F Sev H  SUCCEEDS
+A Ukr H  SUCCEEDS
+A War H  SUCCEEDS
+
+
+TU
+Sunny
+A Arm H  SUCCEEDS
+A Con H  SUCCEEDS
