@@ -1,0 +1,53 @@
+﻿AU
+Mercy
+A Gal - Ukr  SUCCEEDS
+A Mun - Ruh  FAILS
+A Rum S Gal - Ukr  SUCCEEDS
+A Ser - Bul  FAILS
+A Tri - Alb  SUCCEEDS
+A Tyr - Mun  FAILS
+A Vie - Tyr  FAILS
+
+
+FR
+Will
+A Bel S Ruh  SUCCEEDS
+A Bur S Ruh  SUCCEEDS
+F ENG S Lon - NTH  SUCCEEDS
+F Lon - NTH  SUCCEEDS
+F MAO - NAO  SUCCEEDS
+A Ruh S Bel  FAILS
+F Yor S Lon - NTH  FAILS
+
+
+GE
+Katherine
+A Ber S Tyr - Mun  SUCCEEDS
+F Edi - Yor  FAILS
+F HEL S Hol  SUCCEEDS
+A Hol S Mun - Ruh  SUCCEEDS
+A Kie S Mun - Ruh  SUCCEEDS
+
+
+IT
+Adam
+F AEG - Bul/sc  SUCCEEDS
+A Apu - Smy  SUCCEEDS
+F EAS C Apu - Smy  SUCCEEDS
+F Gre S AEG - Bul/sc  SUCCEEDS
+F ION C Apu - Smy  SUCCEEDS
+A Pie S Ven  SUCCEEDS
+A Ven H  SUCCEEDS
+
+
+RU
+Elling
+F Sev H  SUCCEEDS
+A Ukr H  FAILS
+A War H  SUCCEEDS
+
+
+TU
+Sunny
+A Arm H  SUCCEEDS
+A Con H  SUCCEEDS
