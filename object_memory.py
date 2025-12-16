@@ -82,8 +82,10 @@ Invalid Move Affected Outcomes
 
         1906 Spring: GE03
 
+        1907 Spring: IT05
 
 
 
-        
+
+
 """
