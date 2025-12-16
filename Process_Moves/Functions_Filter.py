@@ -142,6 +142,7 @@ def filter_support(command, commands):
                     else:
                         count += 1
                 else:
+
                     count += 1
             else:
                 count +=1 

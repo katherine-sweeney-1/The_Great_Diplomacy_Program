@@ -17,14 +17,23 @@ def get_valid_support(commands, command):
                 supported_command_id = command.origin.is_occupied.id
                 supported_command = commands[supported_command_id]
                 # support is unsuccessful if supported attack ends up holding
+                """
                 if supported_command.location == supported_command.origin and supported_command.origin == supported_command.destination:
+                    print(2, command_id, supported_command_id)
+                    print(command.location.name, command.origin.name, command.destination.name)
+                    print(supported_command.location.name, supported_command.origin.name, supported_command.destination.name)
                     command_success = False
                     break
+                """
                 # support is unsuccessful is supported attack does not match support
                 if supported_command.location == supported_command.origin and supported_command.origin != supported_command.destination:
                     if command.origin != supported_command.origin or command.destination != supported_command.destination:
+                        # make sure this works for all the moves
+                        #if supported_command.location == supported_command.origin and supported_command.origin != supported_command.destination:
                         command_success = False
                         break
+                        #else:
+                            #command_success = True
             # support does not work if it supports an attack on a unit in its own country
             # if support command supports an attack from another country to its own country's unit
             if command.location.is_occupied.commander.human == command.destination.is_occupied.commander.human and command.origin != command.destination:
@@ -58,7 +67,6 @@ def get_valid_support(commands, command):
                 supported_command = commands[supported_command_id]
                 if supported_command.location.is_occupied.commander.human == destination_command.location.is_occupied.commander.human:
                     # need to make sure this change works for all the moves
-                    print(command_id)
                     if destination_command.location == destination_command.origin and destination_command.origin != destination_command.destination:
                         command_success = True
                     else:
@@ -203,6 +211,10 @@ def get_command_strength(commands, command, command_success):
 
 def get_success_supports(commands, id = None, recur_bool = None):
     for command_id in commands:
+        command = commands[command_id]
+        #if command_id == "IT04":
+        #    print("IT04", command.location.name, command.origin.name, command.destination.name)
+        #    print(" ")
         # if a unit is attacking
         if commands[command_id].location == commands[command_id].origin:
             continue
