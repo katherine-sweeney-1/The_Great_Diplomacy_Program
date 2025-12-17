@@ -1,0 +1,52 @@
+﻿AU
+Mercy
+A Boh - Sil  SUCCEEDS
+A Bud - Rum  SUCCEEDS
+A Mos - Sev  SUCCEEDS
+A Mun S Hol - Ruh  SUCCEEDS
+A Ser S Tri  SUCCEEDS
+A Stp - Fin  SUCCEEDS
+A Tri S Tyr - Ven  SUCCEEDS
+A Tyr - Ven  FAILS
+A Vie - Gal  SUCCEEDS
+
+
+FR
+Will
+A Bel S Ruh - Hol  SUCCEEDS
+F Bre - ENG  SUCCEEDS
+A Bur S Ruh  SUCCEEDS
+F Edi - NTH  SUCCEEDS
+F IRI - NAO  SUCCEEDS
+F NTH - SKA  SUCCEEDS
+F NWG - Nwy  SUCCEEDS
+A Par - Pic  SUCCEEDS
+A Ruh - Hol  FAILS
+F Swe - Den  FAILS
+
+
+GE
+Katherine
+A Ber S Mun  SUCCEEDS
+F HEL - Den  FAILS
+A Hol - Ruh  SUCCEEDS
+A Kie S Hol - Ruh  SUCCEEDS
+
+
+IT
+Adam
+F ADR S Tus - Ven  SUCCEEDS
+F Alb - Gre  SUCCEEDS
+F BLA C Con - Arm  SUCCEEDS
+F Bul/sc S Alb - Gre  SUCCEEDS
+A Con - Arm  SUCCEEDS
+F Gre - AEG  SUCCEEDS
+F Nap - ION  SUCCEEDS
+A Pie S Tus - Ven  SUCCEEDS
+A Tus - Ven  SUCCEEDS
+A Ven - Apu  SUCCEEDS
+
+
+RU
+Elling
+A War H  SUCCEEDS

@@ -21,11 +21,13 @@ def get_valid_support(commands, command):
                     if command.origin != supported_command.origin or command.destination != supported_command.destination:
                         command_success = False
                         break
+            # supports for attacks
             # support does not work if it supports an attack on a unit in its own country
             # if support command supports an attack from another country to its own country's unit
             if command.location.is_occupied.commander.human == command.destination.is_occupied.commander.human and command.origin != command.destination:
                 destination_command_id = command.destination.is_occupied.id
                 destination_command = commands[destination_command_id]
+                # support does not work if support is for a supported attack and the affected unit holds
                 if destination_command.origin == destination_command.destination:
                     command_success = False
                     break
@@ -88,14 +90,17 @@ def get_valid_support(commands, command):
 
 # check if the support is cut
 def check_cut_attempt_on_support(commands, command_id, cut_support_id):
-    for cutting_support_id in commands:
+    command = commands[command_id]
+    cut_support_command = commands[cut_support_id]
+    for support_for_cut_attempt_id in commands:
+        support_for_cut_attempt = commands[support_for_cut_attempt_id]
         # if the cut attempt (cut_support_id) has its own support (cutting_support_id)
-        if cutting_support_id != command_id and cutting_support_id != cut_support_id and commands[cutting_support_id].origin:
+        if support_for_cut_attempt_id != command_id and support_for_cut_attempt_id != cut_support_id and support_for_cut_attempt.origin:
             # check if the the support (cutting_support_id) supports the cut attempt's (other_id) attack
-            if commands[cut_support_id].origin == commands[cutting_support_id].origin and commands[cutting_support_id].destination == commands[cut_support_id].destination:
-                if commands[command_id].location == commands[cutting_support_id].destination:
+            if cut_support_command.origin == support_for_cut_attempt.origin and support_for_cut_attempt.destination == cut_support_command.destination:
+                if command.location == support_for_cut_attempt.destination:
                     for attack_on_cut_support_id in commands:
-                        if commands[attack_on_cut_support_id].destination == commands[cutting_support_id].location:
+                        if commands[attack_on_cut_support_id].destination == support_for_cut_attempt.location:
                             command_success = False
                             break
                         else:
@@ -112,32 +117,36 @@ def check_cut_attempt_on_support(commands, command_id, cut_support_id):
                 continue
     return command_success
 
-def is_support_for_attacking_cut(commands, command_id, other_id):
-    for supporting_attack in commands:
-        if supporting_attack != command_id and supporting_attack != other_id:# and commands[supporting_attack].human == commands[command_id].human:
+def is_support_for_attacking_cut(commands, command_id, cut_support_id):
+    command = commands[command_id]
+    cut_support_command = commands[cut_support_id]
+    for supporting_attack_id in commands:
+        supporting_attack_command = commands[supporting_attack_id]
+        if supporting_attack_id != command_id and supporting_attack_id != cut_support_id:
             # if the support is supporting an attack on the other_id's location
-            if commands[supporting_attack].origin == commands[other_id].origin and commands[supporting_attack].destination == commands[supporting_attack].destination and commands[command_id].destination == commands[supporting_attack].location:
+            if supporting_attack_command.origin == cut_support_command.origin and supporting_attack_command.destination == supporting_attack_command.destination and command.destination == supporting_attack_command.location:
                 command_success = False
-            if commands[supporting_attack].origin == commands[command_id].origin and commands[supporting_attack].destination == commands[command_id].destination and commands[supporting_attack].destination == commands[other_id].location:
+            if supporting_attack_command.origin == command.origin and supporting_attack_command.destination == command.destination and supporting_attack_command.destination == cut_support_command.location:
                 command_success = True
-                for supported_attack_on_support in commands:
-                    if supported_attack_on_support != command_id and supported_attack_on_support != other_id and supported_attack_on_support != supporting_attack:
-                        if commands[supported_attack_on_support].origin == commands[other_id].origin and commands[supported_attack_on_support].destination == commands[other_id].destination:
+                for supported_attack_on_support_id in commands:
+                    supported_attack_on_support = commands[supported_attack_on_support_id]
+                    if supported_attack_on_support_id != command_id and supported_attack_on_support_id != cut_support_id and supported_attack_on_support_id != supporting_attack_id:
+                        if supported_attack_on_support.origin == cut_support_command.origin and supported_attack_on_support.destination == cut_support_command.destination:
                             support_strength = 0
                             attacking_cut_strength = 0
                             for supporting_support_id in commands:
                                 supporting_support = commands[supporting_support_id]
                                 # get supports for the support being analyzed
                                 if supporting_support_id != command_id:
-                                    if supporting_support.origin == supporting_support.destination and supporting_support.origin == commands[command_id].location:
+                                    if supporting_support.origin == supporting_support.destination and supporting_support.origin == command.location:
                                         supporting_support_success = get_valid_support(commands, supporting_support)
                                         if supporting_support_success == True:
                                             support_strength += 1
                             # get supports for the cutting attack
                             for attacking_support_id in commands:
                                 attacking_support = commands[attacking_support_id]
-                                if attacking_support != other_id and attacking_support != command_id:
-                                    if attacking_support.origin == commands[other_id].origin and attacking_support.destination == commands[other_id].destination:
+                                if attacking_support != cut_support_id and attacking_support != command_id:
+                                    if attacking_support.origin == cut_support_command.origin and attacking_support.destination == cut_support_command.destination:
                                         attacking_support_success = get_valid_support(commands, attacking_support)
                                         if attacking_support_success == True:
                                             attacking_cut_strength += 1
