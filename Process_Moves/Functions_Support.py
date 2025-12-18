@@ -69,18 +69,22 @@ def get_valid_support(commands, command):
                     break
         # check if there is an attempt to cut support
             if command.location == commands[cut_attempt].destination and commands[cut_attempt].location == commands[cut_attempt].origin:
-                # check if cut attempt has its own support
-                if commands[cut_attempt].location == commands[cut_attempt].origin and commands[cut_attempt].origin != commands[cut_attempt].destination and command.destination.is_occupied == True: 
-                    destination_id = command.destination.is_occupied.id
-                    destination_command = commands[destination_id]
-                    if commands[cut_attempt].destination == destination_command.location:       
-                        command_success = check_cut_attempt_on_support(commands, command_id, cut_attempt)
+                # cut attempts must be from a different country
+                if command.location.is_occupied.commander.human != commands[cut_attempt].location.is_occupied.commander.human:
+                    # check if cut attempt has its own support
+                    if commands[cut_attempt].location == commands[cut_attempt].origin and commands[cut_attempt].origin != commands[cut_attempt].destination and command.destination.is_occupied == True: 
+                        destination_id = command.destination.is_occupied.id
+                        destination_command = commands[destination_id]
+                        if commands[cut_attempt].destination == destination_command.location:       
+                            command_success = check_cut_attempt_on_support(commands, command_id, cut_attempt)
+                        else:
+                            command_success = True
                     else:
-                        command_success = True
+                        command_success = check_cut_attempt_on_support(commands, command_id, cut_attempt)
+                    if command_success == False:
+                        break
                 else:
-                    command_success = check_cut_attempt_on_support(commands, command_id, cut_attempt)
-                if command_success == False:
-                    break
+                    command_success = True
         elif command.location == commands[cut_attempt].destination and commands[cut_attempt].location == commands[cut_attempt].origin:
             # check if cut attempt has its own support
             command_success = check_cut_attempt_on_support(commands, command_id, cut_attempt)

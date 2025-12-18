@@ -1,0 +1,52 @@
+﻿AU
+Sunny
+A Bud - Rum  SUCCEEDS
+F Tri - Alb  SUCCEEDS
+A Vie - Gal  FAILS
+
+
+
+
+UK
+Mercy
+F Edi - NTH  SUCCEEDS
+F Lon - ENG  SUCCEEDS
+A Lvp - Yor  SUCCEEDS
+
+
+FR
+Katherine
+F Bre - MAO  SUCCEEDS
+A Mar - Spa  SUCCEEDS
+A Par - Pic  SUCCEEDS
+
+
+GE
+Elling
+A Ber - Mun  SUCCEEDS
+F Kie - Den  SUCCEEDS
+A Mun - Ruh  SUCCEEDS
+
+
+IT
+Kamran
+F Nap - ION  SUCCEEDS
+A Rom - Tus  SUCCEEDS
+A Ven - Tri  SUCCEEDS
+
+
+RU
+Will
+A Mos - Ukr  SUCCEEDS
+F Sev - BLA  FAILS
+F Stp/sc - BOT  SUCCEEDS
+A War - Gal  FAILS
+
+
+
+
+TU
+Michael
+F Ank - BLA  FAILS
+A Con - Bul  SUCCEEDS
+A Smy - Con  SUCCEEDS

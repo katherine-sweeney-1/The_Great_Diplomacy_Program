@@ -1,0 +1,60 @@
+﻿AU
+Sunny
+A Bud - Rum  FAILS
+A Gal - War  FAILS
+F LYO S WES - Spa/sc  SUCCEEDS
+
+
+UK
+Mercy
+F Bel - ENG  SUCCEEDS
+F HEL S Lon - Den  SUCCEEDS
+A Lon - Den  SUCCEEDS
+F NTH C Lon - Den  SUCCEEDS
+F Nwy - Swe  FAILS
+A Stp - Fin  SUCCEEDS
+
+
+FR
+Katherine
+A Bur S Mar  SUCCEEDS
+A Gas - Spa  SUCCEEDS
+F MAO S Gas - Spa  SUCCEEDS
+F Mar S Gas - Spa  SUCCEEDS
+A Pic S Bur  SUCCEEDS
+
+
+GE
+Elling
+F Den - HEL  FAILS
+A Hol H  SUCCEEDS
+A Kie S Hol  SUCCEEDS
+A Mun - Ruh  SUCCEEDS
+A Pie H  SUCCEEDS
+
+
+IT
+Kamran
+F Rom - TYS  SUCCEEDS
+A Tus - Ven  SUCCEEDS
+A Tyr - Boh  SUCCEEDS
+A Ven - Tyr  SUCCEEDS
+F WES - Spa/sc  FAILS
+
+
+RU
+Will
+F BLA - Rum  FAILS
+A Rum - Gal  SUCCEEDS
+A Sev - Ukr  SUCCEEDS
+F Swe H  SUCCEEDS
+A War S Rum - Gal  SUCCEEDS
+
+
+TU
+Michael
+F Ank H  SUCCEEDS
+A Bul - Ser  SUCCEEDS
+A Con - Bul  SUCCEEDS
+A Gre - Alb  SUCCEEDS
+F Smy - AEG  SUCCEEDS

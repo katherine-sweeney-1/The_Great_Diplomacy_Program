@@ -1,5 +1,5 @@
 from Input_Commands_and_Commanders import input_data_1, input_data_2, input_data_3, input_data_4, input_data_5, input_data_6
-from Input_Commands_and_Commanders import input_data_7
+from Input_Commands_and_Commanders import input_data_7, input_data_8
 import sys
 sys.path.append("../The_Great_Diplomacy_Program/Parse")
 from Parse_Objects import parse_commands_and_units
@@ -49,7 +49,7 @@ def run_main_unit_testing(input_data):
         print(" ")
         count += 1
 
-run_main_unit_testing(input_data_7)
+run_main_unit_testing(input_data_8)
 
 """
 
