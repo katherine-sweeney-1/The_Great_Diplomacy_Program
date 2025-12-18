@@ -84,6 +84,8 @@ Invalid Move Affected Outcomes
 
         1907 Spring: IT05
 
+        1913 Fall: AU03
+
 
 
 

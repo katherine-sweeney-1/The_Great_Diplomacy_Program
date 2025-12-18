@@ -1,0 +1,48 @@
+﻿AU
+Sunny
+F Alb - ION  SUCCEEDS
+A Rum S Tri - Ser  FAILS
+A Vie - Gal  FAILS
+
+
+UK
+Mercy
+F ENG - Bel  SUCCEEDS
+F NTH C Yor - Nwy  SUCCEEDS
+A Yor - Nwy  SUCCEEDS
+
+
+FR
+Katherine
+F MAO - Por  SUCCEEDS
+A Pic S ENG - Bel  SUCCEEDS
+A Spa S MAO - Por  SUCCEEDS
+
+
+GE
+Elling
+F Den H  SUCCEEDS
+A Mun - Tyr  SUCCEEDS
+A Ruh - Hol  SUCCEEDS
+
+
+IT
+Kamran
+F ION - Tun  SUCCEEDS
+A Tri - Ser  SUCCEEDS
+A Tus - Ven  SUCCEEDS
+
+
+RU
+Will
+F BOT - Swe  SUCCEEDS
+F Sev - BLA  FAILS
+A Ukr - Rum  FAILS
+A War - Gal  FAILS
+
+
+TU
+Michael
+F Ank - BLA  FAILS
+A Bul S Rum  SUCCEEDS
+A Con - Bul  FAILS
