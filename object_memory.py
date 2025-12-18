@@ -86,8 +86,9 @@ Invalid Move Affected Outcomes
 
         1913 Fall: AU03
 
+    Game 8
 
-
+        Fall 1903: IT01
 
 
 """
