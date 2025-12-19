@@ -1,0 +1,57 @@
+﻿AU
+Sunny
+A Vie H  FAILS
+
+
+UK
+Mercy
+F BAL - BOT  SUCCEEDS
+F Den S HEL - Kie  SUCCEEDS
+F ENG H  SUCCEEDS
+F HEL - Kie  SUCCEEDS
+A Hol S HEL - Kie  SUCCEEDS
+F NTH - Nwy  SUCCEEDS
+A Stp H  FAILS
+
+
+FR
+Katherine
+A Bel S Ruh  SUCCEEDS
+A Bur - Mun  SUCCEEDS
+F LYO - Spa/sc  SUCCEEDS
+A Mar - Pie  SUCCEEDS
+A Ruh S Bur - Mun  SUCCEEDS
+F WES - Tun  SUCCEEDS
+
+
+GE
+Elling
+A Kie H  FAILS
+A Rom H  FAILS
+
+
+IT
+Kamran
+A Mun - Ber  SUCCEEDS
+F Nap - Rom  SUCCEEDS
+A Sil S Mun - Ber  SUCCEEDS
+A Ven S Nap - Rom  SUCCEEDS
+
+
+RU
+Will
+A Gal - War  SUCCEEDS
+A Lvn - Stp  SUCCEEDS
+A Mos S Lvn - Stp  SUCCEEDS
+F Rum - Sev  SUCCEEDS
+
+
+TU
+Michael
+F AEG - ION  SUCCEEDS
+F Alb - ADR  SUCCEEDS
+F BLA - Bul/ec  SUCCEEDS
+A Bud - Vie  SUCCEEDS
+A Bul - Ser  SUCCEEDS
+A Ser - Bud  SUCCEEDS
+A Tri S Bud - Vie  SUCCEEDS
