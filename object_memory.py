@@ -28,6 +28,14 @@ Convoy affected outcomes
     Game 7
 
         1901 Fall: AU02
+    
+    Game 8
+
+        1905 Spring: FR01
+
+        1905 Fall: IT01
+
+        1905 Fall: IT02
 
 
 Invalid Move Affected Outcomes
@@ -89,6 +97,10 @@ Invalid Move Affected Outcomes
     Game 8
 
         Fall 1903: IT01
+
+        1905 Fall: IT03
+
+        1905 Fall: IT04
 
 
 """

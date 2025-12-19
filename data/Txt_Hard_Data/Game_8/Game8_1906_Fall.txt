@@ -1,0 +1,45 @@
+﻿UK
+Mercy
+F BAR - NWG  SUCCEEDS
+F Edi - NTH  SUCCEEDS
+F HEL S Edi - NTH  SUCCEEDS
+F IRI - MAO  FAILS
+F Kie - Hol  FAILS
+F Lvn - Pru  SUCCEEDS
+A Stp - Mos  FAILS
+A Yor - Wal  SUCCEEDS
+
+
+FR
+Katherine
+A Boh S Bur - Mun  SUCCEEDS
+F Bre - MAO  FAILS
+A Bur - Mun  SUCCEEDS
+F ENG - NTH  FAILS
+A Hol S Mun - Kie  SUCCEEDS
+A Mun - Kie  SUCCEEDS
+A Par - Bur  SUCCEEDS
+A Ruh S Mun - Kie  SUCCEEDS
+F Tun H  SUCCEEDS
+
+
+RU
+Will
+A Ber H  SUCCEEDS
+A Sil H  SUCCEEDS
+
+
+TU
+Michael
+F AEG - ION  SUCCEEDS
+A Ank - Con  FAILS
+A Bud - Vie  SUCCEEDS
+F Bul/ec - Gre  FAILS
+A Con - Bul  FAILS
+A Mos S War  FAILS
+F Nap - Rom  SUCCEEDS
+F Rom - Tus  SUCCEEDS
+A Sev - Ukr  SUCCEEDS
+A Tri - Ven  SUCCEEDS
+F Ven - ADR  SUCCEEDS
+A War S Mos  SUCCEEDS
