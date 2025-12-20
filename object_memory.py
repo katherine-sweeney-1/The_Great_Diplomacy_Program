@@ -37,6 +37,8 @@ Convoy affected outcomes
 
         1905 Fall: IT02
 
+        1914 Spring: TU09
+
 
 Invalid Move Affected Outcomes
 
@@ -103,6 +105,96 @@ Invalid Move Affected Outcomes
         1905 Fall: IT04
 
         1909 Fall: FR12
+
+        1910 Spring: UK04
+
+        1914 Fall: TU08
+
+        1915 Spring: FR05
+
+"""
+
+
+
+
+"""
+
+Convoys
+
+
+    Game 8
+
+        1901 Fall:      UK03 (army convoyed)    => succeed
+                        UK02 (fleet convoying)  => succeed
+
+        1903 Spring:    UK04 (army convoyed)    => succeed
+                        UK03 (fleet convoying)  => succeed
+
+        1905 Spring:    UK07 (army convoyed)    => fail; attack strength not greater than defend strength, destination is occupied by FR01
+                        UK03 (fleet convoying)  => succeed
+
+        1905 Fall:      UK04 (army convoyed)    => fail; attack strength not greater than defend strength, destination is occupied by IT01
+                        UK01 (fleet convoying)  => succeed
+                        UK02 (fleet convoying)  => succeed
+                        UK06 (fleet support)    => fail, disrupted
+
+        1905 Fall:      UK07 (army convoyed)    =>  invalid move path   
+                        UK03 (fleet convoying)  => fail; unit is displaced
+             
+        1907 Spring:    FR05 (army convoyed)    => succeed
+                        UK01 (fleet convoying)  => succeed
+
+        1907 Spring:    UK07 (army convoyed)    => succeed
+                        UK03 (fleet convoying)  => succeed
+
+        1908 Fall:      TU03 (army convoyed)    => fail; attack strength not greater than defend strength, another TU unit occupies destination
+                        TU04 (fleet convoying)  => succeed
+                        
+        1909 Spring:    UK03 (army convoyed)    => succeed
+                        UK02 (fleet convoying)  => fail; invalid move path, different move path than fleet convoying
+
+        1909 Spring:    TU03 (army convoyed)    => succeed
+                        TU04 (fleet convoying)  => succeed
+
+        1909 Fall:      UK02 (army convoyed)    => succeed
+                        UK01 (fleet convoying)  => succeed
+
+        1910 Spring:    UK01 (army convoyed)    => succeed
+                        UK03 (fleet convoying)  => succeed
+        
+        1910 Spring:    TU03 (army convoyed)    => succeed
+                        TU04 (fleet convoying)  => succeed
+
+        1911 Fall:      UK05 (army convoyed)    => succeed 
+                        UK01 (fleet convoying)  => succeed
+
+        1911 Fall:      UK04 (army convoyed)    => succeed
+                        UK08 (fleet convoying)  => succeed
+
+        1912 Spring:    UK10 (army convoyed)    => succeed
+                        UK01 (fleet convoying)  => succeed
+                        FR07 (army support)     => succeed
+                        Note: destination is unoccupied, another unit tries to attack destination
+
+        1912 Spring:    TU01 (army convoyed)    => fails; attack strength not greater than defend strength, another TU unit occupied destination
+                        TU03 (fleet convoying)  => succeeds
+
+        1912 Fall:      TU02 (army convoyed)    => succeed
+                        TU03 (fleet convoying)  => succeed
+
+        1914 Spring:    UK02 (army convoyed)    => fails; attack strength not greater than defend strength, destination is occupied and convoy has no support
+                        UK05 (fleet convoying)  => succeed
+
+        1914 Spring:    UK03 (army convoyed)    => succeed
+                        UK07 (fleet convoying)  => succeed
+
+        1914 Fall:      TU01 (army convoyed)    => succeed
+                        TU02 (fleet convoying)  => succeed
+
+        1915 Spring:    UK02 (army convoyed)    => succeed
+                        UK01 (fleet convoying)  => succeed
+
+
 
 
 """
