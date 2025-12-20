@@ -102,5 +102,7 @@ Invalid Move Affected Outcomes
 
         1905 Fall: IT04
 
+        1909 Fall: FR12
+
 
 """

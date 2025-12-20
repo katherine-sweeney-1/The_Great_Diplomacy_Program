@@ -11,6 +11,7 @@ from Cmdrs_6 import cmdrs_6_1907b, cmdrs_6_1908, cmdrs_6_1909
 from Cmdrs_7 import cmdrs_7_1901, cmdrs_7_1902, cmdrs_7_1903, cmdrs_7_1904, cmdrs_7_1905, cmdrs_7_1906, cmdrs_7_1907, cmdrs_7_1907b, cmdrs_7_1908, cmdrs_7_1908b
 from Cmdrs_7 import cmdrs_7_1909, cmdrs_7_1909b, cmdrs_7_1910, cmdrs_7_1911, cmdrs_7_1911b, cmdrs_7_1912, cmdrs_7_1912b, cmdrs_7_1913, cmdrs_7_1913b
 from Cmdrs_8 import cmdrs_8_1901, cmdrs_8_1902, cmdrs_8_1903, cmdrs_8_1904, cmdrs_8_1904b, cmdrs_8_1905, cmdrs_8_1906, cmdrs_8_1906b, cmdrs_8_1907
+from Cmdrs_8 import cmdrs_8_1908, cmdrs_8_1909
 
 input_data_1 = {}
 input_data_1["data/Txt_Hard_Data/Game_1/Game1_1903_Spring.txt"] = cmdrs_1_1903
@@ -150,7 +151,10 @@ input_data_8["data/Txt_Hard_Data/Game_8/Game8_1906_Spring.txt"] = cmdrs_8_1906
 input_data_8["data/Txt_Hard_Data/Game_8/Game8_1906_Fall.txt"] = cmdrs_8_1906b
 input_data_8["data/Txt_Hard_Data/Game_8/Game8_1907_Spring.txt"] = cmdrs_8_1907
 input_data_8["data/Txt_Hard_Data/Game_8/Game8_1907_Fall.txt"] = cmdrs_8_1907
-
+input_data_8["data/Txt_Hard_Data/Game_8/Game8_1908_Spring.txt"] = cmdrs_8_1908
+input_data_8["data/Txt_Hard_Data/Game_8/Game8_1908_Fall.txt"] = cmdrs_8_1908
+input_data_8["data/Txt_Hard_Data/Game_8/Game8_1909_Spring.txt"] = cmdrs_8_1909
+input_data_8["data/Txt_Hard_Data/Game_8/Game8_1909_Fall.txt"] = cmdrs_8_1909
 
 
 
