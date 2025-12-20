@@ -94,7 +94,6 @@ def get_valid_support(commands, command):
 
 # check if the support is cut
 def check_cut_attempt_on_support(commands, command_id, cut_support_id):
-    print(command_id)
     command = commands[command_id]
     cut_support_command = commands[cut_support_id]
     for support_for_cut_attempt_id in commands:

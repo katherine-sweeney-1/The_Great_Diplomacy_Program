@@ -19,7 +19,7 @@ A Lvn - Pru  SUCCEEDS
 F MAO - Bre  SUCCEEDS
 A Mar S Spa/sc  SUCCEEDS
 A Mun - Ber  SUCCEEDS
-F Spa/sc S Mar  FAILS (Disrupted)
+F Spa/sc S Mar  FAILS
 F Tun S WES  SUCCEEDS
 A War S Lvn - Pru  SUCCEEDS
 F WES S Tun  SUCCEEDS
