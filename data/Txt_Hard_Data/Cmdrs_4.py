@@ -15,7 +15,6 @@ cmdrs_4_1901 = {
                    "Unit Members": ["GE01", "GE02", "GE03"],
                    "Dots Owned": ["Mun", "Kie", "Ber"]
                    },
-
     "Liam" : {"Country": "IT", 
                    "Unit Members": ["IT01", "IT02", "IT03"],
                    "Dots Owned": ["Rom", "Nap", "Ven"]
@@ -47,7 +46,6 @@ cmdrs_4_1902 = {
                    "Unit Members": ["GE01", "GE02", "GE03", "GE04", "GE05"],
                    "Dots Owned": ["Mun", "Kie", "Ber", "Hol", "Den"]
                    },
-
     "Liam" : {"Country": "IT", 
                    "Unit Members": ["IT01", "IT02", "IT03"],
                    "Dots Owned": ["Rom", "Nap", "Ven", "Tun"]
@@ -79,7 +77,6 @@ cmdrs_4_1903 = {
                    "Unit Members": ["GE01", "GE02", "GE03", "GE04", "GE05"],
                    "Dots Owned": ["Mun", "Kie", "Ber", "Hol", "Den"]
                    },
-
     "Liam" : {"Country": "IT", 
                    "Unit Members": ["IT01", "IT02", "IT03"],
                    "Dots Owned": ["Rom", "Nap", "Ven", "Tun"]
@@ -111,7 +108,6 @@ cmdrs_4_1903b = {
                    "Unit Members": ["GE01", "GE02", "GE03", "GE04"],
                    "Dots Owned": ["Mun", "Kie", "Ber", "Hol"]
                    },
-
     "Liam" : {"Country": "IT", 
                    "Unit Members": ["IT01", "IT02", "IT03"],
                    "Dots Owned": ["Rom", "Nap", "Ven", "Tun"]
