@@ -1,0 +1,48 @@
+﻿UK
+Mercy
+F ENG C Lon - Bel  SUCCEEDS
+F Hol - Kie  SUCCEEDS
+A Lon - Bel  SUCCEEDS
+A Mos S Gal - Ukr  FAILS
+F Naf - WES  FAILS
+F Nwy - NTH  SUCCEEDS
+A Pic - Bur  SUCCEEDS
+A Stp S Mos  SUCCEEDS
+F WES - TYS  FAILS
+
+
+FR
+Katherine
+A Boh - Mun  SUCCEEDS
+A Gal - War  SUCCEEDS
+F LYO - Spa/sc  SUCCEEDS
+A Mar - Gas  SUCCEEDS
+A Pie - Mar  SUCCEEDS
+F Spa/sc - MAO  SUCCEEDS
+F Tun S TYS - WES  SUCCEEDS
+A Tyr - Boh  SUCCEEDS
+F TYS - WES  SUCCEEDS
+A War - Lvn  SUCCEEDS
+
+
+RU
+Will
+A Sil H  SUCCEEDS
+
+
+TU
+Michael
+F ADR S Tri - Ven  SUCCEEDS
+F AEG S ION  SUCCEEDS
+A Ank - Rum  SUCCEEDS
+F BLA C Ank - Rum  SUCCEEDS
+A Bud S Rum - Gal  SUCCEEDS
+F ION S Rom - Nap  SUCCEEDS
+A Rom - Nap  SUCCEEDS
+A Rum - Gal  SUCCEEDS
+A Ser - Tri  SUCCEEDS
+A Sev - Mos  FAILS
+A Tri - Ven  SUCCEEDS
+F Tus - Pie  SUCCEEDS
+A Ukr S Rum - Gal  SUCCEEDS
+A Vie S Ser - Tri  SUCCEEDS

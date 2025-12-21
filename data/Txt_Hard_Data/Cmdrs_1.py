@@ -15,7 +15,6 @@ cmdrs_1_1903 = {
                    "Unit Members": ["GE01", "GE02", "GE03"],
                    "Dots Owned": ["Mun", "Kie", "Hol"]
                    },
-
     "Katherine" : {"Country": "IT", 
                    "Unit Members": ["IT01", "IT02", "IT03", "IT04", "IT05"],
                    "Dots Owned": ["Rom", "Nap", "Ven", "Mar", "Tun"]
