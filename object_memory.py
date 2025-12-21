@@ -37,6 +37,8 @@ Convoy affected outcomes
 
         1905 Fall: IT02
 
+        1912 Spring: TU07
+
         1914 Spring: TU09
 
 
@@ -112,6 +114,8 @@ Invalid Move Affected Outcomes
 
         1915 Spring: FR05
 
+        1916 Spring: UK04
+
 """
 
 
@@ -159,8 +163,8 @@ Convoys
         1909 Fall:      UK02 (army convoyed)    => succeed
                         UK01 (fleet convoying)  => succeed
 
-        1910 Spring:    UK01 (army convoyed)    => succeed
-                        UK03 (fleet convoying)  => succeed
+        1910 Spring:    UK03 (army convoyed)    => succeed
+                        UK01 (fleet convoying)  => succeed
         
         1910 Spring:    TU03 (army convoyed)    => succeed
                         TU04 (fleet convoying)  => succeed
