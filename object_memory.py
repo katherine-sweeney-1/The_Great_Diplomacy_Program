@@ -149,7 +149,13 @@ Convoys
                         UK01 (fleet convoying)  => succeed
 
         1907 Spring:    UK07 (army convoyed)    => succeed
-                        UK03 (fleet convoying)  => succeed
+                        UK03 (fleet convoying)  => succeed      ISSUE WITH CONVOY FILTER FOR DOUBLE CONVOYS
+                        FR04 (fleet convoying)  => succeed
+
+        1907 Fall:      FR03 (army convoyed)    => succeed
+                        UK01 (fleet convoying)  => succeed
+                        UK07 (fleet support)    => succeed
+                        Note: destination is occupied and unit on destination has a failed attack, unit on destination disbands
 
         1908 Fall:      TU03 (army convoyed)    => fail; attack strength not greater than defend strength, another TU unit occupies destination
                         TU04 (fleet convoying)  => succeed

@@ -14,10 +14,15 @@ def filter_convoyer(command):
         if command.origin.is_occupied.type == "army":
             if command.origin.node_type == "Coast" and command.destination.node_type == "Coast":
                 if command.location.node_type == "Sea":
+                    # might need to move to the convoy path function
+                    # issue here with double convoys
+                    """
                     if command.location in command.origin.neighbors.values() or command.destination in command.origin.neighbors.values():
                         command.legal = 1
                     else:
                         command.legal = "False - convoy is not neighbors with convoying unit"
+                    """
+                    command.legal = 1
                 else:
                     command.legal = "False - convoy location is not a sea"
             else:
