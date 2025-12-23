@@ -9,7 +9,7 @@ def filter_convoyer(command):
     # Convoy must have a different origin, location, and destination
     #print(command.unit.id, command.unit.type)
     #print(command.location.name, command.origin.name, command.destination.name)
-    if command.location != command.origin and command.location != command.destination and command.origin != command.destination and command.legal != 1 and command.unit.type == "fleet":
+    if command.location != command.origin and command.location != command.destination and command.origin != command.destination and command.unit.type == "fleet":
         # Unit convoying is a fleet and unit being convoyed is an army
         if command.origin.is_occupied.type == "army":
             if command.origin.node_type == "Coast" and command.destination.node_type == "Coast":
@@ -63,7 +63,7 @@ def filter_convoyer(command):
 def filter_convoyed_army (command, commands):
     #print(command.unit.id)
     #print("check", command.location.name, command.origin.name, command.destination.name)
-    if command.location == command.origin and command.origin != command.destination and command.legal != 1 and command.unit.type == "army":
+    if command.location == command.origin and command.origin != command.destination and command.unit.type == "army":
         for convoyer_command_id in commands:
             convoyer_command = commands[convoyer_command_id]
             if command.origin == convoyer_command.origin and command.destination == convoyer_command.destination:
@@ -78,6 +78,53 @@ def filter_convoyed_army (command, commands):
         command.legal = command.legal
     print("convoyed army check", command.unit.id, command.legal)
     return command
+
+def filter_convoy_support (command, commands):
+    if command.location != command.origin and command.origin != command.destination and command.legal != 1:
+        #print("yes")
+        for convoy_command_id in commands:
+            convoy_command = commands[convoy_command_id]
+            # check if there's a corresponding fleet convoying the command
+            # check if the fleet convoy has a valid path 
+            #if convoy_command.unit.id == "FR07":
+               # print(convoy_command.unit.id, convoy_command.legal, convoy_command.unit.type, convoy_command.origin.name, convoy_command.destination.name)
+            if convoy_command.legal == 1 and convoy_command.unit.type == "fleet" and convoy_command.origin.node_type == "Coast" and convoy_command.destination.node_type == "Coast":
+                #print("yes 1")
+                if command.location != convoy_command.location and command.origin == convoy_command.origin and command.destination == convoy_command.destination:
+                    convoyer_fleet_boolean = True
+                    break
+                else:
+                    convoyer_fleet_boolean = False
+            else:
+                convoyer_fleet_boolean = False
+            # an army needs to be convoyed 
+        for convoyed_command_id in commands:
+            convoyed_command = commands[convoyed_command_id]
+            if convoyed_command.legal == 1 and convoyed_command.unit.type == "army" and convoyed_command.origin.node_type == "Coast" and convoyed_command.destination.node_type == "Coast":
+                print("yes 2", command.unit.id, convoyed_command.unit.id)
+                print(command.location.name, command.origin.name, command.destination.name)
+                print(convoyed_command.location.name, convoyed_command.origin.name, convoyed_command.destination.name)
+                if command.location != convoyed_command.location and command.origin == convoyed_command.origin and command.destination == convoyed_command.destination:
+                    convoyed_army_boolean = True
+                else:
+                    convoyed_army_boolean = False
+            else:
+                convoyed_army_boolean = False
+            if convoyer_fleet_boolean == True and convoyed_army_boolean == True:
+                command.legal = 1
+                break
+    else:
+        convoyer_fleet_boolean = False
+        convoyed_army_boolean = False
+        command.legal = command.legal
+    print("convoy support check", command.unit.id, command.legal)
+    print(convoyer_fleet_boolean, convoyed_army_boolean)
+    return command
+
+
+
+
+
 """
 
 need to consider double convoys when either
@@ -123,9 +170,13 @@ def filter_convoys(commands):
             continue
         else:
             command = filter_convoyed_army(command, commands)
-            if command.legal != 1:
-                command.origin = command.location
-                command.destination = command.location
+        if command.legal == 1:
+            continue
+        else: 
+            command = filter_convoy_support(command, commands)
+        if command.legal != 1:
+            command.origin = command.location
+            command.destination = command.location
     return commands
 
     

@@ -149,7 +149,7 @@ Convoys
                         UK01 (fleet convoying)  => succeed
 
         1907 Spring:    UK07 (army convoyed)    => succeed
-                        UK03 (fleet convoying)  => succeed      ISSUE WITH CONVOY FILTER FOR DOUBLE CONVOYS
+                        UK03 (fleet convoying)  => succeed    
                         FR04 (fleet convoying)  => succeed
 
         1907 Fall:      FR03 (army convoyed)    => succeed
