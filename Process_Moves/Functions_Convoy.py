@@ -100,10 +100,13 @@ def filter_convoy_support (command, commands):
             # an army needs to be convoyed 
         for convoyed_command_id in commands:
             convoyed_command = commands[convoyed_command_id]
+            #print(convoyed_command.unit.id)
+            if convoyed_command.unit.id == "FR03":
+                print("check", convoyed_command.legal, convoyed_command.unit.type, convoyed_command.origin.node_type, convoyed_command.destination.node_type)
             if convoyed_command.legal == 1 and convoyed_command.unit.type == "army" and convoyed_command.origin.node_type == "Coast" and convoyed_command.destination.node_type == "Coast":
-                print("yes 2", command.unit.id, convoyed_command.unit.id)
-                print(command.location.name, command.origin.name, command.destination.name)
-                print(convoyed_command.location.name, convoyed_command.origin.name, convoyed_command.destination.name)
+                #print("yes 2", command.unit.id, convoyed_command.unit.id)
+                #print(command.location.name, command.origin.name, command.destination.name)
+                #print(convoyed_command.location.name, convoyed_command.origin.name, convoyed_command.destination.name)
                 if command.location != convoyed_command.location and command.origin == convoyed_command.origin and command.destination == convoyed_command.destination:
                     convoyed_army_boolean = True
                 else:
@@ -166,14 +169,19 @@ def filter_convoys(commands):
             continue
         else:
             command = filter_convoyer(command)
+    for command_id in commands:
+        command = commands[command_id]
         if command.legal == 1:
             continue
         else:
             command = filter_convoyed_army(command, commands)
+    for command_id in commands:
+        command = commands[command_id]
         if command.legal == 1:
             continue
         else: 
             command = filter_convoy_support(command, commands)
+    for command_id in commands:
         if command.legal != 1:
             command.origin = command.location
             command.destination = command.location
