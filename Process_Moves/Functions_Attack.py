@@ -36,13 +36,6 @@ def check_other_attacks(command_id, command, commands, destination_command_id, c
                                             outcome = False
                                             break
                                         else:
-                                            """
-                                            if command.strength > last_relevant_attack.strength:
-                                                outcome = True
-                                            else:
-                                                outcome = False
-                                                break
-                                            """
                                             outcome = check_attack_strengths(command, last_relevant_attack)
                                             if outcome == False:
                                                 break
@@ -54,13 +47,6 @@ def check_other_attacks(command_id, command, commands, destination_command_id, c
                                 last_relevant_attack = retrieve_last_relevant_attack(relevant_attacking_commands)
                                 # check command and destination command strengths if there are no last relevant attacks
                                 if last_relevant_attack == None:
-                                    """
-                                    if command.strength > destination_command.strength:
-                                        outcome = True
-                                    else:
-                                        outcome = False
-                                        break
-                                    """
                                     outcome = check_attack_strengths(command, destination_command)
                                     if outcome == False:
                                         break
@@ -72,13 +58,6 @@ def check_other_attacks(command_id, command, commands, destination_command_id, c
                                             outcome = False
                                             break
                                         else:
-                                            """
-                                            if command.strength > last_relevant_attack.strength:
-                                                outcome = True
-                                            else:
-                                                outcome = False
-                                                break
-                                            """
                                             outcome = check_attack_strengths(command, last_relevant_attack)
                                             if outcome == False:
                                                 break
@@ -137,12 +116,6 @@ def check_other_attacks(command_id, command, commands, destination_command_id, c
                 #print(command_id)
                 # the command and destination command attack each other
                 if destination_command.location == command.destination and destination_command.destination == command.location:
-                    """
-                    if command.strength > destination_command.strength:
-                        outcome = True
-                    else:
-                        outcome = False
-                    """
                     outcome = check_attack_strengths(command, destination_command)
                 # the command and destination command do not attack each other
                 else:
@@ -150,12 +123,6 @@ def check_other_attacks(command_id, command, commands, destination_command_id, c
                     last_relevant_attack = retrieve_last_relevant_attack(relevant_attacking_commands)
                     #print(last_relevant_attack, last_relevant_attack.location.name, last_relevant_attack.origin.name, last_relevant_attack.destination.name)
                     if last_relevant_attack == None:
-                        """
-                        if command.strength > destination_command.strength:
-                            outcome = True
-                        else:
-                            outcome = False
-                        """
                         outcome = check_attack_strengths(command, destination_command)
                     else:
                         last_relevant_attack_outcome = get_attack_outcome (last_relevant_attack.unit.id, last_relevant_attack, commands)
@@ -182,12 +149,6 @@ def check_other_attacks(command_id, command, commands, destination_command_id, c
                     if relevant_attack.destination == command.destination and relevant_attack.location == relevant_attack.origin and relevant_attack.origin != relevant_attack.destination:
                         outcome = check_if_other_attack_is_on_destination(command_id, command, relevant_attack, destination_command)
                     else:
-                        """
-                        if command.strength > destination_command.strength:
-                            outcome = True
-                        else:
-                            outcome = False
-                        """
                         outcome = check_attack_strengths(command, destination_command)
                     if outcome == False:
                         break
@@ -222,22 +183,11 @@ def check_if_other_attack_is_on_destination(command_id, command, other_attacking
             if destination_command != None:
                 # if the destination command is being attacked by other command and is not attacking (i.e. hold or support)
                 if destination_command.destination == other_attacking_command.origin and destination_command.origin == destination_command.location:
-                    
                     if other_attacking_command.strength > destination_command.strength:
                         outcome = False
                     else:
                         outcome = True
-                    
-                    #print("yes 1", command_id)
-                    #outcome = check_attack_strengths(other_attacking_command, destination_command)
                 else:
-                    """
-                    if command.strength > other_attacking_command.strength:
-                        outcome = True
-                    else:
-                        outcome = False
-                    """
-                    #print("yes 2", command_id)
                     outcome = check_attack_strengths(command, other_attacking_command)
             else:
                 """
