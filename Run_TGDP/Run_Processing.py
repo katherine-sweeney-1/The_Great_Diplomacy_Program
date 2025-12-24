@@ -13,7 +13,7 @@ from Functions_Convoy import filter_convoys
 # do this later 
 def run_processing(commands, commanders, nodes, units):
     valid_commands, invalid_commands = filter_commands(commands, commanders)
-    valid_commands = filter_convoys(valid_commands)
+    #valid_commands = filter_convoys(valid_commands)
     valid_commands = get_success_supports(valid_commands)
     valid_commands = get_success_attacks(valid_commands)
     #for valid in valid_commands:

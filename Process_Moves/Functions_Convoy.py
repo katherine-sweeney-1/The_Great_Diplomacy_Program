@@ -57,7 +57,7 @@ def filter_convoyer(command):
         """
     else:
         command.legal = command.legal
-    print("Convoyer fleet check", command.unit.id, command.legal)
+    #print("Convoyer fleet check", command.unit.id, command.legal)
     return command
 
 def filter_convoyed_army (command, commands):
@@ -76,7 +76,7 @@ def filter_convoyed_army (command, commands):
                 command.legal = "False - convoyed army does not have a corresponding convoy"
     else:
         command.legal = command.legal
-    print("convoyed army check", command.unit.id, command.legal)
+    #print("convoyed army check", command.unit.id, command.legal)
     return command
 
 def filter_convoy_support (command, commands):
@@ -100,9 +100,6 @@ def filter_convoy_support (command, commands):
             # an army needs to be convoyed 
         for convoyed_command_id in commands:
             convoyed_command = commands[convoyed_command_id]
-            #print(convoyed_command.unit.id)
-            if convoyed_command.unit.id == "FR03":
-                print("check", convoyed_command.legal, convoyed_command.unit.type, convoyed_command.origin.node_type, convoyed_command.destination.node_type)
             if convoyed_command.legal == 1 and convoyed_command.unit.type == "army" and convoyed_command.origin.node_type == "Coast" and convoyed_command.destination.node_type == "Coast":
                 #print("yes 2", command.unit.id, convoyed_command.unit.id)
                 #print(command.location.name, command.origin.name, command.destination.name)
@@ -120,8 +117,8 @@ def filter_convoy_support (command, commands):
         convoyer_fleet_boolean = False
         convoyed_army_boolean = False
         command.legal = command.legal
-    print("convoy support check", command.unit.id, command.legal)
-    print(convoyer_fleet_boolean, convoyed_army_boolean)
+    #print("convoy support check", command.unit.id, command.legal)
+    #print(convoyer_fleet_boolean, convoyed_army_boolean)
     return command
 
 

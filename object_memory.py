@@ -39,7 +39,7 @@ Convoy affected outcomes
 
         1912 Spring: TU07
 
-        1914 Spring: TU09
+        1914 Spring: TU09 => convoy cut support
 
 
 Invalid Move Affected Outcomes
@@ -100,15 +100,27 @@ Invalid Move Affected Outcomes
 
     Game 8
 
-        Fall 1903: IT01
+        1903 Fall: IT01
+
+        1905 Spring: IT02
 
         1905 Fall: IT03
 
         1905 Fall: IT04
 
+        1906 Spring: TU06
+
+        1906 Fall: TU04
+
+        1907 Fall: FR10
+
+        1908 Fall: TU01
+
         1909 Fall: FR12
 
         1910 Spring: UK04
+
+        1910 Fall: TU07
 
         1914 Fall: TU08
 
@@ -133,6 +145,7 @@ Convoys
 
         1903 Spring:    UK04 (army convoyed)    => succeed
                         UK03 (fleet convoying)  => succeed
+                        UK02 (fleet support)    => succeed
 
         1905 Spring:    UK07 (army convoyed)    => fail; attack strength not greater than defend strength, destination is occupied by FR01
                         UK03 (fleet convoying)  => succeed
