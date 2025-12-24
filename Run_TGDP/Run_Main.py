@@ -34,7 +34,7 @@ def run_main_testing():
 def run_main_unit_testing(input_data):
     count = 0
     for commands_data in input_data:
-        game_year = 1908 + count/2
+        game_year = 1901 + count/2
         game_year = int(game_year)
         game_season = count % 2
         if game_season == 0:
@@ -49,7 +49,7 @@ def run_main_unit_testing(input_data):
         print(" ")
         count += 1
 
-run_main_unit_testing(input_data_8b)
+run_main_unit_testing(input_data_3)
 
 """
 
