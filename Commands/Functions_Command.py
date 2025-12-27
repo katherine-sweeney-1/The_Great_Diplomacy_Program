@@ -3,15 +3,16 @@ from Class_Command import Command
 
 def create_commands(commands_starting_data, commanders, nodes, units):
     cmds_dict = {}
-    for each_cmd in commands_starting_data: 
-        one_cmd = Command(commands_starting_data[each_cmd]["country"])
-        one_cmd.assign_commander(commands_starting_data[each_cmd]["owner"], commanders)
-        one_cmd.assign_unit(each_cmd, units)
-        one_cmd.assign_location(commands_starting_data[each_cmd]["location"], nodes)
-        one_cmd.assign_origin(commands_starting_data[each_cmd]["origin"], nodes)
-        one_cmd.assign_destination(commands_starting_data[each_cmd]["destination"], nodes)
-        one_cmd.predetermined_outcome(commands_starting_data[each_cmd]["outcome"])
-        if one_cmd.unit != 0:
-            cmds_dict[one_cmd.unit.id] = one_cmd
+    for each_command in commands_starting_data: 
+        command = Command(commands_starting_data[each_command]["country"])
+        command.assign_commander(commands_starting_data[each_command]["owner"], commanders)
+        command.assign_unit(each_command, units)
+        command.assign_location(commands_starting_data[each_command]["location"], nodes)
+        command.assign_origin(commands_starting_data[each_command]["origin"], nodes)
+        command.assign_destination(commands_starting_data[each_command]["destination"], nodes)
+        command.predetermined_outcome(commands_starting_data[each_command]["outcome"])
+        command.convoy_status(commands_starting_data[each_command]["convoy"])
+        if command.unit != 0:
+            cmds_dict[command.unit.id] = command
     return cmds_dict
     

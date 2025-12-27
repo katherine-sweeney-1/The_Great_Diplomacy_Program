@@ -57,6 +57,10 @@ class Command ():
         self.check_other_attacks = check_other_attacks_boolean
         return self.check_other_attacks
 
+    def convoy_status (self, convoy_boolean):
+        self.convoy = convoy_boolean
+        return self.convoy
+    
     def print_statement(self):
         print("command for unit {}, country {} has commander {}".format(self.unit.id, self.country, self.human.human))
         print("loc: {}, origin: {}, dest: {}".format(self.loc.name, self.origin.name, self.destination.name))
