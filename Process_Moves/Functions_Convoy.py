@@ -127,6 +127,10 @@ def filter_valid_convoy_paths(command, commands):
 def filter_convoys(commands):
     for command_id in commands:
         command = commands[command_id]
+        if command.convoy == True:
+            print("convoying unit", command.unit.id)
+    for command_id in commands:
+        command = commands[command_id]
         if command.legal == 1:
             continue
         else:

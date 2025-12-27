@@ -1,6 +1,7 @@
 def determine_node_name(line, loc_count, origin_count, dest_count):       
     stripped_line = line[2:]
     location = stripped_line[loc_count : loc_count + 3]
+    convoy_boolean = False
     # get location
     if loc_count != 0:
         location = stripped_line[0:6]
@@ -18,6 +19,7 @@ def determine_node_name(line, loc_count, origin_count, dest_count):
             destination = origin
     # convoys --> get origin and destination
     elif stripped_line[loc_count + 3 : loc_count + 6] == " C ":
+        convoy_boolean = True
         origin = stripped_line[loc_count + 6: loc_count + origin_count + 9]
         destination = stripped_line[loc_count + origin_count + 13 : loc_count + origin_count + dest_count + 16]
     # holds --> get origin and destination
@@ -49,4 +51,4 @@ def determine_node_name(line, loc_count, origin_count, dest_count):
         destination = destination.replace("/", "-")
         last_letter = destination[-1].upper()
         destination = destination[:-1] + last_letter
-    return location, origin, destination
+    return location, origin, destination, convoy_boolean

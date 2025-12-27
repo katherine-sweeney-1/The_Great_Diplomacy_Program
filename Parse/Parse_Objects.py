@@ -62,14 +62,15 @@ def parse_commands_and_units (txt):
                 # support attack, destination is coastal:
                 elif len(line) > 18 and line[18] == "/":
                      dest_count = 3
-            location, origin, destination = determine_node_name(line, loc_count, origin_count, dest_count)
+            location, origin, destination, convoy_boolean = determine_node_name(line, loc_count, origin_count, dest_count)
             parsed_cmds[unit_name] = {
                  "location": location,
                  "origin": origin,
                  "destination": destination,
                  "country": country,
                  "owner": commander,
-                 "outcome": outcome
+                 "outcome": outcome,
+                 "convoy": convoy_boolean
             }
             parsed_units[unit_name] = {
                  "type": unit_type,

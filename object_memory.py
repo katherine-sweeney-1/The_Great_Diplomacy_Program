@@ -39,6 +39,8 @@ Convoy affected outcomes
 
         1912 Spring: TU07
 
+        1914 Spring: UK08
+
         1914 Spring: TU09 => convoy cut support
 
 
@@ -259,7 +261,7 @@ Convoys
 
         1907 Spring:    RU07 (army convoyed)    => succeed
                         RU06 (fleet convoying)  => succeed
-                        Note: destination is unoccupied
+                        Note: destination is unoccupied, no other attacks on destination 
 
         1908 Fall:      IT02 (army convoyed)    => succeed
                         IT04 (fleet convoying)  => succeed
@@ -269,17 +271,20 @@ Convoys
         1910 Spring:    IT13 (army convoyed)    => succeed
                         IT09 (fleet convoying)  => succeed
                         IT05 (fleet support)    => succeed
+                        Note: destination is unoccupied, no other attacks on destination 
 
     Game 4
 
         1901 Fall:      UK01 (army convoyed)    => succeed
                         UK03 (fleet convoying)  => succeed
                         UK02 (fleet support)    => succeed
+                        Note: destination is unoccupied, there is another attack on destination, attack strength exceeds other attack strength
 
-        1905 Spring:    UK04 (army convoyed)    => fails; invalid move path, not sure why
+        1905 Spring:    UK04 (army convoyed)    => fails; invalid move path
                         UK02 (fleet convoying)  => succeed
                         UK05 (fleet convoying)  => succeed
                         UK03 (fleet support)    => succeed
+                        Note: UK02 convoys army to a sea and not a coast; it is still a legal move
 
     Game 5
 
@@ -354,9 +359,9 @@ Convoys
         1901 Fall:      UK03 (army convoyed)    => succeed
                         UK02 (fleet convoying)  => succeed
 
-        1903 Spring:    UK04 (army convoyed)    => succeed
-                        UK03 (fleet convoying)  => succeed
-                        UK02 (fleet support)    => succeed
+        1903 Spring:    UK03 (army convoyed)    => succeed
+                        UK04 (fleet convoying)  => succeed
+                        UK02 (fleet support)    => succeed  => outcome says its convoyer fleet
 
         1905 Spring:    UK07 (army convoyed)    => fail; attack strength not greater than defend strength, destination is occupied by FR01
                         UK03 (fleet convoying)  => succeed
