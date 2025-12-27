@@ -211,10 +211,6 @@ def get_command_strength(commands, command, command_success):
 def get_success_supports(commands, id = None, recur_bool = None):
     for command_id in commands:
         command = commands[command_id]
-        #if command_id == "IT04":
-        #    print("IT04", command.location.name, command.origin.name, command.destination.name)
-        #    print(" ")
-        # if a unit is attacking
         if commands[command_id].location == commands[command_id].origin:
             continue
         command = commands[command_id]
@@ -227,3 +223,10 @@ def get_success_supports(commands, id = None, recur_bool = None):
         commands = get_command_strength(commands, command, command_success)
         command.success(command_success)
     return commands
+
+
+"""
+
+for convoys, i think i need to add if its a convoy boolean and if not then run the support functions
+
+"""
