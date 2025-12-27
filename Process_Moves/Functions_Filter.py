@@ -167,14 +167,13 @@ def filter_commands(commands, commanders):
         command = filtered_commands[command_id]
         command = filter_support(command, filtered_commands)
         # commenting out for convoys
-        """
         if command.legal != 1:
-            invalid_commands[command_id] =command
-            command.origin = command.location
-            command.destination = command.location
+            invalid_commands[command_id] = command
+            #command.origin = command.location
+            #command.destination = command.location
             valid_commands[command_id] = command
         else:
             valid_commands[command_id] = command
-        """
+        
         valid_commands[command_id] = command
     return valid_commands, invalid_commands

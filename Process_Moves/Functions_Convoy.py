@@ -37,7 +37,9 @@ def filter_convoyed_army (command, commands):
     if command.location == command.origin and command.origin != command.destination and command.unit.type == "army":
         for convoyer_command_id in commands:
             convoyer_command = commands[convoyer_command_id]
-            if command.origin == convoyer_command.origin and command.destination == convoyer_command.destination:
+            #print(command.unit.id, command.origin.name, command.destination.name)
+            #print(convoyer_command.unit.id, convoyer_command.origin.name, convoyer_command.destination.name)
+            if command != convoyer_command and command.origin == convoyer_command.origin and command.destination == convoyer_command.destination:
                 if convoyer_command.legal == convoyer_command.legal:
                     command.legal = 1
                     break
@@ -125,29 +127,26 @@ def filter_valid_convoy_paths(command, commands):
 
 
 def filter_convoys(commands):
+    """
     for command_id in commands:
         command = commands[command_id]
         if command.convoy == True:
             print("convoying unit", command.unit.id)
+    """
     for command_id in commands:
         command = commands[command_id]
-        if command.legal == 1:
-            continue
-        else:
+        if command.legal != 1 and command.convoy == True:
             command = filter_convoyer(command)
     for command_id in commands:
         command = commands[command_id]
-        if command.legal == 1:
-            continue
-        else:
+        if command.legal != 1:
             command = filter_convoyed_army(command, commands)
     for command_id in commands:
         command = commands[command_id]
-        if command.legal == 1:
-            continue
-        else: 
+        if command.legal != 1:
             command = filter_convoy_support(command, commands)
     for command_id in commands:
+        command = commands[command_id]
         if command.legal != 1:
             command.origin = command.location
             command.destination = command.location
