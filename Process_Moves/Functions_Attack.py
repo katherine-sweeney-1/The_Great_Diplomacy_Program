@@ -292,11 +292,16 @@ def get_success_attacks(commands):
         if command.location == command.destination:
             get_hold_outcome(command_id, commands[command_id], commands)
         elif command.location == command.origin and command.origin != command.destination:
-            #get_attack_outcome(command_id, commands[command_id], commands)
+            get_attack_outcome(command_id, commands[command_id], commands)
+            """
             if command.origin in command.destination.neighbors.values():
                 get_attack_outcome(command_id, commands[command_id], commands)
             else:
+                # might be get hold outcome
+                #get_hold_outcome(command_id, commands[command_id], commands)
+                #print(command_id, "convoy ")
                 command.success("True - convoy placeholder to debug")
+            """
         # if not an attack or hold then continue to next command
         else:
             continue

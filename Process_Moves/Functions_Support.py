@@ -3,6 +3,7 @@ import os
 sys.path.append(os.path.join("/home/katherine/Documents/The-Great-Diplomacy-Program/Nodes/Class_Sub_Node"))
 from Class_Sub_Node import Coastal_Node
 from Functions_Attack import get_attack_outcome
+from Functions_Attack import get_hold_outcome
 
 def get_valid_support(commands, command):
     command_id = command.unit.id
@@ -215,13 +216,17 @@ def get_success_supports(commands, id = None, recur_bool = None):
             continue
         command = commands[command_id]
         # if a unit is supporting
-        if command.location != command.origin:
+        if command.location != command.origin and command.convoy == False:
             if command.convoy == False:
                 command_success = get_valid_support(commands, command)
             else:
                 command_success = True
-        commands = get_command_strength(commands, command, command_success)
-        command.success(command_success)
+            commands = get_command_strength(commands, command, command_success)
+            command.success(command_success)
+        else:
+            command.succeed = get_hold_outcome(command_id, command, commands)
+        #commands = get_command_strength(commands, command, command_success)
+        #command.success(command_success)
     return commands
 
 

@@ -29,8 +29,6 @@ def filter_convoyer(command):
             command.legal = "False - convoyed unit is not an army"
     else:
         command.legal = command.legal
-    if command.legal == 1:
-        print("convoyer fleet", command.unit.id, command.legal)
     return command
 
 def filter_convoyed_army (command, commands):
@@ -49,8 +47,6 @@ def filter_convoyed_army (command, commands):
                 command.legal = "False - convoyed army does not have a corresponding convoy"
     else:
         command.legal = command.legal
-    if command.legal == 1:
-        print("convoyed army", command.unit.id, command.legal)
     return command
 
 def filter_convoy_support (command, commands):
@@ -84,8 +80,6 @@ def filter_convoy_support (command, commands):
         convoyer_fleet_boolean = False
         convoyed_army_boolean = False
         command.legal = command.legal
-    if command.legal == 1:
-        print("convoy support", command.unit.id, command.legal)
     return command
 
 
