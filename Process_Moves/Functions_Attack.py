@@ -267,6 +267,7 @@ def get_hold_outcome(command_id, command, commands):
             else:
                 outcome = True
     command.success(outcome)
+    #print(command.unit.id, command.succeed)
     return command.succeed
 
 
@@ -284,6 +285,28 @@ def get_destination(command, commands):
     destination_command = commands[destination_command_id]
     return destination_command_id, destination_command
 
+def get_convoy_dislodgement_outcome(command_id, command, commands):
+    dictionary_without_command = commands.copy()
+    dictionary_without_command.pop(command_id)
+    for attacking_command_id in dictionary_without_command:
+        attacking_command = dictionary_without_command[attacking_command_id]
+        if attacking_command.location == attacking_command.origin and attacking_command.destination == command.location:
+           # print("checking convoy displacement")
+            #print(command.unit.id, command.location.name, command.origin.name, command.destination.name, command.strength)
+            #print(attacking_command.unit.id, attacking_command.location.name, attacking_command.origin.name, attacking_command.destination.name, attacking_command.strength)
+            #print(" ")
+            if command.strength >= attacking_command.strength:
+                outcome = True
+            else:
+                outcome = False
+                break
+        else:
+            outcome = True
+    #command.success(outcome)
+    #print("convoy check", command.unit.id, outcome)
+    return outcome
+
+
 def get_success_attacks(commands):
     for command_id in commands:
         command = commands[command_id]
@@ -292,6 +315,7 @@ def get_success_attacks(commands):
         if command.location == command.destination:
             get_hold_outcome(command_id, commands[command_id], commands)
         elif command.location == command.origin and command.origin != command.destination:
+            #print(command.unit.id)
             get_attack_outcome(command_id, commands[command_id], commands)
             """
             if command.origin in command.destination.neighbors.values():
