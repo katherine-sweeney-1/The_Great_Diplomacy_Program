@@ -96,29 +96,48 @@ need to consider double convoys when either
 
 """
 def filter_valid_convoy_paths(command, commands):
-        # Convoy connects a path between coasts
-        for neighbor_id in command.origin.neighbors():
-            #not sure if this is correct
-            if command.destination in command.origin.neighbors.values() and command.location in command.origin.neighbors.values():
-                command.legal = True
-            else:
-                count = 0
-                for convoyer_command_id in commands:
-                    convoyer_command = commands[convoyer_command_id]
-                    convoyer_command = filter_convoyer(convoyer_command)
-                    if command.legal == 1:
-                        # n + 1 convoying unit must be neighbors with original convoy
-                        if convoyer_command.location in command.location.neighbors.values():
-                            # n + 1 convoying unit ends if other command is neighbors with destination
-                            if convoyer_command.location in command.destination.neighbors.values():
-                                convoy_boolean = True
-                            else:
-                                count = 0
-                                convoyer_command_neighbors_count = len(convoyer_command.location.neighbors)
-                                for other_convoyer_neighbor_id in convoyer_command.location.neighbors():
-                                    return True
-                                #count += 1
+        convoying_commands = {}
+        convoying_commands[command.unit.id] = command
+        for convoying_command_id in commands:
+            convoying_command = commands[convoying_command_id]
+            if convoying_command.convoy == True and convoying_command.origin == command.origin and convoying_command.destination == command.destination:
+                convoying_commands[convoying_command_id] = convoying_command
+        if len(convoying_commands) == 1:
+            if command.location in command.origin.neighbors.values() and command.location in command.destination.neighbors.values():
+                command.legal = 1
+        else:
+            convoy_path_length = len(convoying_commands)
+            convoy_path_count = 0
+            convoy_location_neighbor_boolean = False
+            convoy_destination_neighbor_boolean = True
+            for each_convoy_id in convoying_commands:
+                convoy_path_count += 1
+                each_convoy = convoying_commands[each_convoy_id]
+                if each_convoy.location in command.location.neighbors.values():
+                    convoy_location_neighbor_boolean = True
+                if each_convoy.location in command.destination.neighbors.values():
+                    convoy_destination_neighbor_boolean = True
+                for neighboring_convoy_id in convoying_commands:
+                    neighboring_convoy = convoying_commands[neighboring_convoy_id]
+                    if neighboring_convoy != each_convoy and neighboring_convoy.location in each_convoy.location.neighbors.values():
+                        command.legal = 1
+                    else:
+                        command.legal = "False - invalid convoy path"
+                        break
+                if command.legal == False:
+                    break
+                else:
+                    if convoy_path_count == convoy_path_length:
+                        if convoy_location_neighbor_boolean == True and convoy_destination_neighbor_boolean == True:
+                            command.legal = True
+                        else:
+                            command.legal = "False - no neighbor to convoy origin or destination"
+                    else:
+                        continue
+        return command
+                
 
+    
 
 def filter_convoys(commands):
     """
@@ -139,6 +158,10 @@ def filter_convoys(commands):
         command = commands[command_id]
         if command.legal != 1:
             command = filter_convoy_support(command, commands)
+    for command_id in commands:
+        command = commands[command_id]
+        if command.legal == 1 and command.convoy == True:
+            command = filter_valid_convoy_paths(command, commands)
     for command_id in commands:
         command = commands[command_id]
         if command.legal != 1:
