@@ -150,7 +150,7 @@ Invalid Move Affected Outcomes
 
         1905 Fall: IT04
 
-        1906 Spring: TU06
+        1906 Spring: TU04
 
         1906 Fall: TU04
 
@@ -251,8 +251,8 @@ Convoys
                         UK02 (fleet convoying)  => succeed
                         Note: destination is unoccupied
 
-        Fall 1903:      UK01 (army convoyed)    => fails; attack strength not greater
-                        UK04 (fleet convoying)  => succeed
+        Fall 1903:      UK04 (army convoyed)    => fails; attack strength not greater
+                        UK01 (fleet convoying)  => succeed
                         Note: destination is unoccupied, attack bounces with another attack
 
         1904 Fall:      TU04 (army convoyed)    => fails; attack strength not greater
@@ -453,6 +453,36 @@ Convoys
         1915 Spring:    UK01 (fleet convoying)  => succeed
                         UK02 (army convoyed)    => succeed
                         Note: destination is occupied by UK06, UK06 has a successful attack, no other attacks on destination 
+
+
+
+
+"""
+
+"""
+Convoy affected outcomes with convoy filters working
+
+    Game 1
+
+        1905 Fall: UK06 => convoy support
+
+    Game 2
+
+        1903 Fall: UK07 => beats the convoy attack; convoy attack says it has a strength of 2
+
+    Game 4
+
+        1905 Spring: GE02 => beats the invalid convoy attack; convoy attack says it has a strength of 3 (for double convoy)
+
+        1905 Spring: UK08 => assumes that the convoy works so UK08 moves to convoy army's spot when convoy was actually invalid
+
+    Game 8
+
+        1914 Spring: UK02 => convoyed army
+
+        1914 Spring: UK08 => assumes convoy works when it doesnt work
+        
+
 
 
 
