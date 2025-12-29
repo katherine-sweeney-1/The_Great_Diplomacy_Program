@@ -168,9 +168,7 @@ def check_if_other_attack_is_on_destination(command_id, command, other_attacking
                 else:
                     outcome = check_attack_strengths(command, other_attacking_command)
             else:
-                """
-                code might be redundant here
-                """
+                #code might be redundant here
                 if command.strength > other_attacking_command.strength:
                     outcome = True
                 else:
@@ -267,7 +265,6 @@ def get_hold_outcome(command_id, command, commands):
             else:
                 outcome = True
     command.success(outcome)
-    #print(command.unit.id, command.succeed)
     return command.succeed
 
 
@@ -291,10 +288,6 @@ def get_convoy_dislodgement_outcome(command_id, command, commands):
     for attacking_command_id in dictionary_without_command:
         attacking_command = dictionary_without_command[attacking_command_id]
         if attacking_command.location == attacking_command.origin and attacking_command.destination == command.location:
-           # print("checking convoy displacement")
-            #print(command.unit.id, command.location.name, command.origin.name, command.destination.name, command.strength)
-            #print(attacking_command.unit.id, attacking_command.location.name, attacking_command.origin.name, attacking_command.destination.name, attacking_command.strength)
-            #print(" ")
             if command.strength >= attacking_command.strength:
                 outcome = True
             else:
@@ -302,8 +295,6 @@ def get_convoy_dislodgement_outcome(command_id, command, commands):
                 break
         else:
             outcome = True
-    #command.success(outcome)
-    #print("convoy check", command.unit.id, outcome)
     return outcome
 
 
@@ -315,17 +306,7 @@ def get_success_attacks(commands):
         if command.location == command.destination:
             get_hold_outcome(command_id, commands[command_id], commands)
         elif command.location == command.origin and command.origin != command.destination:
-            #print(command.unit.id)
             get_attack_outcome(command_id, commands[command_id], commands)
-            """
-            if command.origin in command.destination.neighbors.values():
-                get_attack_outcome(command_id, commands[command_id], commands)
-            else:
-                # might be get hold outcome
-                #get_hold_outcome(command_id, commands[command_id], commands)
-                #print(command_id, "convoy ")
-                command.success("True - convoy placeholder to debug")
-            """
         # if not an attack or hold then continue to next command
         else:
             continue

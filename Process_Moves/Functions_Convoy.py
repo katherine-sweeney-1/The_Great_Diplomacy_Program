@@ -3,30 +3,12 @@ import os
 sys.path.append(os.path.join("C:\\Users\\kathe\\Documents\\Py_Code\\Diplomacy\\Nodes"))
 from Class_Sub_Node import Coastal_Node
 
-# filter units that convoy
-# command filter != 1 because convoys will get flared in previous filters 
+# filter fleets that convoy
 def filter_convoyer(command):
     # Convoy must have a different origin, location, and destination
     if command.location != command.origin and command.location != command.destination and command.origin != command.destination and command.unit.type == "fleet":
-        """
-        # Unit convoying is a fleet and unit being convoyed is an army
-        if command.origin.is_occupied.type == "army":
-            if command.origin.node_type == "Coast" and command.destination.node_type == "Coast":
-                if command.location.node_type == "Sea":
-                    # might need to move to the convoy path function
-                    # issue here with double convoys
-                    command.legal = 1
-                else:
-                    command.legal = "False - convoy location is not a sea"
-            else:
-                command.legal = "False - convoy is not between coasts"
-        else:
-            command.legal = "False - convoyed unit is not an army"
-        """
         if command.origin.node_type == "Coast" and command.destination.node_type == "Coast":
             if command.location.node_type == "Sea":
-                # might need to move to the convoy path function
-                # issue here with double convoys
                 command.legal = 1
             else:
                 command.legal = "False - convoy location is not a sea"
@@ -36,6 +18,7 @@ def filter_convoyer(command):
         command.legal = command.legal
     return command
 
+#filter convoyed armies
 def filter_convoyed_army (command, commands):
     if command.location == command.origin and command.origin != command.destination and command.unit.type == "army":
         for convoyer_command_id in commands:
@@ -52,6 +35,7 @@ def filter_convoyed_army (command, commands):
         command.legal = command.legal
     return command
 
+# filter supports for convoys
 def filter_convoy_support (command, commands):
     if command.location != command.origin and command.origin != command.destination and command.legal != 1:
         for convoy_command_id in commands:
@@ -85,19 +69,7 @@ def filter_convoy_support (command, commands):
         command.legal = command.legal
     return command
 
-
-
-
-
-"""
-
-need to consider double convoys when either
-
-    convoy is neighbors with location and not destination
-
-    convoy is neighbors with destination and not location
-
-"""
+# filter valid paths for convoyed armies
 def filter_valid_convoy_paths(command, commands):
         convoying_commands = {}
         convoying_commands[command.unit.id] = command
@@ -113,7 +85,6 @@ def filter_valid_convoy_paths(command, commands):
                     if command.location in command.origin.neighbors.values() and command.location in command.destination.neighbors.values():
                         convoyed_army.legal = 1
                     else:
-                        
                         convoyed_army.legal = "False - incomplete convoy path"
                 else:
                     convoy_path_length = len(convoying_commands)
@@ -147,22 +118,12 @@ def filter_valid_convoy_paths(command, commands):
                         if convoyed_army.legal == False:
                             break
                     if convoyed_army.legal == False:
-                        break
-                
+                        break   
             else:
                 continue
         return command
                 
-
-    
-
 def filter_convoys(commands):
-    """
-    for command_id in commands:
-        command = commands[command_id]
-        if command.convoy == True:
-            print("convoying unit", command.unit.id)
-    """
     for command_id in commands:
         command = commands[command_id]
         if command.legal != 1 and command.convoy == True:
