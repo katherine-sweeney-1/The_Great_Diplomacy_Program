@@ -34,7 +34,7 @@ def run_main_testing():
 def run_main_unit_testing(input_data):
     count = 0
     for commands_data in input_data:
-        game_year = 1901 + count/2
+        game_year = 1903 + count/2
         game_year = int(game_year)
         game_season = count % 2
         if game_season == 0:
@@ -46,10 +46,11 @@ def run_main_unit_testing(input_data):
         commands, commanders, nodes, units = create_objects(data_nodes, data_coastal, data_fleet_coastal, data_fleet_special_coastal, commanders_data, parsed_units, parsed_cmds)
         print("Game 2 {} {}".format(game_year, game_season))
         nodes, units, processed_commands = run_processing(commands, commanders, nodes, units)
+        db_table = yield_table(processed_commands)
         print(" ")
         count += 1
 
-run_main_unit_testing(input_data_6)
+run_main_unit_testing(input_data_1)
 
 """
 
