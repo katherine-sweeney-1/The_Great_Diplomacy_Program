@@ -207,7 +207,6 @@ def get_command_strength(commands, command, command_success):
         command_strength = 0
     return commands
 
-
 def get_success_supports(commands, id = None, recur_bool = None):
     for command_id in commands:
         command = commands[command_id]
@@ -216,29 +215,14 @@ def get_success_supports(commands, id = None, recur_bool = None):
         command = commands[command_id]
         # if a unit is supporting
         if command.location != command.origin and command.convoy == False:
-            """
-            if command.convoy == False:
-                command_success = get_valid_support(commands, command)
-            else:
-                command_success = True
-            commands = get_command_strength(commands, command, command_success)
-            command.success(command_success)
-            """
             command_success = get_valid_support(commands, command)
-            #command.success(command_success)
-            #commands = get_command_strength(commands, command, command_success)
-        #else:
-            #command_success = get_convoy_dislodgement_outcome(command_id, command, commands)
-            #print(command_id, command_success)
-            #command.success(command_success)
-        #commands = get_command_strength(commands, command, command_success)
             command.success(command_success)
-        #print(command_id, command_success)
+    # get command strength from supports
     for command_id in commands:
         command = commands[command_id]
-        #command_success = command.succeed
         if command.location != command.origin and command.convoy == False:
             commands = get_command_strength(commands, command, command.succeed)
+    # determine any convoy dislodgements
     for command_id in commands:
         command = commands[command_id]
         if command.convoy == True:
@@ -251,13 +235,5 @@ def get_success_supports(commands, id = None, recur_bool = None):
                         if convoyed_army.origin == command.origin and convoyed_army.destination == command.destination:
                             convoyed_army.origin = convoyed_army.location
                             convoyed_army.destination = convoyed_army.location
-                            convoyed_army.legal = "False - invalid path move from dislodged convoy"
-                            
+                            convoyed_army.legal = "False - invalid path move from dislodged convoy"    
     return commands
-
-
-"""
-
-for convoys, i think i need to add if its a convoy boolean and if not then run the support functions
-
-"""
