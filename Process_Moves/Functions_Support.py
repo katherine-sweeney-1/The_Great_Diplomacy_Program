@@ -216,6 +216,7 @@ def get_success_supports(commands, id = None, recur_bool = None):
         command = commands[command_id]
         # if a unit is supporting
         if command.location != command.origin and command.convoy == False:
+            #print(command.unit.id, "yes")
             """
             if command.convoy == False:
                 command_success = get_valid_support(commands, command)

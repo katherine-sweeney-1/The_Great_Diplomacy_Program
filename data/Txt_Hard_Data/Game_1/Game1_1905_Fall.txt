@@ -10,7 +10,7 @@ F Hol S Kie  FAILS
 F Kie H  FAILS
 F NAO H  SUCCEEDS
 F NWG C Edi - Nwy  SUCCEEDS
-A Swe S Edi - Nwy
+A Swe S Edi - Nwy  FAILS
 
 
 FR

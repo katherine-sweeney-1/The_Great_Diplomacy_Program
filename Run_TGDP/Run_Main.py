@@ -49,11 +49,13 @@ def run_main_unit_testing(input_data):
         print(" ")
         count += 1
 
-run_main_unit_testing(input_data_8)
+run_main_unit_testing(input_data_6)
 
 """
 
-need to debug game 3 AU04 move for spring 1902
+Game 1 starts at year 1903
+
+Game 8b starts at year 1908
 
 
 """

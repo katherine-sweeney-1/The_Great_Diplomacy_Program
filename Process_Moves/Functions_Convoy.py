@@ -8,18 +8,13 @@ from Class_Sub_Node import Coastal_Node
 def filter_convoyer(command):
     # Convoy must have a different origin, location, and destination
     if command.location != command.origin and command.location != command.destination and command.origin != command.destination and command.unit.type == "fleet":
+        """
         # Unit convoying is a fleet and unit being convoyed is an army
         if command.origin.is_occupied.type == "army":
             if command.origin.node_type == "Coast" and command.destination.node_type == "Coast":
                 if command.location.node_type == "Sea":
                     # might need to move to the convoy path function
                     # issue here with double convoys
-                    """
-                    if command.location in command.origin.neighbors.values() or command.destination in command.origin.neighbors.values():
-                        command.legal = 1
-                    else:
-                        command.legal = "False - convoy is not neighbors with convoying unit"
-                    """
                     command.legal = 1
                 else:
                     command.legal = "False - convoy location is not a sea"
@@ -27,6 +22,16 @@ def filter_convoyer(command):
                 command.legal = "False - convoy is not between coasts"
         else:
             command.legal = "False - convoyed unit is not an army"
+        """
+        if command.origin.node_type == "Coast" and command.destination.node_type == "Coast":
+            if command.location.node_type == "Sea":
+                # might need to move to the convoy path function
+                # issue here with double convoys
+                command.legal = 1
+            else:
+                command.legal = "False - convoy location is not a sea"
+        else:
+            command.legal = "False - convoy is not between coasts"
     else:
         command.legal = command.legal
     return command
@@ -35,8 +40,6 @@ def filter_convoyed_army (command, commands):
     if command.location == command.origin and command.origin != command.destination and command.unit.type == "army":
         for convoyer_command_id in commands:
             convoyer_command = commands[convoyer_command_id]
-            #print(command.unit.id, command.origin.name, command.destination.name)
-            #print(convoyer_command.unit.id, convoyer_command.origin.name, convoyer_command.destination.name)
             if command != convoyer_command and command.origin == convoyer_command.origin and command.destination == convoyer_command.destination:
                 if convoyer_command.legal == convoyer_command.legal:
                     command.legal = 1
@@ -98,42 +101,56 @@ need to consider double convoys when either
 def filter_valid_convoy_paths(command, commands):
         convoying_commands = {}
         convoying_commands[command.unit.id] = command
-        for convoying_command_id in commands:
-            convoying_command = commands[convoying_command_id]
-            if convoying_command.convoy == True and convoying_command.origin == command.origin and convoying_command.destination == command.destination:
-                convoying_commands[convoying_command_id] = convoying_command
-        if len(convoying_commands) == 1:
-            if command.location in command.origin.neighbors.values() and command.location in command.destination.neighbors.values():
-                command.legal = 1
-        else:
-            convoy_path_length = len(convoying_commands)
-            convoy_path_count = 0
-            convoy_location_neighbor_boolean = False
-            convoy_destination_neighbor_boolean = True
-            for each_convoy_id in convoying_commands:
-                convoy_path_count += 1
-                each_convoy = convoying_commands[each_convoy_id]
-                if each_convoy.location in command.location.neighbors.values():
-                    convoy_location_neighbor_boolean = True
-                if each_convoy.location in command.destination.neighbors.values():
-                    convoy_destination_neighbor_boolean = True
-                for neighboring_convoy_id in convoying_commands:
-                    neighboring_convoy = convoying_commands[neighboring_convoy_id]
-                    if neighboring_convoy != each_convoy and neighboring_convoy.location in each_convoy.location.neighbors.values():
-                        command.legal = 1
+        # get corresponding army command
+        for convoyed_army_id in commands:
+            convoyed_army = commands[convoyed_army_id]
+            if convoyed_army.location.is_occupied.type == "army" and convoyed_army.legal == 1 and convoyed_army.origin == command.origin and convoyed_army.destination == command.destination:
+                for convoying_command_id in commands:
+                    convoying_command = commands[convoying_command_id]
+                    if convoying_command.convoy == True and convoying_command.origin == command.origin and convoying_command.destination == command.destination:
+                        convoying_commands[convoying_command_id] = convoying_command
+                if len(convoying_commands) == 1:
+                    if command.location in command.origin.neighbors.values() and command.location in command.destination.neighbors.values():
+                        convoyed_army.legal = 1
                     else:
-                        command.legal = "False - invalid convoy path"
-                        break
-                if command.legal == False:
-                    break
+                        
+                        convoyed_army.legal = "False - incomplete convoy path"
                 else:
-                    if convoy_path_count == convoy_path_length:
-                        if convoy_location_neighbor_boolean == True and convoy_destination_neighbor_boolean == True:
-                            command.legal = True
+                    convoy_path_length = len(convoying_commands)
+                    convoy_path_count = 0
+                    convoy_location_neighbor_boolean = False
+                    convoy_destination_neighbor_boolean = True
+                    for each_convoy_id in convoying_commands:
+                        convoy_path_count += 1
+                        each_convoy = convoying_commands[each_convoy_id]
+                        if each_convoy.location in command.location.neighbors.values():
+                            convoy_location_neighbor_boolean = True
+                        if each_convoy.location in command.destination.neighbors.values():
+                            convoy_destination_neighbor_boolean = True
+                        for neighboring_convoy_id in convoying_commands:
+                            neighboring_convoy = convoying_commands[neighboring_convoy_id]
+                            if neighboring_convoy != each_convoy and neighboring_convoy.location in each_convoy.location.neighbors.values():
+                                convoyed_army.legal = 1
+                            else:
+                                convoyed_army.legal = "False - invalid convoy path"
+                                break
+                        if convoyed_army.legal == False:
+                            break
                         else:
-                            command.legal = "False - no neighbor to convoy origin or destination"
-                    else:
-                        continue
+                            if convoy_path_count == convoy_path_length:
+                                if convoy_location_neighbor_boolean == True and convoy_destination_neighbor_boolean == True:
+                                    convoyed_army.legal = True
+                                else:
+                                    convoyed_army.legal = "False - no neighbor to convoy origin or destination"
+                            else:
+                                continue
+                        if convoyed_army.legal == False:
+                            break
+                    if convoyed_army.legal == False:
+                        break
+                
+            else:
+                continue
         return command
                 
 
