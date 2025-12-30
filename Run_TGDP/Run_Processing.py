@@ -16,11 +16,6 @@ def run_processing(commands, commanders, nodes, units):
     valid_commands = filter_convoys(valid_commands)
     valid_commands = get_success_supports(valid_commands)
     valid_commands = get_success_attacks(valid_commands)
-    for command_id in commands:
-        if commands[command_id].succeed == commands[command_id].predet_outcome and commands[command_id].legal == 1:
-           print(command_id, "Correct outcome", commands[command_id].succeed)
-        else:
-            print("uh oh", command_id, commands[command_id].strength, commands[command_id].legal, commands[command_id].succeed)
     nodes, units = process_outcomes(valid_commands, nodes, units)
     return nodes, units, valid_commands
 

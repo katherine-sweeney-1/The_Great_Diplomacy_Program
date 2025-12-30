@@ -14,7 +14,7 @@ data_fleet_coastal = "data/Data_Ter_Fleet.csv"
 commands_data = "data/Txt_Hard_Data/Game2_1906_Fall.txt"
 data_fleet_special_coastal = "data/Data_Ter_Fleet_Special_Coasts.csv"
 
-game_and_turn = "game1_1903_fall"
+#game_and_turn = "game1_1903_fall"
 
 def run_main_original():
     cmdrs_data_list = cmdrs_3
@@ -42,11 +42,19 @@ def run_main_unit_testing(input_data):
             game_season = "Spring"
         if game_season != "Spring":
             game_season = "Fall"
+        game_season = game_season.lower()
+        game_and_turn = "game1_" + str(game_year) + "_" + game_season
+        print(game_and_turn)
         commanders_data = input_data[commands_data]
         parsed_cmds, parsed_units = parse_commands_and_units(commands_data)
         commands, commanders, nodes, units = create_objects(data_nodes, data_coastal, data_fleet_coastal, data_fleet_special_coastal, commanders_data, parsed_units, parsed_cmds)
         print("Game 2 {} {}".format(game_year, game_season))
         nodes, units, processed_commands = run_processing(commands, commanders, nodes, units)
+        for command_id in commands:
+            if commands[command_id].succeed == commands[command_id].predet_outcome and commands[command_id].legal == 1:
+                print(command_id, "Correct outcome", commands[command_id].succeed)
+            else:
+                print("uh oh", command_id, commands[command_id].strength, commands[command_id].legal, commands[command_id].succeed)
         db_table = yield_table(processed_commands, game_and_turn)
         print(" ")
         count += 1
