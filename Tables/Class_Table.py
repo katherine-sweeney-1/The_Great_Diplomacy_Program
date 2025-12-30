@@ -31,6 +31,18 @@ class Table ():
             #self.db.store_result()
             return self.db
 
+    def delete_previous_data(self):
+        self.db.query("""USE tgdp_testing_1;""")
+        self.db.query("""
+                DELETE from game1_1903_fall;
+            """
+        )
+        #self.db.commit()
+        return self.db
+         
+
+
+
     def save(self, cmds):
         sql = """USE tgdp_testing_1;"""
         self.db.query(sql)
@@ -38,7 +50,7 @@ class Table ():
             DELETE FROM game2_1903_fall;
             """
         sql = """
-            DELETE FROm game1_1901_fall;
+            DELETE FROM game1_1901_fall;
             """
         self.db.query(sql)
         for cmd_string in cmds:
