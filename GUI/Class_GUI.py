@@ -67,7 +67,7 @@ class Map_Image ():
         return image
 
     # working on this
-    def insert_map_jpg_image(self, json_image_array):
+    def insert_map_jpg_image(self, image_data):
         sql = """USE tgdp_map_images"""
         self.db.query(sql)
         sql = """
