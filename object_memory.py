@@ -58,7 +58,7 @@ Invalid Move Affected Outcomes
 
         1901 Spring: RU03
 
-        1902 Fall: TU01
+        1902 Spring: TU01
 
         1903 Fall: GE02
 
@@ -99,6 +99,10 @@ Invalid Move Affected Outcomes
         1904 Fall: UK01
 
         1904 Fall: FR03
+
+        1905 Spring: UK02 => invalid convoy path (hel supports lon to hel)
+
+        1905 Spring: UK04 => army has incomplete convoy path
 
     Game 5
 
@@ -146,6 +150,8 @@ Invalid Move Affected Outcomes
 
         1905 Spring: IT02
 
+        1905 Fall: UK07 => army has invalid convoy move path
+
         1905 Fall: IT03
 
         1905 Fall: IT04
@@ -157,6 +163,8 @@ Invalid Move Affected Outcomes
         1907 Fall: FR10
 
         1908 Fall: TU01
+
+        1909 Spring: UK03 => army has invalid convoy move path
 
         1909 Fall: FR12
 
