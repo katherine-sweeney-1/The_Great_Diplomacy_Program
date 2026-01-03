@@ -6,8 +6,8 @@ import sys
 main_window = tk.Tk()
 
 main_window.title('TGDP GUI')
-#main_window.geometry("500x500")
-main_window.minsize(400, 400)
+main_window.geometry("600x600")
+main_window.minsize(600, 600)
 main_window.maxsize(1000, 1000)
 # Close window button
 # Button syntax: w = tk.Button (master, option = value)
@@ -16,10 +16,11 @@ button.pack()
 
 
 # image
-map_pil_image = Image.open("kamrans_map_png.png")
-map_pil_image = map_image.resize((300, 300), Image.Resampling.LANCZOS)
+map_pil_image = Image.open("GUI/kamrans_map_png.png")
+#map_pil_image = map_pil_image.thumbnail ((500, 500), Image.LANCZOS)
+map_pil_image.thumbnail((900, 900), Image.Resampling.LANCZOS)
 # convert pil image to tkinter image object
-map_image = ImageTk.Photoimage(map_pil_image)
+map_image = ImageTk.PhotoImage(map_pil_image)
 # make image label
 map_label = tk.Label(main_window, image = map_image)
 map_label.pack (pady = 10)
