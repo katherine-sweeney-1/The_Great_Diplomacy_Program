@@ -28,25 +28,14 @@ map_label.pack (pady = 10)
 
 # Display text or images
 # Display box syntax: w = tk.Label (master, option = value)
-# display_box = tk.Label(main_window, text = "TGDP Display Box")
-# display_box.pack()
-
-"""
-# Listbox
-# Displays list of items from which a user can select one or more
-# Listbox syntax: w = Listbox (master, option = value)
-listbox = tk.Listbox(main_window)
-listbox.insert (1, "Edi")
-listbox.insert (2, "Lvp")
-listbox.insert (3, "Yor")
-listbox.pack()
-"""
+display_box = tk.Label(main_window, text = "TGDP Display Box")
+display_box.pack()
 
 # Scroll bar
 scrollbar = tk.Scrollbar(main_window)
 scrollbar.pack(side = 'right', fill = 'y')
 
-# Listbox
+# Listbox 
 # Displays list of items from which a user can select one or more
 # Listbox syntax: w = Listbox (master, option = value)
 listbox = tk.Listbox(main_window, yscrollcommand = scrollbar.set)
