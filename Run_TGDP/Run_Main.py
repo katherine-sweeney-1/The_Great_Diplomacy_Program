@@ -38,10 +38,18 @@ def run_main_unit_testing(input_data):
         game_year = 1903 + count/2
         game_year = int(game_year)
         game_season = count % 2
+        
+        match game_season:
+            case 0:
+                game_season = "Spring"
+            case 1:
+                game_season = "Fall"
+        """
         if game_season == 0:
             game_season = "Spring"
         if game_season != "Spring":
             game_season = "Fall"
+        """
         game_season = game_season.lower()
         game_and_turn = "game1_" + str(game_year) + "_" + game_season
         print(game_and_turn)
@@ -59,7 +67,7 @@ def run_main_unit_testing(input_data):
         print(" ")
         count += 1
 
-run_main_unit_testing(input_data_1)
+#run_main_unit_testing(input_data_1)
 
 """
 
