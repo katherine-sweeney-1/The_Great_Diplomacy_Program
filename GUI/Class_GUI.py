@@ -36,21 +36,39 @@ class Map_Image ():
         #return self.decoded_image_rgb
         # b64decode gives the same output as the image data before it's encoded
     def open_jpg_image(self, image_path):
-        with open (image_path, "rb") as image_file:
-            image_data = image_file.read()
-            print(type(image_data))
+        with open (image_path, "rb") as f_in, open("Map_Data.json", "w") as outfile:
+            image_data = base64.b64encode(f_in.read())
+            #print(type(image_data))
             #print(image_data)
             #image_bytes = image_data.encode("utf-8")
             #image_b64_bytes = base64.b64encode(image_bytes)
             image_bytes = image_data
-            print("check")
-            print(type(image_bytes))
+            #print("check")
+            #print(type(image_bytes))
+            #print(image_bytes)
+            #print(image_bytes)
+            image_json = image_data.decode('utf-8')
+            #image_json = list(image_json)
+            #image_json = json.loads(image_bytes)
+            #print("json", type(image_json))
+            #print(image_json)
+            #image_dictionary = '{"filename": "TGDP Europe Map", "base64 string": {}}'.format(image_json)
+            #image_json = json.loads(image_dictionary)4:
+            json.dump({"image": f"data:image/png;base64,{image_json}"}, outfile)
+            print(outfile)
+            print(type(outfile))
+            #print(image_json)
+            #print("image json type", type(image_json))
+            #print(image_json)
             #encoded_string = base64.b64encode(image_data)
             #decoded_string = base64.b64decode(encoded_string)
             #print(decoded_string)
-            self.encoded_string = image_bytes
+            #self.encoded_string = image_bytes
+
             #self.encoded_string = self.encoded_string.
-        return self.encoded_string
+            self.outfile = outfile
+        #print(self.json_formatted_data)
+        return self.outfile
 
     def create_image_from_data(self, image_bytes):
         #print(type(encoded_string))
@@ -92,5 +110,5 @@ class Map_Image ():
 image_path = "GUI/kamrans_map_jpg.jpg"
 tgdp_europe_map = Map_Image()
 image_data = tgdp_europe_map.open_jpg_image(image_path)
-convert_data_to_image = tgdp_europe_map.create_image_from_data(image_data)
+#convert_data_to_image = tgdp_europe_map.create_image_from_data(image_data)
 #print(image_data)
