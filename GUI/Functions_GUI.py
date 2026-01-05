@@ -15,7 +15,6 @@ main_window.maxsize(1000, 1000)
 button = tk.Button(main_window, text = "Close", width = 25, command = main_window.destroy)
 button.pack()
 
-
 # image
 map_image = Image.open("GUI/kamrans_map_png.png")
 #map_pil_image.thumbnail((900, 900), Image.Resampling.LANCZOS)
@@ -30,15 +29,7 @@ drawing_image.line(coordinates, fill = "red")
 # convert pil image to tkinter image object
 map_image = ImageTk.PhotoImage(map_image)
 
-"""
-# Canvas to display arrows
-canvas = tk.Canvas(main_window, width = 200, height = 200)
-line = canvas.create_line(0, 0, 200, 200, fill = "green")
-canvas.pack()
-"""
-
 # make image label
-
 map_label = tk.Label(main_window, image = map_image)
 map_label.pack (pady = 10)
 
@@ -50,11 +41,19 @@ display_box.pack()
 # Scroll bar
 scrollbar = tk.Scrollbar(main_window)
 scrollbar.pack(side = 'right', fill = 'y')
-
 # Listbox 
 # Displays list of items from which a user can select one or more
 # Listbox syntax: w = Listbox (master, option = value)
 listbox = tk.Listbox(main_window, yscrollcommand = scrollbar.set)
+territory_file = "GUI/Data_Main_Names.csv"
+opened_file = open(territory_file)
+count = 1
+for entry in opened_file:
+    #print(entry)
+    listbox.insert(count, str(entry))
+    count += 1
+listbox.pack()
+"""
 listbox.insert (1, "Edi")
 listbox.insert (2, "Lvp")
 listbox.insert (3, "Yor")
@@ -67,6 +66,7 @@ listbox.insert (9, "Fin")
 listbox.insert (10, "Swe")
 listbox.insert (11, "Den")
 listbox.pack()
+"""
 
 
 scrollbar.config(command = listbox.yview)
