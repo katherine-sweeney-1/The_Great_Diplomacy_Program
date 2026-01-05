@@ -55,8 +55,8 @@ class Map_Image ():
             #image_dictionary = '{"filename": "TGDP Europe Map", "base64 string": {}}'.format(image_json)
             #image_json = json.loads(image_dictionary)4:
             json.dump({"image": f"data:image/png;base64,{image_json}"}, outfile)
-            print(outfile)
-            print(type(outfile))
+            #print(outfile)
+            #print(type(outfile))
             #print(image_json)
             #print("image json type", type(image_json))
             #print(image_json)
@@ -80,8 +80,8 @@ class Map_Image ():
         print(decoded_string)
         """
         image = Image.open(io.BytesIO(image_bytes))
-        print(image)
-        image.save('tgdp_output.png')
+        #print(image)
+        #image.save('tgdp_output.png')
         return image
 
     # working on this
