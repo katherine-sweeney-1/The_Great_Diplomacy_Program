@@ -1,5 +1,5 @@
 import tkinter as tk
-from PIL import Image, ImageTk
+from PIL import Image, ImageTk, ImageDraw
 import sys
 
 
@@ -9,6 +9,7 @@ main_window.title('TGDP GUI')
 main_window.geometry("600x600")
 main_window.minsize(600, 600)
 main_window.maxsize(1000, 1000)
+
 # Close window button
 # Button syntax: w = tk.Button (master, option = value)
 button = tk.Button(main_window, text = "Close", width = 25, command = main_window.destroy)
@@ -16,15 +17,30 @@ button.pack()
 
 
 # image
-map_pil_image = Image.open("GUI/kamrans_map_png.png")
-#map_pil_image = map_pil_image.thumbnail ((500, 500), Image.LANCZOS)
-map_pil_image.thumbnail((900, 900), Image.Resampling.LANCZOS)
+map_image = Image.open("GUI/kamrans_map_png.png")
+#map_pil_image.thumbnail((900, 900), Image.Resampling.LANCZOS)
+
+
+
+# draw a line on map 
+drawing_image = ImageDraw.Draw(map_image)
+coordinates = [(0,0), (200, 200)]
+drawing_image.line(coordinates, fill = "red")
+
 # convert pil image to tkinter image object
-map_image = ImageTk.PhotoImage(map_pil_image)
+map_image = ImageTk.PhotoImage(map_image)
+
+"""
+# Canvas to display arrows
+canvas = tk.Canvas(main_window, width = 200, height = 200)
+line = canvas.create_line(0, 0, 200, 200, fill = "green")
+canvas.pack()
+"""
+
 # make image label
+
 map_label = tk.Label(main_window, image = map_image)
 map_label.pack (pady = 10)
-
 
 # Display text or images
 # Display box syntax: w = tk.Label (master, option = value)
@@ -52,9 +68,7 @@ listbox.insert (10, "Swe")
 listbox.insert (11, "Den")
 listbox.pack()
 
-scrollbar.config(command = listbox.yview)
 
-# keep a reference to the image object
-# "this prevents the image rom from being garbage collected by python"
+scrollbar.config(command = listbox.yview)
 map_label.image = map_image
 main_window.mainloop()
