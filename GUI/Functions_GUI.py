@@ -16,8 +16,35 @@ def get_coordinates(click):
     return x_coordinate, y_coordinate
 
 
-main_window = tk.Tk()
+def save_coordinates(coordinates_file, territory_data_file):
+    with open(territory_data_file) as file_input, open(coordinates_file, "w") as file_output:
+        for line in file_input:
+            print("test", line, file = file_output)
+    return coordinates_file
 
+def create_territory_listbox(main_window, territory_file):
+    # Listbox 
+    listbox = tk.Listbox(main_window, yscrollcommand = scrollbar.set)
+    opened_file = open(territory_file)
+    count = 1
+    for entry in opened_file:
+        listbox.insert(count, str(entry)[0:3])
+        count += 1
+        
+    listbox.place(x=700, y=700)
+    listbox.pack()
+    return listbox
+
+# draw a line on map
+def draw_line(map_image): 
+    drawing_image = ImageDraw.Draw(map_image)
+    coordinates = [(0,0), (200, 200)]
+    drawing_image.line(coordinates, fill = "red")
+
+territory_file = "GUI/Data_Main_Names.csv"
+coordinates_file = "GUI/Territory_Main_Coordinates.txt"
+
+main_window = tk.Tk()
 main_window.title('TGDP GUI')
 main_window.geometry("1000x1000")
 #main_window.minsize(1000, 1000)
@@ -28,26 +55,17 @@ main_window.geometry("1000x1000")
 button = tk.Button(main_window, text = "Close", width = 25, command = main_window.destroy)
 button.pack()
 
-
 # image
 map_image = Image.open("GUI/kamrans_map_png.png")
 map_width = map_image.width
 map_height = map_image.height
 map_image.thumbnail((map_width, map_height), Image.Resampling.LANCZOS)
 
-
-
 # create canvas to click on 
 canvas = tk.Canvas(main_window, width = map_width, height = map_height, cursor = "cross")
 canvas.pack(fill = tk.BOTH)
 
-"""
-# draw a line on map 
-drawing_image = ImageDraw.Draw(map_image)
-coordinates = [(0,0), (200, 200)]
-drawing_image.line(coordinates, fill = "red")
-"""
-
+#draw_line(map_image)
 
 # convert pil image to tkinter image object
 map_image = ImageTk.PhotoImage(map_image)
@@ -70,20 +88,21 @@ scrollbar = tk.Scrollbar(main_window)
 scrollbar.pack(side = 'right', fill = 'y')
 
 
-# Listbox 
 listbox = tk.Listbox(main_window, yscrollcommand = scrollbar.set)
-territory_file = "GUI/Data_Main_Names.csv"
 opened_file = open(territory_file)
 count = 1
 for entry in opened_file:
     listbox.insert(count, str(entry)[0:3])
-    count += 1
+    count += 1  
 listbox.place(x=700, y=700)
 listbox.pack()
 
-
 # bind image for clicks
 main_window.bind("<Button-1>", get_coordinates)
-#scrollbar.config(command = listbox.yview)
+# create listbox
+#create_territory_listbox(main_window, territory_file)
+# print file with coordinates
+save_coordinates(coordinates_file, territory_file)
+scrollbar.config(command = listbox.yview)
 canvas.image = map_image
 main_window.mainloop()
