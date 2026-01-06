@@ -66,6 +66,8 @@ def run_main_unit_testing(input_data):
         db_table = yield_table(processed_commands, game_and_turn)
         print(" ")
         count += 1
+        return commands
+
 
 #run_main_unit_testing(input_data_1)
 
