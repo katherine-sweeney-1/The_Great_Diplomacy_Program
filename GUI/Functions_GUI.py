@@ -1,12 +1,19 @@
 import tkinter as tk
 from PIL import Image, ImageTk, ImageDraw
 import cv2
+
 # import commands to draw arrows
 """
 import sys
 sys.path.append("../The_Great_Diplomacy_Program/Run_TGDP")
 from Main import commands
 """
+
+def get_coordinates(click):
+    x_coordinate = click.x
+    y_coordinate = click.y
+    print(x_coordinate, y_coordinate)
+    return x_coordinate, y_coordinate
 
 
 main_window = tk.Tk()
@@ -53,7 +60,7 @@ canvas.create_image(0, 0, anchor = tk.NW, image = map_image)
 map_label = tk.Label(main_window, image = map_image)
 map_label.pack (pady = 10)
 """
-"""
+
 # Display text or images
 display_box = tk.Label(main_window, text = "TGDP Display Box")
 display_box.pack()
@@ -73,9 +80,10 @@ for entry in opened_file:
     count += 1
 listbox.place(x=700, y=700)
 listbox.pack()
-"""
 
 
+# bind image for clicks
+main_window.bind("<Button-1>", get_coordinates)
 #scrollbar.config(command = listbox.yview)
 canvas.image = map_image
 main_window.mainloop()
