@@ -9,18 +9,32 @@ sys.path.append("../The_Great_Diplomacy_Program/Run_TGDP")
 from Main import commands
 """
 
+coordinates = []
+territory_file = "GUI/Data_Main_Names.csv"
+coordinates_file = "GUI/Territory_Main_Coordinates.txt"
 def get_coordinates(click):
-    x_coordinate = click.x
-    y_coordinate = click.y
-    print(x_coordinate, y_coordinate)
-    return x_coordinate, y_coordinate
+    if click:
+        x_coordinate = click.x
+        y_coordinate = click.y
+        coordinate = (x_coordinate, y_coordinate)
+        coordinates.append(coordinate)
+        #print(x_coordinate, y_coordinate)
+        #print("Coordinates", coordinates)
+        write_coordinates_file(territory_file, coordinates_file)
+    #print(x_coordinate, y_coordinate)
 
-
-def save_coordinates(coordinates_file, territory_data_file):
-    with open(territory_data_file) as file_input, open(coordinates_file, "w") as file_output:
+def write_coordinates_file(territory_file, coordinates_file):
+    with open(territory_file, "r") as file_input, open(coordinates_file, "a") as file_output:
+        count = len(coordinates)
+        #print(territory_file[count])
+        territory_file_count = 0
         for line in file_input:
-            print("test", line, file = file_output)
-    return coordinates_file
+            if territory_file_count == count - 1:
+                print(line)
+                print("count", count)
+                
+                print(coordinates[count - 1], line, file = file_output)
+            territory_file_count += 1
 
 def create_territory_listbox(main_window, territory_file):
     # Listbox 
@@ -30,7 +44,6 @@ def create_territory_listbox(main_window, territory_file):
     for entry in opened_file:
         listbox.insert(count, str(entry)[0:3])
         count += 1
-        
     listbox.place(x=700, y=700)
     listbox.pack()
     return listbox
@@ -87,22 +100,11 @@ display_box.pack()
 scrollbar = tk.Scrollbar(main_window)
 scrollbar.pack(side = 'right', fill = 'y')
 
-
-listbox = tk.Listbox(main_window, yscrollcommand = scrollbar.set)
-opened_file = open(territory_file)
-count = 1
-for entry in opened_file:
-    listbox.insert(count, str(entry)[0:3])
-    count += 1  
-listbox.place(x=700, y=700)
-listbox.pack()
-
 # bind image for clicks
-main_window.bind("<Button-1>", get_coordinates)
+coords = main_window.bind("<Button-1>", get_coordinates)
 # create listbox
-#create_territory_listbox(main_window, territory_file)
-# print file with coordinates
-save_coordinates(coordinates_file, territory_file)
+listbox = create_territory_listbox(main_window, territory_file)
+#write_coordinates_file(territory_file, coordinates_file)
 scrollbar.config(command = listbox.yview)
 canvas.image = map_image
 main_window.mainloop()

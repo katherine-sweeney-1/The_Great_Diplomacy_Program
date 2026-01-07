@@ -1,149 +1,18 @@
-test Nwg
+(89, 68) Nao
 
-test Nao
+(271, 179) Cly
 
-test Cly
+(507, 330) Edi
 
-test Edi
+(135, 76) Cly
 
-test Lvp
+(286, 177) Edi
 
-test Yor
+(564, 331) Lvp
 
-test Wal
+(61, 38) Nwg
 
-test Lon
+(290, 178) Nao
 
-test Nth
+(524, 333) Cly
 
-test Bar
-
-test Nwy
-
-test Ska
-
-test Iri
-
-test Eng
-
-test Fin
-
-test Bot
-
-test Swe
-
-test Den
-
-test Bal
-
-test Hel
-
-test Hol
-
-test Bel
-
-test Ruh
-
-test Kie
-
-test Ber
-
-test Sil
-
-test Mun
-
-test Pru
-
-test Stp
-
-test Lvn
-
-test Mos
-
-test War
-
-test Ukr
-
-test Sev
-
-test Pic
-
-test Bre
-
-test Par
-
-test Bur
-
-test Gas
-
-test Mar
-
-test Mao
-
-test Spa
-
-test Por
-
-test Naf
-
-test Tun
-
-test Wes
-
-test Lyo
-
-test Tys
-
-test Gal
-
-test Boh
-
-test Tyr
-
-test Vie
-
-test Tri
-
-test Bud
-
-test Pie
-
-test Tus
-
-test Ven
-
-test Rom
-
-test Apu
-
-test Nap
-
-test Adr
-
-test Ion
-
-test Alb
-
-test Ser
-
-test Rum
-
-test Bul
-
-test Gre
-
-test Bla
-
-test Aeg
-
-test Eas
-
-test Con
-
-test Ank
-
-test Arm
-
-test Smy
-
-test Syr
