@@ -30,10 +30,11 @@ def write_coordinates_file(territory_file, coordinates_file):
         territory_file_count = 0
         for line in file_input:
             if territory_file_count == count - 1:
-                print(line)
-                print("count", count)
-                
-                print(coordinates[count - 1], line, file = file_output)
+                #print(line)
+                #print("count", count)
+                print("current territory is", line)
+                print("click the next territory", next(file_input))
+                print(line[0:3], coordinates[count - 1], file = file_output)
             territory_file_count += 1
 
 def create_territory_listbox(main_window, territory_file):
