@@ -32,26 +32,21 @@ def run_main_testing():
     #db_table = yield_table(processed_commands)
 
 
-def run_main_unit_testing(input_data):
+def run_main_unit_testing(input_data, game_number_string):
     count = 0
+    turns_objects = {}
     for commands_data in input_data:
-        game_year = 1903 + count/2
+        objects = {}
+        game_year = 1908 + count/2
         game_year = int(game_year)
         game_season = count % 2
-        
         match game_season:
             case 0:
                 game_season = "Spring"
             case 1:
                 game_season = "Fall"
-        """
-        if game_season == 0:
-            game_season = "Spring"
-        if game_season != "Spring":
-            game_season = "Fall"
-        """
         game_season = game_season.lower()
-        game_and_turn = "game1_" + str(game_year) + "_" + game_season
+        game_and_turn = str(game_number_string) + str(game_year) + "_" + game_season
         print(game_and_turn)
         commanders_data = input_data[commands_data]
         parsed_cmds, parsed_units = parse_commands_and_units(commands_data)
@@ -66,7 +61,14 @@ def run_main_unit_testing(input_data):
         db_table = yield_table(processed_commands, game_and_turn)
         print(" ")
         count += 1
-        return commands
+        objects["Commands"] = commands
+        objects["Commanders"] = commanders
+        objects["Nodes"] = nodes
+        objects["Units"] = units
+        turns_objects[game_and_turn] = objects
+        #print(turns_objects)
+    return turns_objects
+        #return commands, commanders, nodes, units
 
 
 #run_main_unit_testing(input_data_1)
