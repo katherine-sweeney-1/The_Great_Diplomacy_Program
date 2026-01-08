@@ -16,7 +16,7 @@ def get_coordinates(click):
     if click:
         x_coordinate = click.x
         y_coordinate = click.y
-        coordinate = (x_coordinate, y_coordinate)
+        coordinate = str(x_coordinate) + " " + str(y_coordinate)
         coordinates.append(coordinate)
         #print(x_coordinate, y_coordinate)
         #print("Coordinates", coordinates)
