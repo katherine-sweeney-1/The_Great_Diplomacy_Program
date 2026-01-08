@@ -1,75 +1,75 @@
-Territory (Abbr),Territory Name,Territory Type,Adjacent Territories,Country,Dot?,Home Supply Center?
-Nwg,Norwegian Sea,Sea,Nao Cly Edi Nth Nwy Bar,Neutral,FALSE,FALSE
-Nao,North Atlantic Ocean,Sea,Mao Iri Lvp Cly Nwg,Neutral,FALSE,FALSE
-Cly,Clyde,Coast,Nap Nwg Lvp Edi,Eng,FALSE,FALSE
-Edi,Edinburgh,Coast,Cly Lvp Nth Nwg Yor,Eng,TRUE,Eng
-Lvp,Liverpool,Coast,Nap Cly Edi Yor Wal Iri Nao,Eng,TRUE,Eng
-Yor,Yorkshire,Coast,Edi Lon Lvp Nth Wal,Eng,FALSE,FALSE
-Wal,Wales,Coast,Eng Iri Lon Lvp Yor,Eng,FALSE,FALSE
-Lon,London,Coast,Eng Nth Wal Yor,Eng,TRUE,Eng
-Nth,North Sea,Sea,Nwg Edi Yor Lon Eng Bel Hol Hel Den Ska Nwy,Neutral,FALSE,FALSE
-Bar,Barents Sea,Sea,Nwg Nwy Stp,Neutral,FALSE,FALSE
-Nwy,Norway,Coast,Bar Fin Nth Nwg Ska Stp Swe,Neutral,FALSE,FALSE
-Ska,Skagerrak,Sea,Den Nth Nwy Swe,Neutral,FALSE,FALSE
-Iri,Irish Sea,Sea,Nao Eng Mao Nap Lvp Wal,Neutral,FALSE,FALSE
-Eng,English Channel,Sea,Bel Bre Iri Lon Mao Nth Pic Wal,Neutral,FALSE,FALSE
-Fin,Finland,Coast,Bot Nwy Stp Swe,Neutral,FALSE,FALSE
-Bot,Gulf of Bothnia,Sea,Bal Fin Lvn Stp Swe,Neutral,FALSE,FALSE
-Swe,Sweden,Coast,Bal Bot Den Fin Nwy Ska,Neutral,TRUE,FALSE
-Den,Denmark,Coast,Bal Hel Kie Nth Ska Swe,Neutral,TRUE,FALSE
-Bal,Baltic Sea,Sea,Ber Bot Den Kie Lvn Pru Swe,Neutral,FALSE,FALSE
-Hel,Helgoland,Sea,Den Nth Hol Kie,Neutral,FALSE,FALSE
-Hol,Holland,Coast,Hel Nth Bel Ruh Kie,Neutral,TRUE,FALSE
-Bel,Belgium,Coast,Nth Eng Pic Bur Ruh Hol,Neutral,TRUE,FALSE
-Ruh,Ruhr,Land,Hol Bel Bur Mun Kie,Ger,FALSE,FALSE
-Kie,Kiel,Coast,Ruh Hol Hel Den Bal Ber Mun,Ger,TRUE,Ger
-Ber,Berlin,Coast,Bal Pru Sil Mun Kie,Ger,TRUE,Ger
-Sil,Silesia,Land,War Gal Boh Mun Ber Pru,Ger,FALSE,FALSE
-Mun,Munich,Land,Ruh Kie Ber Sil Boh Tyr Bur,Ger,TRUE,Ger
-Pru,Prussia,Coast,Bal Lvn War Sil Ber,Ger,FALSE,FALSE
-Stp,St. Petersburg,Coast,Bar Fin Nwy Bot Lvn Mos,Rus,TRUE,Rus
-Lvn,Livonia,Coast,Stp Bot Bal Pru War Mos,Rus,FALSE,FALSE
-Mos,Moscow,Land,Stp Lvn War Ukr Sev,Rus,TRUE,Rus
-War,Warsaw,Land,Lvn Mos Ukr Gal Sil Pru,Rus,TRUE,Rus
-Ukr,Ukraine,Land,Mos Sev Rum Gal War,Rus,FALSE,FALSE
-Sev,Sevastopol,Coast,Mos Ukr Rum Arm Bla,Rus,TRUE,Rus
-Pic,Picardy,Coast,Eng Bel Bur Par Bre,Fra,FALSE,FALSE
-Bre,Brest,Coast,Eng Pic Par Gas Mao,Fra,TRUE,Fra
-Par,Paris,Land,Bre Pic Bur Gas,Fra,TRUE,Fra
-Bur,Burgundy,Land,Bel Ruh Mun Mar Gas Par Pic
-Gas,Gascony,Coast,Bre Par Bur Mar Spa Mao
-Mar,Marseilles,Coast,Gas Bur Pie Lyo Spa
-Mao,Mid-Atlantic Ocean,Sea,Nao Iri Eng Bre Gas Spa Por Wes Naf
-Spa,Spain,Coast,Gas Mao Por Wes Lyo Mar
-Por,Portugal,Coast,Mao Spa
-Naf,North Africa,Coast,Mao Wes Tun
-Tun,Tunisia,Coast,Naf Wes Tys Ion
-Wes,Western Mediterranean,Sea,Mao Spa Lyo Tys Tun Naf
-Lyo,Gulf of Lyon,Sea,Spa Mar Pie Tus Tys Wes
-Tys,Tyrrhenian Sea,Sea,Wes Lyo Tus Rom Nap Ion Tun
-Gal,Galicia,Land,War Ukr Rum Bud Vie Boh Sil
-Boh,Bohemia,Land,Mun Sil Gal Vie Tyr
-Tyr,Tyrolia,Land,Mun Boh Vie Tri Ven Pie
-Vie,Boh Gal Bud Tri Tyr
-Tri,Tyr Vie Bud Ser Alb Adr Ven
-Bud,Tri Vie Gal Rum Ser
-Pie,Mar Tyr Ven Tus Lyo
-Tus,Pie Ven Rom Tys Lyo
-Ven,Tyr Tri Adr Apu Rom Tus Pie
-Apu,Adr Ion Nap Rom Ven
-Nap, Rom Apu Ion Tys
-Adr,Tri Alb Ion Apu Ven
-Ion,Tun Tys Nap Apu Adr Alb Gre Aeg Eas
-Alb,Tri Ser Gre Ion Adr
-Ser,Tri Bud Rum Bul Gre Alb
-Rum,Bud Gal Ukr Sev Bla Bul Ser
-Bul,Rum Bla Con Ser Aeg Gre
-Gre,Alb Ser Bul Aeg Ion
-Bla,Bul Rum Arm Ank Con Sev
-Aeg,Gre Bul Con Smy Eas Ion
-Eas,Ion Aeg Smy Syr
-Con,Bul Bla Ank Smy Aeg
-Ank,Bla Arm Smy Con
-Arm,Sev Bla Ank Smy Syr
-Smy,Con Ank Arm Syr Eas Aeg
-Syr,Eas Smy Arm,
+Nwg {'Nao': '(79, 97)', 'Cly': '(163, 129)', 'Edi': '(175, 126)', 'Nth': '(217, 149)', 'Nwy': '(277, 110)', 'Bar': '(403, 23)'}
+Nao {'Mao': '(54, 246)', 'Iri': '(104, 184)', 'Lvp': '(166, 157)', 'Cly': '(163, 129)', 'Nwg': '(234, 49)'}
+Cly {'Nap': '(284, 346)', 'Nwg': '(234, 49)', 'Lvp': '(166, 157)', 'Edi': '(175, 126)'}
+Edi {'Cly': '(163, 129)', 'Lvp': '(166, 157)', 'Nth': '(217, 149)', 'Nwg': '(234, 49)', 'Yor': '(179, 160)'}
+Lvp {'Nap': '(284, 346)', 'Cly': '(163, 129)', 'Edi': '(175, 126)', 'Yor': '(179, 160)', 'Wal': '(156, 181)', 'Iri': '(104, 184)', 'Nao': '(79, 97)'}
+Yor {'Edi': '(175, 126)', 'Lon': '(180, 179)', 'Lvp': '(166, 157)', 'Nth': '(217, 149)', 'Wal': '(156, 181)'}
+Wal {'Eng': '(147, 204)', 'Iri': '(104, 184)', 'Lon': '(180, 179)', 'Lvp': '(166, 157)', 'Yor': '(179, 160)'}
+Lon {'Eng': '(147, 204)', 'Nth': '(217, 149)', 'Wal': '(156, 181)', 'Yor': '(179, 160)'}
+Nth {'Nwg': '(234, 49)', 'Edi': '(175, 126)', 'Yor': '(179, 160)', 'Lon': '(180, 179)', 'Eng': '(147, 204)', 'Bel': '(205, 194)', 'Hol': '(226, 185)', 'Hel': '(245, 160)', 'Den': '(283, 163)', 'Ska': '(281, 141)', 'Nwy': '(277, 110)'}
+Bar {'Nwg': '(234, 49)', 'Nwy': '(277, 110)', 'Stp': '(410, 126)'}
+Nwy {'Bar': '(403, 23)', 'Fin': '(374, 104)', 'Nth': '(217, 149)', 'Nwg': '(234, 49)', 'Ska': '(281, 141)', 'Stp': '(410, 126)', 'Swe': '(319, 118)'}
+Ska {'Den': '(283, 163)', 'Nth': '(217, 149)', 'Nwy': '(277, 110)', 'Swe': '(319, 118)'}
+Iri {'Nao': '(79, 97)', 'Eng': '(147, 204)', 'Mao': '(54, 246)', 'Nap': '(284, 346)', 'Lvp': '(166, 157)', 'Wal': '(156, 181)'}
+Eng {'Bel': '(205, 194)', 'Bre': '(125, 211)', 'Iri': '(104, 184)', 'Lon': '(180, 179)', 'Mao': '(54, 246)', 'Nth': '(217, 149)', 'Pic': '(180, 214)', 'Wal': '(156, 181)'}
+Fin {'Bot': '(342, 139)', 'Nwy': '(277, 110)', 'Stp': '(410, 126)', 'Swe': '(319, 118)'}
+Bot {'Bal': '(309, 173)', 'Fin': '(374, 104)', 'Lvn': '(376, 179)', 'Stp': '(410, 126)', 'Swe': '(319, 118)'}
+Swe {'Bal': '(309, 173)', 'Bot': '(342, 139)', 'Den': '(283, 163)', 'Fin': '(374, 104)', 'Nwy': '(277, 110)', 'Ska': '(281, 141)'}
+Den {'Bal': '(309, 173)', 'Hel': '(245, 160)', 'Kie': '(263, 184)', 'Nth': '(217, 149)', 'Ska': '(281, 141)', 'Swe': '(319, 118)'}
+Bal {'Ber': '(290, 201)', 'Bot': '(342, 139)', 'Den': '(283, 163)', 'Kie': '(263, 184)', 'Lvn': '(376, 179)', 'Pru': '(321, 200)', 'Swe': '(319, 118)'}
+Hel {'Den': '(283, 163)', 'Nth': '(217, 149)', 'Hol': '(226, 185)', 'Kie': '(263, 184)'}
+Hol {'Hel': '(245, 160)', 'Nth': '(217, 149)', 'Bel': '(205, 194)', 'Ruh': '(228, 218)', 'Kie': '(263, 184)'}
+Bel {'Nth': '(217, 149)', 'Eng': '(147, 204)', 'Pic': '(180, 214)', 'Bur': '(187, 258)', 'Ruh': '(228, 218)', 'Hol': '(226, 185)'}
+Ruh {'Hol': '(226, 185)', 'Bel': '(205, 194)', 'Bur': '(187, 258)', 'Mun': '(262, 239)', 'Kie': '(263, 184)'}
+Kie {'Ruh': '(228, 218)', 'Hol': '(226, 185)', 'Hel': '(245, 160)', 'Den': '(283, 163)', 'Bal': '(309, 173)', 'Ber': '(290, 201)', 'Mun': '(262, 239)'}
+Ber {'Bal': '(309, 173)', 'Pru': '(321, 200)', 'Sil': '(316, 221)', 'Mun': '(262, 239)', 'Kie': '(263, 184)'}
+Sil {'War': '(336, 213)', 'Gal': '(379, 241)', 'Boh': '(300, 228)', 'Mun': '(262, 239)', 'Ber': '(290, 201)', 'Pru': '(321, 200)'}
+Mun {'Ruh': '(228, 218)', 'Kie': '(263, 184)', 'Ber': '(290, 201)', 'Sil': '(316, 221)', 'Boh': '(300, 228)', 'Tyr': '(270, 261)', 'Bur': '(187, 258)'}
+Pru {'Bal': '(309, 173)', 'Lvn': '(376, 179)', 'War': '(336, 213)', 'Sil': '(316, 221)', 'Ber': '(290, 201)'}
+Stp {'Bar': '(403, 23)', 'Fin': '(374, 104)', 'Nwy': '(277, 110)', 'Bot': '(342, 139)', 'Lvn': '(376, 179)', 'Mos': '(471, 158)'}
+Lvn {'Stp': '(410, 126)', 'Bot': '(342, 139)', 'Bal': '(309, 173)', 'Pru': '(321, 200)', 'War': '(336, 213)', 'Mos': '(471, 158)'}
+Mos {'Stp': '(410, 126)', 'Lvn': '(376, 179)', 'War': '(336, 213)', 'Ukr': '(416, 233)', 'Sev': '(480, 271)'}
+War {'Lvn': '(376, 179)', 'Mos': '(471, 158)', 'Ukr': '(416, 233)', 'Gal': '(379, 241)', 'Sil': '(316, 221)', 'Pru': '(321, 200)'}
+Ukr {'Mos': '(471, 158)', 'Sev': '(480, 271)', 'Rum': '(407, 279)', 'Gal': '(379, 241)', 'War': '(336, 213)'}
+Sev {'Mos': '(471, 158)', 'Ukr': '(416, 233)', 'Rum': '(407, 279)', 'Arm': '(571, 314)', 'Bla': '(452, 292)'}
+Pic {'Eng': '(147, 204)', 'Bel': '(205, 194)', 'Bur': '(187, 258)', 'Par': '(185, 226)', 'Bre': '(125, 211)'}
+Bre {'Eng': '(147, 204)', 'Pic': '(180, 214)', 'Par': '(185, 226)', 'Gas': '(143, 279)', 'Mao': '(54, 246)'}
+Par {'Bre': '(125, 211)', 'Pic': '(180, 214)', 'Bur': '(187, 258)', 'Gas': '(143, 279)'}
+Bur {'Bel': '(205, 194)', 'Ruh': '(228, 218)', 'Mun': '(262, 239)', 'Mar': '(196, 289)', 'Gas': '(143, 279)', 'Par': '(185, 226)', 'Pic': '(180, 214)'}
+Gas {'Bre': '(125, 211)', 'Par': '(185, 226)', 'Bur': '(187, 258)', 'Mar': '(196, 289)', 'Spa': '(96, 303)', 'Mao': '(54, 246)'}
+Mar {'Gas': '(143, 279)', 'Bur': '(187, 258)', 'Pie': '(230, 284)', 'Lyo': '(174, 315)', 'Spa': '(96, 303)'}
+Mao {'Nao': '(79, 97)', 'Iri': '(104, 184)', 'Eng': '(147, 204)', 'Bre': '(125, 211)', 'Gas': '(143, 279)', 'Spa': '(96, 303)', 'Por': '(50, 308)', 'Wes': '(172, 346)', 'Naf': '(143, 378)'}
+Spa {'Gas': '(143, 279)', 'Mao': '(54, 246)', 'Por': '(50, 308)', 'Wes': '(172, 346)', 'Lyo': '(174, 315)', 'Mar': '(196, 289)'}
+Por {'Mao': '(54, 246)', 'Spa': '(96, 303)'}
+Naf {'Mao': '(54, 246)', 'Wes': '(172, 346)', 'Tun': '(212, 380)'}
+Tun {'Naf': '(143, 378)', 'Wes': '(172, 346)', 'Tys': '(247, 338)', 'Ion': '(322, 374)'}
+Wes {'Mao': '(54, 246)', 'Spa': '(96, 303)', 'Lyo': '(174, 315)', 'Tys': '(247, 338)', 'Tun': '(212, 380)', 'Naf': '(143, 378)'}
+Lyo {'Spa': '(96, 303)', 'Mar': '(196, 289)', 'Pie': '(230, 284)', 'Tus': '(257, 312)', 'Tys': '(247, 338)', 'Wes': '(172, 346)'}
+Tys {'Wes': '(172, 346)', 'Lyo': '(174, 315)', 'Tus': '(257, 312)', 'Rom': '(264, 323)', 'Nap': '(284, 346)', 'Ion': '(322, 374)', 'Tun': '(212, 380)'}
+Gal {'War': '(336, 213)', 'Ukr': '(416, 233)', 'Rum': '(407, 279)', 'Bud': '(330, 256)', 'Vie': '(301, 242)', 'Boh': '(300, 228)', 'Sil': '(316, 221)'}
+Boh {'Mun': '(262, 239)', 'Sil': '(316, 221)', 'Gal': '(379, 241)', 'Vie': '(301, 242)', 'Tyr': '(270, 261)'}
+Tyr {'Mun': '(262, 239)', 'Boh': '(300, 228)', 'Vie': '(301, 242)', 'Tri': '(288, 281)', 'Ven': '(269, 278)', 'Pie': '(230, 284)'}
+Vie {'Boh': '(300, 228)', 'Gal': '(379, 241)', 'Bud': '(330, 256)', 'Tri': '(288, 281)', 'Tyr': '(270, 261)'}
+Tri {'Tyr': '(270, 261)', 'Vie': '(301, 242)', 'Bud': '(330, 256)', 'Ser': '(351, 302)', 'Alb': '(343, 341)', 'Adr': '(315, 325)', 'Ven': '(269, 278)'}
+Bud {'Tri': '(288, 281)', 'Vie': '(301, 242)', 'Gal': '(379, 241)', 'Rum': '(407, 279)', 'Ser': '(351, 302)'}
+Pie {'Mar': '(196, 289)', 'Tyr': '(270, 261)', 'Ven': '(269, 278)', 'Tus': '(257, 312)', 'Lyo': '(174, 315)'}
+Tus {'Pie': '(230, 284)', 'Ven': '(269, 278)', 'Rom': '(264, 323)', 'Tys': '(247, 338)', 'Lyo': '(174, 315)'}
+Ven {'Tyr': '(270, 261)', 'Tri': '(288, 281)', 'Adr': '(315, 325)', 'Apu': '(296, 332)', 'Rom': '(264, 323)', 'Tus': '(257, 312)', 'Pie': '(230, 284)'}
+Rom {'Tus': '(257, 312)', 'Ven': '(269, 278)', 'Apu': '(296, 332)', 'Nap': '(284, 346)', 'Tys': '(247, 338)'}
+Apu {'Adr': '(315, 325)', 'Ion': '(322, 374)', 'Nap': '(284, 346)', 'Rom': '(264, 323)', 'Ven': '(269, 278)'}
+Nap {'Rom': '(264, 323)', 'Apu': '(296, 332)', 'Ion': '(322, 374)', 'Tys': '(247, 338)'}
+Adr {'Tri': '(288, 281)', 'Alb': '(343, 341)', 'Ion': '(322, 374)', 'Apu': '(296, 332)', 'Ven': '(269, 278)'}
+Ion {'Tun': '(212, 380)', 'Tys': '(247, 338)', 'Nap': '(284, 346)', 'Apu': '(296, 332)', 'Adr': '(315, 325)', 'Alb': '(343, 341)', 'Gre': '(373, 365)', 'Aeg': '(395, 357)', 'Eas': '(468, 380)'}
+Alb {'Tri': '(288, 281)', 'Ser': '(351, 302)', 'Gre': '(373, 365)', 'Ion': '(322, 374)', 'Adr': '(315, 325)'}
+Ser {'Tri': '(288, 281)', 'Bud': '(330, 256)', 'Rum': '(407, 279)', 'Bul': '(377, 318)', 'Gre': '(373, 365)', 'Alb': '(343, 341)'}
+Rum {'Bud': '(330, 256)', 'Gal': '(379, 241)', 'Ukr': '(416, 233)', 'Sev': '(480, 271)', 'Bla': '(452, 292)', 'Bul': '(377, 318)', 'Ser': '(351, 302)'}
+Bul {'Rum': '(407, 279)', 'Bla': '(452, 292)', 'Con': '(436, 321)', 'Ser': '(351, 302)', 'Aeg': '(395, 357)', 'Gre': '(373, 365)'}
+Gre {'Alb': '(343, 341)', 'Ser': '(351, 302)', 'Bul': '(377, 318)', 'Aeg': '(395, 357)', 'Ion': '(322, 374)'}
+Bla {'Bul': '(377, 318)', 'Rum': '(407, 279)', 'Arm': '(571, 314)', 'Ank': '(483, 328)', 'Con': '(436, 321)', 'Sev': '(480, 271)'}
+Aeg {'Gre': '(373, 365)', 'Bul': '(377, 318)', 'Con': '(436, 321)', 'Smy': '(425, 363)', 'Eas': '(468, 380)', 'Ion': '(322, 374)'}
+Eas {'Ion': '(322, 374)', 'Aeg': '(395, 357)', 'Smy': '(425, 363)', 'Syr': '(558, 360)'}
+Con {'Bul': '(377, 318)', 'Bla': '(452, 292)', 'Ank': '(483, 328)', 'Smy': '(425, 363)', 'Aeg': '(395, 357)'}
+Ank {'Bla': '(452, 292)', 'Arm': '(571, 314)', 'Smy': '(425, 363)', 'Con': '(436, 321)'}
+Arm {'Sev': '(480, 271)', 'Bla': '(452, 292)', 'Ank': '(483, 328)', 'Smy': '(425, 363)', 'Syr': '(558, 360)'}
+Smy {'Con': '(436, 321)', 'Ank': '(483, 328)', 'Arm': '(571, 314)', 'Syr': '(558, 360)', 'Eas': '(468, 380)', 'Aeg': '(395, 357)'}
+Syr {'Eas': '(468, 380)', 'Smy': '(425, 363)', 'Arm': '(571, 314)'}

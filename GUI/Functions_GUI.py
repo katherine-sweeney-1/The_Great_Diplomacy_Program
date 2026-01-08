@@ -12,11 +12,12 @@ from Main import commands
 coordinates = []
 territory_file = "GUI/Data_Main_Names.csv"
 coordinates_file = "GUI/Territory_Main_Coordinates.txt"
+
 def get_coordinates(click):
     if click:
         x_coordinate = click.x
         y_coordinate = click.y
-        coordinate = str(x_coordinate) + " " + str(y_coordinate)
+        coordinate = (x_coordinate, y_coordinate)
         coordinates.append(coordinate)
         #print(x_coordinate, y_coordinate)
         #print("Coordinates", coordinates)
