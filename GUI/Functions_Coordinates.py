@@ -36,22 +36,34 @@ def get_territories_with_neighbors_coordinates(nodes_data_main, territory_coordi
             print(node_entry, territories_neighbors_with_coordinates[node_entry], file = file_output)
     return territories_neighbors_with_coordinates
 
-def assign_coordinates_to_nodes(nodes, coordinate_file):
+def assign_coordinates_to_nodes(nodes, coordinate_file, coastal_coordinate_file):
     for node_id in nodes:
-        print("nodes", nodes)
-        """
         node = nodes[node_id]
         with open (coordinate_file, "r") as file_input:
             for line in file_input:
                 if line[0:3] == node_id:
                     coordinates = line[4:-1]
-                    print(coordinates)
-                    coordinates = tuple(coordinates)
-                    node.assign_coordinates(coordinates)
-        """        
+                    coordinates = coordinates.split(" ")
+                    x_coordinate = coordinates[0][1:-1]
+                    x_coordinate = int(x_coordinate)
+                    y_coordinate = coordinates[1][:-1]
+                    y_coordinate = int(y_coordinate)
+                    coordinates = (x_coordinate, y_coordinate)
+                    node.assign_coordinates(coordinates) 
+    for coastal_id in nodes:
+        node = nodes[coastal_id]
+        with  open (coastal_coordinate_file, "r") as file_input:
+            for line in file_input:
+                if line[0:6] == node_id:
+                    coordinates = line[7:-1]
+                    coordinates = coordinates.split(" ")
+                    x_coordinate = coordinates[0][1:-1]
+                    x_coordinate = int(x_coordinate)
+                    y_coordinate = coordinates[1][:-1]
+                    y_coordinate = int(y_coordinate)
+                    coordinates = (x_coordinate, y_coordinate)
+                    node.assign_coordinates(coordinates)  
+    for node_id in nodes:
+        print(node_id, node.coordinate)   
     return nodes
-#territories_with_neighbors_coordinates = get_territories_with_neighbors_coordinates(nodes_data_main, territory_coordinates, territory_neighbor_coordinates)
-"""
-for entry in territories_with_neighbors_coordinates:
-    print(entry, territories_with_neighbors_coordinates[entry])
-"""
+
