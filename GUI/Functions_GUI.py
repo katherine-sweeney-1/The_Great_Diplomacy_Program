@@ -42,6 +42,20 @@ def create_territory_listbox(main_window, territory_file, scrollbar):
     listbox.pack()
     return listbox
 
+def draw_unit_on_map(unit, map_image):
+    center = unit.location.coordinate
+    nw_coordinates = (center[0] - 10, center[1] - 10)
+    se_coordinates = (center[0] + 10, center[1] + 10)
+    coordinates = [nw_coordinates, se_coordinates]
+    radius = 25
+    outline = "black"
+    fill = "red"
+    line_width = 5
+    drawing_image = ImageDraw.Draw(map_image)
+    drawing_image.ellipse(coordinates, outline, fill, line_width)
+    return map_image
+
+
 # Draw a line on map
 def draw_line(map_image): 
     drawing_image = ImageDraw.Draw(map_image)
@@ -64,7 +78,7 @@ def assign_coordinates_to_nodes(nodes, coordinate_file):
     return nodes
 """
 
-def set_up_gui():
+def set_up_gui(units):
     main_window = tk.Tk()
     main_window.title('TGDP GUI')
     main_window.geometry("1000x1000")
@@ -80,6 +94,9 @@ def set_up_gui():
     # create canvas to click on 
     canvas = tk.Canvas(main_window, width = map_width, height = map_height, cursor = "cross")
     canvas.pack(fill = tk.BOTH)
+    for unit_id in units:
+        unit = units[unit_id]
+        map_image = draw_unit_on_map(unit, map_image)
     #draw_line(map_image)
     # convert pil image to tkinter image object
     map_image = ImageTk.PhotoImage(map_image)
@@ -116,7 +133,6 @@ def run_gui(game_objects):
         print(turn)
         #print(turn, commands)
     """
-    #set_up_gui()
     turn = "8b1908_spring"
     commands = game_objects[turn]["Commands"]
     commanders = game_objects[turn]["Commanders"]
@@ -124,6 +140,7 @@ def run_gui(game_objects):
     units = game_objects[turn]["Units"]
     nodes = nodes[0]
     assign_coordinates_to_nodes(nodes, coordinates_file, coastal_coordinates_file)
+    set_up_gui(units)
     """
     for node_id in nodes:
         print(nodes[node_id].coordinate)

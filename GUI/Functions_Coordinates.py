@@ -1,7 +1,6 @@
 import sys
 sys.path.append("../The_Great_Diplomacy_Program/Nodes")
 from Functions_Node import get_nodes_data_dictionary
-import sys
 
 data_nodes = "data/Data_Ter_Main.csv"
 data_coastal = "data/Data_Ter_Special_Coasts.csv"
@@ -62,8 +61,5 @@ def assign_coordinates_to_nodes(nodes, coordinate_file, coastal_coordinate_file)
                     y_coordinate = coordinates[1][:-1]
                     y_coordinate = int(y_coordinate)
                     coordinates = (x_coordinate, y_coordinate)
-                    node.assign_coordinates(coordinates)  
-    for node_id in nodes:
-        print(node_id, node.coordinate)   
+                    node.assign_coordinates(coordinates)   
     return nodes
-
