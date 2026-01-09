@@ -1,6 +1,7 @@
 import tkinter as tk
 from PIL import Image, ImageTk, ImageDraw
 import cv2
+from Functions_Coordinates import assign_coordinates_to_nodes
 
 coordinates = []
 territory_file = "GUI/Data_Main_Names.csv"
@@ -102,10 +103,23 @@ def set_up_gui():
     main_window.mainloop()
 
 def run_gui(game_objects):
+    """
     for turn in game_objects:
         commands = game_objects[turn]["Commands"]
         commanders = game_objects[turn]["Commanders"]
         nodes = game_objects[turn]["Nodes"]
         units = game_objects[turn]["Units"]
+        print(turn)
         #print(turn, commands)
+    """
     set_up_gui()
+    turn = "8b1908_spring"
+    commands = game_objects[turn]["Commands"]
+    commanders = game_objects[turn]["Commanders"]
+    nodes = game_objects[turn]["Nodes"]
+    units = game_objects[turn]["Units"]
+    assign_coordinates_to_nodes(nodes, coordinates_file)
+    for node_id in nodes:
+        print(nodes[node_id].coordinate)
+    return game_objects
+

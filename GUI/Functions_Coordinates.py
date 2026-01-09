@@ -2,12 +2,6 @@ import sys
 sys.path.append("../The_Great_Diplomacy_Program/Nodes")
 from Functions_Node import get_nodes_data_dictionary
 import sys
-sys.path.append("../The_Great_Diplomacy_Program/Run_TGDP")
-from Run_Main import nodes
-
-
-
-
 
 data_nodes = "data/Data_Ter_Main.csv"
 data_coastal = "data/Data_Ter_Special_Coasts.csv"
@@ -44,13 +38,17 @@ def get_territories_with_neighbors_coordinates(nodes_data_main, territory_coordi
 
 def assign_coordinates_to_nodes(nodes, coordinate_file):
     for node_id in nodes:
+        print("nodes", nodes)
+        """
         node = nodes[node_id]
         with open (coordinate_file, "r") as file_input:
             for line in file_input:
                 if line[0:3] == node_id:
                     coordinates = line[4:-1]
+                    print(coordinates)
                     coordinates = tuple(coordinates)
                     node.assign_coordinates(coordinates)
+        """        
     return nodes
 #territories_with_neighbors_coordinates = get_territories_with_neighbors_coordinates(nodes_data_main, territory_coordinates, territory_neighbor_coordinates)
 """

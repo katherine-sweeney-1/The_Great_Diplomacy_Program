@@ -54,6 +54,10 @@ class Node ():
         self.fleet_neighbors = fleet_coastal_neighbors
         return self.fleet_neighbors
 
+    def assign_coordinates (self, coordinate_tuple):
+        self.coordinate = coordinate_tuple
+        return self.coordinate
+    
     def print_statements (self):
         print("Territory {} / {}".format(self.name, self.full_name))
         print("dot status: {}, hsc status {},occupied status {}".format(self.dot, self.hsc, self.is_occ))
