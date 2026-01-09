@@ -42,29 +42,73 @@ def create_territory_listbox(main_window, territory_file, scrollbar):
     listbox.pack()
     return listbox
 
+def draw_unit(unit, map_image, canvas, drawn_map_image = None):
+    #print(unit.id, unit.location.name)
+    center = unit.location.coordinate
+    nw_coordinates = (center[0] - 5, center[1] - 5)
+    se_coordinates = (center[0] + 5, center[1] + 5)
+    coordinates = [nw_coordinates, se_coordinates]
+    fill = "red"
+    if drawn_map_image == None:
+        print("nonde", unit.id)
+        drawing_image = ImageDraw.Draw(map_image)
+    else:
+        print("drawing with existing image")
+        drawing_image = ImageDraw.Draw(drawn_map_image)
+    drawing_image.ellipse(coordinates, fill)
+    canvas.pack(fill = tk.BOTH)
+    return map_image
+
+def draw_units_on_map(units, map_image, canvas, last_unit_value= None, drawn_units = None, drawn_map_image = None):
+    if last_unit_value == None:
+        for unit_id in units:
+            last_unit = unit_id
+    else:
+        last_unit = last_unit_value
+    if drawn_units == None:
+        already_drawn_units = []
+    else:
+        already_drawn_units = drawn_units
+    for unit_id in units:
+        unit = units[unit_id]
+        #print(unit_id)
+        if unit_id in already_drawn_units:
+            #print("check", unit_id, len(already_drawn_units), already_drawn_units)
+            if len(already_drawn_units) == 1 and drawn_map_image == None:
+                #print("yes -1", unit_id)
+                already_drawn_units.append(unit_id)
+                map_image_with_unit = draw_unit(unit, map_image, canvas)
+                map_image_with_unit = draw_units_on_map(units, map_image, canvas, last_unit_value = last_unit, drawn_units = already_drawn_units, drawn_map_image = map_image_with_unit)
+            else:
+                continue
+        else:
+            #print("yes 0")
+            already_drawn_units.append(unit_id)
+            #print(len(already_drawn_units))
+            if unit_id != last_unit and unit not in already_drawn_units:
+                #print("yes 1")
+                map_image_with_previous_units = drawn_map_image
+                print(unit_id, len(already_drawn_units))
+                if len(already_drawn_units) == 1:
+                    print("check", unit_id)
+                    map_image_with_unit = draw_unit(unit, map_image, canvas)
+                else:
+                    map_image_with_unit = draw_unit(unit, map_image, canvas, map_image_with_previous_units)
+                map_image_with_unit = draw_units_on_map(units, map_image, canvas, last_unit_value = last_unit, drawn_units = already_drawn_units, drawn_map_image = map_image_with_unit)
+            elif unit_id == last_unit:
+                #print("yes 2")
+                map_image_with_previous_units = drawn_map_image
+                map_image_with_units = draw_unit(unit, map_image, canvas, map_image_with_previous_units)
+                return map_image_with_units
+    #return map_image
+
 # Draw a line on map
 def draw_line(map_image): 
     drawing_image = ImageDraw.Draw(map_image)
     coordinates = [(0,0), (200, 200)]
     drawing_image.line(coordinates, fill = "red")
 
-#territory_file = "GUI/Data_Main_Names.csv"
-#coordinates_file = "GUI/Territory_Main_Coordinates.txt"
-
-"""
-def assign_coordinates_to_nodes(nodes, coordinate_file):
-    for node_id in nodes:
-        node = nodes[node_id]
-        with open (coordinate_file, "r") as file_input:
-            for line in file_input:
-                if line[0:3] == node_id:
-                    coordinates = line[4:-1]
-                    coordinates = tuple(coordinates)
-                    node.assign_coordinates(coordinates)
-    return nodes
-"""
-
-def set_up_gui():
+def set_up_gui(units):
     main_window = tk.Tk()
     main_window.title('TGDP GUI')
     main_window.geometry("1000x1000")
@@ -79,6 +123,8 @@ def set_up_gui():
     map_image.thumbnail((map_width, map_height), Image.Resampling.LANCZOS)
     # create canvas to click on 
     canvas = tk.Canvas(main_window, width = map_width, height = map_height, cursor = "cross")
+    #canvas.pack(fill = tk.BOTH)
+    draw_units_on_map(units, map_image, canvas, drawn_map_image=None)
     canvas.pack(fill = tk.BOTH)
     #draw_line(map_image)
     # convert pil image to tkinter image object
@@ -107,26 +153,13 @@ def set_up_gui():
     main_window.mainloop()
 
 def run_gui(game_objects):
-    """
-    for turn in game_objects:
-        commands = game_objects[turn]["Commands"]
-        commanders = game_objects[turn]["Commanders"]
-        nodes = game_objects[turn]["Nodes"]
-        units = game_objects[turn]["Units"]
-        print(turn)
-        #print(turn, commands)
-    """
-    #set_up_gui()
-    turn = "8b1908_spring"
+    turn = "81908_spring"
     commands = game_objects[turn]["Commands"]
     commanders = game_objects[turn]["Commanders"]
     nodes = game_objects[turn]["Nodes"]
     units = game_objects[turn]["Units"]
     nodes = nodes[0]
     assign_coordinates_to_nodes(nodes, coordinates_file, coastal_coordinates_file)
-    """
-    for node_id in nodes:
-        print(nodes[node_id].coordinate)
-    """
+    set_up_gui(units)
     return game_objects
 
