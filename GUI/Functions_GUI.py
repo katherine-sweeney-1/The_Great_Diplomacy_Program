@@ -1,10 +1,13 @@
 import tkinter as tk
 from PIL import Image, ImageTk, ImageDraw
 import cv2
+from Functions_Coordinates import assign_coordinates_to_nodes
 
 coordinates = []
 territory_file = "GUI/Data_Main_Names.csv"
 coordinates_file = "GUI/Territory_Main_Coordinates.txt"
+coastal_territory_file = "GUI/Data_Coastal_Names.csv"
+coastal_coordinates_file = "GUI/Territory_Coastal_Coordinates.txt"
 
 # retrieve coordinates for territories
 def get_coordinates(click):
@@ -13,7 +16,7 @@ def get_coordinates(click):
         y_coordinate = click.y
         coordinate = (x_coordinate, y_coordinate)
         coordinates.append(coordinate)
-        write_coordinates_file(territory_file, coordinates_file)
+        write_coordinates_file(coastal_territory_file, coastal_coordinates_file)
 
 # save coordinates for territories in output file
 def write_coordinates_file(territory_file, coordinates_file):
@@ -45,9 +48,10 @@ def draw_line(map_image):
     coordinates = [(0,0), (200, 200)]
     drawing_image.line(coordinates, fill = "red")
 
-territory_file = "GUI/Data_Main_Names.csv"
-coordinates_file = "GUI/Territory_Main_Coordinates.txt"
+#territory_file = "GUI/Data_Main_Names.csv"
+#coordinates_file = "GUI/Territory_Main_Coordinates.txt"
 
+"""
 def assign_coordinates_to_nodes(nodes, coordinate_file):
     for node_id in nodes:
         node = nodes[node_id]
@@ -58,6 +62,7 @@ def assign_coordinates_to_nodes(nodes, coordinate_file):
                     coordinates = tuple(coordinates)
                     node.assign_coordinates(coordinates)
     return nodes
+"""
 
 def set_up_gui():
     main_window = tk.Tk()
@@ -102,10 +107,26 @@ def set_up_gui():
     main_window.mainloop()
 
 def run_gui(game_objects):
+    """
     for turn in game_objects:
         commands = game_objects[turn]["Commands"]
         commanders = game_objects[turn]["Commanders"]
         nodes = game_objects[turn]["Nodes"]
         units = game_objects[turn]["Units"]
+        print(turn)
         #print(turn, commands)
-    set_up_gui()
+    """
+    #set_up_gui()
+    turn = "8b1908_spring"
+    commands = game_objects[turn]["Commands"]
+    commanders = game_objects[turn]["Commanders"]
+    nodes = game_objects[turn]["Nodes"]
+    units = game_objects[turn]["Units"]
+    nodes = nodes[0]
+    assign_coordinates_to_nodes(nodes, coordinates_file, coastal_coordinates_file)
+    """
+    for node_id in nodes:
+        print(nodes[node_id].coordinate)
+    """
+    return game_objects
+
