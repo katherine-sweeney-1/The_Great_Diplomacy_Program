@@ -50,14 +50,30 @@ def draw_unit(unit, map_image, canvas, drawn_map_image = None):
     coordinates = [nw_coordinates, se_coordinates]
     fill = "red"
     if drawn_map_image == None:
-        print("nonde", unit.id)
+        print("no previous map image", unit.id)
         drawing_image = ImageDraw.Draw(map_image)
     else:
-        print("drawing with existing image")
+        print("drawing with existing image", unit.id)
         drawing_image = ImageDraw.Draw(drawn_map_image)
     drawing_image.ellipse(coordinates, fill)
     canvas.pack(fill = tk.BOTH)
     return map_image
+
+def draw_units_test(units, map_image):
+    drawing_image = ImageDraw.Draw(map_image)
+    units_coordinates = []
+    for unit_id in units:
+        unit = units[unit_id]
+        center = unit.location.coordinate
+        #print(unit_id, unit.location.name, unit.location.coordinate)
+        nw_coordinates = (center[0] - 5, center[1] - 5)
+        se_coordinates = (center[0] + 5, center[1] + 5)
+        coordinates = [nw_coordinates, se_coordinates]
+        units_coordinates.append(coordinates)
+        fill = "red"
+    for coordinate in units_coordinates:
+        #print(coordinate)
+        drawing_image.ellipse(coordinate, fill)
 
 def draw_units_on_map(units, map_image, canvas, last_unit_value= None, drawn_units = None, drawn_map_image = None):
     if last_unit_value == None:
@@ -72,15 +88,18 @@ def draw_units_on_map(units, map_image, canvas, last_unit_value= None, drawn_uni
     for unit_id in units:
         unit = units[unit_id]
         #print(unit_id)
+        #print("checkin", unit_id, drawn_map_image)
         if unit_id in already_drawn_units:
-            #print("check", unit_id, len(already_drawn_units), already_drawn_units)
-            if len(already_drawn_units) == 1 and drawn_map_image == None:
-                #print("yes -1", unit_id)
+            """
+            if len(already_drawn_units) == 1:
+                print("testing", unit_id)
                 already_drawn_units.append(unit_id)
                 map_image_with_unit = draw_unit(unit, map_image, canvas)
                 map_image_with_unit = draw_units_on_map(units, map_image, canvas, last_unit_value = last_unit, drawn_units = already_drawn_units, drawn_map_image = map_image_with_unit)
             else:
                 continue
+            """
+            continue
         else:
             #print("yes 0")
             already_drawn_units.append(unit_id)
@@ -88,15 +107,17 @@ def draw_units_on_map(units, map_image, canvas, last_unit_value= None, drawn_uni
             if unit_id != last_unit and unit not in already_drawn_units:
                 #print("yes 1")
                 map_image_with_previous_units = drawn_map_image
-                print(unit_id, len(already_drawn_units))
+                #print("len already drawn units", unit_id, len(already_drawn_units))
                 if len(already_drawn_units) == 1:
                     print("check", unit_id)
                     map_image_with_unit = draw_unit(unit, map_image, canvas)
                 else:
+                    print("test ", unit_id)
                     map_image_with_unit = draw_unit(unit, map_image, canvas, map_image_with_previous_units)
+                print(map_image_with_unit)
                 map_image_with_unit = draw_units_on_map(units, map_image, canvas, last_unit_value = last_unit, drawn_units = already_drawn_units, drawn_map_image = map_image_with_unit)
             elif unit_id == last_unit:
-                #print("yes 2")
+                print("yes 2")
                 map_image_with_previous_units = drawn_map_image
                 map_image_with_units = draw_unit(unit, map_image, canvas, map_image_with_previous_units)
                 return map_image_with_units
@@ -104,9 +125,13 @@ def draw_units_on_map(units, map_image, canvas, last_unit_value= None, drawn_uni
 
 # Draw a line on map
 def draw_line(map_image): 
+    coordinates = [[(0,0), (200, 200)],[(100, 150), 200, 250]]
     drawing_image = ImageDraw.Draw(map_image)
-    coordinates = [(0,0), (200, 200)]
-    drawing_image.line(coordinates, fill = "red")
+    #coordinates = [(0,0), (200, 200)]
+    for coordinate in coordinates:
+        drawing_image.line(coordinate, fill = "red")
+    #coordinates = [(100,150), (200, 250)]
+    #drawing_image.line(coordinates, fill = "red")
 
 def set_up_gui(units):
     main_window = tk.Tk()
@@ -124,9 +149,11 @@ def set_up_gui(units):
     # create canvas to click on 
     canvas = tk.Canvas(main_window, width = map_width, height = map_height, cursor = "cross")
     #canvas.pack(fill = tk.BOTH)
-    draw_units_on_map(units, map_image, canvas, drawn_map_image=None)
+    #draw_units_on_map(units, map_image, canvas, drawn_map_image=None)
+    #canvas.pack(fill = tk.BOTH)
+    draw_line(map_image)
+    draw_units_test(units, map_image)
     canvas.pack(fill = tk.BOTH)
-    #draw_line(map_image)
     # convert pil image to tkinter image object
     map_image = ImageTk.PhotoImage(map_image)
     # create canvas on image
@@ -160,6 +187,8 @@ def run_gui(game_objects):
     units = game_objects[turn]["Units"]
     nodes = nodes[0]
     assign_coordinates_to_nodes(nodes, coordinates_file, coastal_coordinates_file)
+    for unit_id in units:
+        print(unit_id, units[unit_id].location.name, units[unit_id].location.coordinate)
     set_up_gui(units)
     return game_objects
 

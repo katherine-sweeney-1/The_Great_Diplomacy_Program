@@ -48,18 +48,29 @@ def assign_coordinates_to_nodes(nodes, coordinate_file, coastal_coordinate_file)
                     y_coordinate = coordinates[1][:-1]
                     y_coordinate = int(y_coordinate)
                     coordinates = (x_coordinate, y_coordinate)
-                    node.assign_coordinates(coordinates) 
+                    #print(coordinates)
+                    node.assign_coordinates(coordinates)
+                    #print(node.coordinate) 
     for coastal_id in nodes:
-        node = nodes[coastal_id]
-        with  open (coastal_coordinate_file, "r") as file_input:
-            for line in file_input:
-                if line[0:6] == node_id:
-                    coordinates = line[7:-1]
-                    coordinates = coordinates.split(" ")
-                    x_coordinate = coordinates[0][1:-1]
-                    x_coordinate = int(x_coordinate)
-                    y_coordinate = coordinates[1][:-1]
-                    y_coordinate = int(y_coordinate)
-                    coordinates = (x_coordinate, y_coordinate)
-                    node.assign_coordinates(coordinates)   
+        if "-" in coastal_id:
+            node = nodes[coastal_id]
+            with  open (coastal_coordinate_file, "r") as file_input:
+                for line in file_input:
+                    if line[0:6] == node_id:
+                        coordinates = line[7:-1]
+                        coordinates = coordinates.split(" ")
+                        x_coordinate = coordinates[0][1:-1]
+                        x_coordinate = int(x_coordinate)
+                        y_coordinate = coordinates[1][:-1]
+                        y_coordinate = int(y_coordinate)
+                        coordinates = (x_coordinate, y_coordinate)
+                        print(coordinates)
+                        node.assign_coordinates(coordinates) 
+                        print(node.coordinate)
+        else:
+            print(coastal_id)
+            print(nodes[coastal_id].coordinate)
+            continue
+    for node_id in nodes:
+        print("node coordinates", node_id, nodes[node_id].coordinate)  
     return nodes
