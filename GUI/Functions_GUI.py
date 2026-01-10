@@ -42,25 +42,6 @@ def create_territory_listbox(main_window, territory_file, scrollbar):
     listbox.pack()
     return listbox
 
-"""
-def draw_unit(unit, map_image, canvas, drawn_map_image = None):
-    #print(unit.id, unit.location.name)
-    center = unit.location.coordinate
-    nw_coordinates = (center[0] - 5, center[1] - 5)
-    se_coordinates = (center[0] + 5, center[1] + 5)
-    coordinates = [nw_coordinates, se_coordinates]
-    fill = "red"
-    if drawn_map_image == None:
-        print("no previous map image", unit.id)
-        drawing_image = ImageDraw.Draw(map_image)
-    else:
-        print("drawing with existing image", unit.id)
-        drawing_image = ImageDraw.Draw(drawn_map_image)
-    drawing_image.ellipse(coordinates, fill)
-    canvas.pack(fill = tk.BOTH)
-    return map_image
-"""
-
 def draw_units_test(units, map_image):
     drawing_image = ImageDraw.Draw(map_image)
     units_coordinates = []
