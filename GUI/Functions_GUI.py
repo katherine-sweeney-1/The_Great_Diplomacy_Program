@@ -42,6 +42,7 @@ def create_territory_listbox(main_window, territory_file, scrollbar):
     listbox.pack()
     return listbox
 
+"""
 def draw_unit(unit, map_image, canvas, drawn_map_image = None):
     #print(unit.id, unit.location.name)
     center = unit.location.coordinate
@@ -58,6 +59,7 @@ def draw_unit(unit, map_image, canvas, drawn_map_image = None):
     drawing_image.ellipse(coordinates, fill)
     canvas.pack(fill = tk.BOTH)
     return map_image
+"""
 
 def draw_units_test(units, map_image):
     drawing_image = ImageDraw.Draw(map_image)
@@ -74,7 +76,7 @@ def draw_units_test(units, map_image):
     for coordinate in units_coordinates:
         #print(coordinate)
         drawing_image.ellipse(coordinate, fill)
-
+"""
 def draw_units_on_map(units, map_image, canvas, last_unit_value= None, drawn_units = None, drawn_map_image = None):
     if last_unit_value == None:
         for unit_id in units:
@@ -90,15 +92,6 @@ def draw_units_on_map(units, map_image, canvas, last_unit_value= None, drawn_uni
         #print(unit_id)
         #print("checkin", unit_id, drawn_map_image)
         if unit_id in already_drawn_units:
-            """
-            if len(already_drawn_units) == 1:
-                print("testing", unit_id)
-                already_drawn_units.append(unit_id)
-                map_image_with_unit = draw_unit(unit, map_image, canvas)
-                map_image_with_unit = draw_units_on_map(units, map_image, canvas, last_unit_value = last_unit, drawn_units = already_drawn_units, drawn_map_image = map_image_with_unit)
-            else:
-                continue
-            """
             continue
         else:
             #print("yes 0")
@@ -122,23 +115,19 @@ def draw_units_on_map(units, map_image, canvas, last_unit_value= None, drawn_uni
                 map_image_with_units = draw_unit(unit, map_image, canvas, map_image_with_previous_units)
                 return map_image_with_units
     #return map_image
-
+"""
 # Draw a line on map
 def draw_line(map_image): 
     coordinates = [[(0,0), (200, 200)],[(100, 150), 200, 250]]
     drawing_image = ImageDraw.Draw(map_image)
-    #coordinates = [(0,0), (200, 200)]
     for coordinate in coordinates:
         drawing_image.line(coordinate, fill = "red")
-    #coordinates = [(100,150), (200, 250)]
-    #drawing_image.line(coordinates, fill = "red")
 
 def set_up_gui(units):
     main_window = tk.Tk()
     main_window.title('TGDP GUI')
     main_window.geometry("1000x1000")
     # Close window button
-    # Button syntax: w = tk.Button (master, option = value)
     button = tk.Button(main_window, text = "Close", width = 25, command = main_window.destroy)
     button.pack()
     # image
@@ -148,10 +137,7 @@ def set_up_gui(units):
     map_image.thumbnail((map_width, map_height), Image.Resampling.LANCZOS)
     # create canvas to click on 
     canvas = tk.Canvas(main_window, width = map_width, height = map_height, cursor = "cross")
-    #canvas.pack(fill = tk.BOTH)
-    #draw_units_on_map(units, map_image, canvas, drawn_map_image=None)
-    #canvas.pack(fill = tk.BOTH)
-    draw_line(map_image)
+    #draw_line(map_image)
     draw_units_test(units, map_image)
     canvas.pack(fill = tk.BOTH)
     # convert pil image to tkinter image object

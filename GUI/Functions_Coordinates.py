@@ -28,7 +28,6 @@ def get_territories_with_neighbors_coordinates(nodes_data_main, territory_coordi
                 for line in file_input:
                     if line[0:3] == neighbor:
                         coordinate_tuple = line[4:-1]
-                        #print(line[0:3], "rest of line", line[4:-1])
                         neighbors_coordinates[line[0:3]] = coordinate_tuple
         territories_neighbors_with_coordinates[node_entry] = neighbors_coordinates
         with open(territory_neighbor_coordinates, "a") as file_output:
@@ -48,9 +47,7 @@ def assign_coordinates_to_nodes(nodes, coordinate_file, coastal_coordinate_file)
                     y_coordinate = coordinates[1][:-1]
                     y_coordinate = int(y_coordinate)
                     coordinates = (x_coordinate, y_coordinate)
-                    #print(coordinates)
                     node.assign_coordinates(coordinates)
-                    #print(node.coordinate) 
     for coastal_id in nodes:
         if "-" in coastal_id:
             node = nodes[coastal_id]
@@ -68,9 +65,5 @@ def assign_coordinates_to_nodes(nodes, coordinate_file, coastal_coordinate_file)
                         node.assign_coordinates(coordinates) 
                         print(node.coordinate)
         else:
-            print(coastal_id)
-            print(nodes[coastal_id].coordinate)
             continue
-    for node_id in nodes:
-        print("node coordinates", node_id, nodes[node_id].coordinate)  
     return nodes
