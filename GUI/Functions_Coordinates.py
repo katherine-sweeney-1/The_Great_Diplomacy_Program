@@ -28,7 +28,6 @@ def get_territories_with_neighbors_coordinates(nodes_data_main, territory_coordi
                 for line in file_input:
                     if line[0:3] == neighbor:
                         coordinate_tuple = line[4:-1]
-                        #print(line[0:3], "rest of line", line[4:-1])
                         neighbors_coordinates[line[0:3]] = coordinate_tuple
         territories_neighbors_with_coordinates[node_entry] = neighbors_coordinates
         with open(territory_neighbor_coordinates, "a") as file_output:
@@ -48,18 +47,23 @@ def assign_coordinates_to_nodes(nodes, coordinate_file, coastal_coordinate_file)
                     y_coordinate = coordinates[1][:-1]
                     y_coordinate = int(y_coordinate)
                     coordinates = (x_coordinate, y_coordinate)
-                    node.assign_coordinates(coordinates) 
+                    node.assign_coordinates(coordinates)
     for coastal_id in nodes:
-        node = nodes[coastal_id]
-        with  open (coastal_coordinate_file, "r") as file_input:
-            for line in file_input:
-                if line[0:6] == node_id:
-                    coordinates = line[7:-1]
-                    coordinates = coordinates.split(" ")
-                    x_coordinate = coordinates[0][1:-1]
-                    x_coordinate = int(x_coordinate)
-                    y_coordinate = coordinates[1][:-1]
-                    y_coordinate = int(y_coordinate)
-                    coordinates = (x_coordinate, y_coordinate)
-                    node.assign_coordinates(coordinates)   
+        if "-" in coastal_id:
+            node = nodes[coastal_id]
+            with  open (coastal_coordinate_file, "r") as file_input:
+                for line in file_input:
+                    if line[0:6] == node_id:
+                        coordinates = line[7:-1]
+                        coordinates = coordinates.split(" ")
+                        x_coordinate = coordinates[0][1:-1]
+                        x_coordinate = int(x_coordinate)
+                        y_coordinate = coordinates[1][:-1]
+                        y_coordinate = int(y_coordinate)
+                        coordinates = (x_coordinate, y_coordinate)
+                        print(coordinates)
+                        node.assign_coordinates(coordinates) 
+                        print(node.coordinate)
+        else:
+            continue
     return nodes
