@@ -2,6 +2,7 @@ import tkinter as tk
 from PIL import Image, ImageTk, ImageDraw
 import cv2
 from Functions_Coordinates import assign_coordinates_to_nodes
+import math
 
 coordinates = []
 territory_file = "GUI/Data_Main_Names.csv"
@@ -48,12 +49,6 @@ def draw_units_test(units, map_image):
     for unit_id in units:
         unit = units[unit_id]
         center = unit.location.coordinate
-        #print(unit_id, unit.location.name, unit.location.coordinate)
-        nw_coordinates = (center[0] - 5, center[1] - 5)
-        se_coordinates = (center[0] + 5, center[1] + 5)
-        coordinates = [nw_coordinates, se_coordinates]
-        #units_coordinates.append(coordinates)
-        print(unit_id[0:2])
         if unit_id[0:2] == "AU":
             fill = (200, 50, 50)
         elif unit_id[0:2] == "UK":
@@ -68,8 +63,6 @@ def draw_units_test(units, map_image):
             fill = (75, 25, 75)
         elif unit_id[0:2] == "TU":
             fill = (250, 225, 20)
-    #for coordinate in units_coordinates:
-        #print(coordinate)
         if unit.type == "army":
             nw_coordinates = (center[0] - 5, center[1] - 5)
             se_coordinates = (center[0] + 5, center[1] + 5)
@@ -121,6 +114,78 @@ def draw_units_on_map(units, map_image, canvas, last_unit_value= None, drawn_uni
                 return map_image_with_units
     #return map_image
 """
+
+def draw_moves(map_image, commands):
+    drawing_image = ImageDraw.Draw(map_image)
+    for command_id in commands:
+        command = commands[command_id]
+    # for attacks
+        if command.location == command.origin and command.origin != command.destination:
+            coordinates = [command.origin.coordinate, command.destination.coordinate]
+            origin_coordinate = command.origin.coordinate
+            destination_coordinate = command.destination.coordinate
+            slope = (destination_coordinate[1] - origin_coordinate[1])/(destination_coordinate[0] - origin_coordinate[0])
+            if slope > 0:
+                sign = True
+            else:
+                sign = False
+            slope = round(slope, 2)
+            slope_degrees = math.atan(slope)
+            slope_degrees = round(slope_degrees, 2)
+            slope_upper_line = slope_degrees + 30
+            slope_lower_line = slope_degrees - 30
+            if sign == True:
+                upper_x_endpoint = 20*math.cos(slope_upper_line) + destination_coordinate[0]
+                upper_y_endpoint = 20*math.sin(slope_lower_line) + destination_coordinate[1]
+            else:
+                upper_x_endpoint = (20*math.cos(slope_upper_line))*(-1) + destination_coordinate[0]
+                upper_y_endpoint = (20*math.sin(slope_lower_line))*(-1) + destination_coordinate[1]
+            #upper_x_endpoint = 20*math.cos(slope_upper_line) + destination_coordinate[0]
+            #upper_y_endpoint = 20*math.sin(slope_lower_line) + destination_coordinate[1]
+            upper_x_endpoint = int(upper_x_endpoint)
+            upper_y_endpoint = int(upper_y_endpoint)
+            upper_arrow_coordinates = [upper_x_endpoint, upper_y_endpoint]
+            print(command_id)
+            print("dest coord", destination_coordinate)
+            print("upper arrow coord", upper_arrow_coordinates)
+            print(" ")
+            lower_endpoint = slope_lower_line*(20) + destination_coordinate[1]
+            lower_arrow_coordinates = [lower_endpoint, destination_coordinate]
+            #print(command.unit.id, slope, slope_degrees)
+            if command.succeed == True:
+                fill = "black"
+            else:
+                fill = "red"
+            #print(upper_arrow_coordinates)
+            drawing_image.line(coordinates, fill)
+            drawing_image.line(upper_arrow_coordinates, fill)
+            #drawing_image.line(lower_arrow_coordinates, fill)
+            """
+            if command.succeed == True:
+                drawing_image.line(coordinates, fill = "black")
+                drawing_image.line(upper_arrow_coordinates, fill = "black")
+                drawing_image.line(lower_arrow_coordinates, fill = "black")
+
+            else:
+                drawing_image.line(coordinates, fill = "red")
+                drawing_image.line(upper_arrow_coordinates, fill = "black")
+                drawing_image.line(lower_arrow_coordinates, fill = "red")
+            """
+    # for supports
+    #for holds
+        if command.location == command.origin == command.destination:
+            center = command.location.coordinate
+            nw_coordinates = (center[0] - 8, center[1] - 8)
+            se_coordinates = (center[0] + 8, center[1] + 8)
+            coordinates = [nw_coordinates, se_coordinates]
+            if command.succeed == True:
+                drawing_image.ellipse(coordinates, outline = "black", width = 3)
+            else:
+                drawing_image.ellipse(coordinates, outline = "red", width = 3)
+
+
+
+    # for convoys
 # Draw a line on map
 def draw_line(map_image): 
     coordinates = [[(0,0), (200, 200)],[(100, 150), 200, 250]]
@@ -128,7 +193,7 @@ def draw_line(map_image):
     for coordinate in coordinates:
         drawing_image.line(coordinate, fill = "red")
 
-def set_up_gui(units):
+def set_up_gui(commands, units):
     main_window = tk.Tk()
     main_window.title('TGDP GUI')
     main_window.geometry("1000x1000")
@@ -144,6 +209,7 @@ def set_up_gui(units):
     canvas = tk.Canvas(main_window, width = map_width, height = map_height, cursor = "cross")
     #draw_line(map_image)
     draw_units_test(units, map_image)
+    draw_moves(map_image, commands)
     canvas.pack(fill = tk.BOTH)
     # convert pil image to tkinter image object
     map_image = ImageTk.PhotoImage(map_image)
@@ -178,8 +244,6 @@ def run_gui(game_objects):
     units = game_objects[turn]["Units"]
     nodes = nodes[0]
     assign_coordinates_to_nodes(nodes, coordinates_file, coastal_coordinates_file)
-    for unit_id in units:
-        print(unit_id, units[unit_id].location.name, units[unit_id].location.coordinate)
-    set_up_gui(units)
+    set_up_gui(commands, units)
     return game_objects
 
