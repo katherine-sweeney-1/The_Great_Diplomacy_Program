@@ -43,32 +43,33 @@ def create_territory_listbox(main_window, territory_file, scrollbar):
     listbox.pack()
     return listbox
 
-def draw_units_test(units, map_image):
+def draw_units_test(commands, map_image):
     drawing_image = ImageDraw.Draw(map_image)
     units_coordinates = []
-    for unit_id in units:
-        unit = units[unit_id]
-        center = unit.location.coordinate
-        if unit_id[0:2] == "AU":
+    for command_id in commands:
+        command = commands[command_id]
+        #print("checking", unit.location.name)
+        center = command.location.coordinate
+        if command_id[0:2] == "AU":
             fill = (200, 50, 50)
-        elif unit_id[0:2] == "UK":
+        elif command_id[0:2] == "UK":
             fill = (255, 50, 150)
-        elif unit_id[0:2] == "FR":
+        elif command_id[0:2] == "FR":
             fill = (0, 75, 100)
-        elif unit_id[0:2] == "GE":
+        elif command_id[0:2] == "GE":
             fill = (100, 50, 25)
-        elif unit_id[0:2] == "IT":
+        elif command_id[0:2] == "IT":
             fill = (75, 100, 0)
-        elif unit_id[0:2] == "RU":
+        elif command_id[0:2] == "RU":
             fill = (75, 25, 75)
-        elif unit_id[0:2] == "TU":
+        elif command_id[0:2] == "TU":
             fill = (250, 225, 20)
-        if unit.type == "army":
+        if command.unit.type == "army":
             nw_coordinates = (center[0] - 5, center[1] - 5)
             se_coordinates = (center[0] + 5, center[1] + 5)
             coordinates = [nw_coordinates, se_coordinates]
             drawing_image.ellipse(coordinates, fill, outline = "black", width = 1)
-        elif unit.type == "fleet":
+        elif command.unit.type == "fleet":
             south_coordinates = (center[0], center[1] + 5)
             nw_coordinates = (center[0] - 6, center[1] - 6)
             ne_coordinates = (center[0] + 6, center[1] - 6)
@@ -130,36 +131,61 @@ def draw_moves(map_image, commands):
             else:
                 sign = False
             slope = round(slope, 2)
-            slope_degrees = math.atan(slope)
-            slope_degrees = round(slope_degrees, 2)
-            slope_upper_line = slope_degrees + 30
-            slope_lower_line = slope_degrees - 30
+            slope = math.atan(slope)
+            slope = round(slope, 2)
             if sign == True:
+                print("positive slope", command_id, command.location.name)
+                slope_upper_line = slope - math.pi/6
+                slope_lower_line = slope + math.pi/6
                 upper_x_endpoint = 20*math.cos(slope_upper_line) + destination_coordinate[0]
-                upper_y_endpoint = 20*math.sin(slope_lower_line) + destination_coordinate[1]
+                upper_y_endpoint = (20*math.sin(slope_upper_line))*(-1) + destination_coordinate[1]
+                lower_x_endpoint = (20*math.cos(slope_lower_line))*(-1) + destination_coordinate[0]
+                lower_y_endpoint = 20*math.sin(slope_lower_line) + destination_coordinate[1]
             else:
-                upper_x_endpoint = (20*math.cos(slope_upper_line))*(-1) + destination_coordinate[0]
-                upper_y_endpoint = (20*math.sin(slope_lower_line))*(-1) + destination_coordinate[1]
+                if command.destination.coordinate[1] > command.origin.coordinate[1]:
+                    print("yes", command_id, command.location)
+                    slope_upper_line = slope + math.pi/6
+                    slope_lower_line = slope + math.pi/6
+                    upper_x_endpoint = (20*math.cos(slope_upper_line)) + destination_coordinate[0]
+                    upper_y_endpoint = (20*math.sin(slope_upper_line)) + destination_coordinate[1]
+                    lower_x_endpoint = (20*math.cos(slope_lower_line)) + destination_coordinate[0]
+                    upper_y_endpoint = (20*math.sin(slope_lower_line)) + destination_coordinate[1]
+                else:
+                #print("negative slope", command_id, command.location.name)
+                    print("no", command_id, command.location)
+                    slope_upper_line = slope + math.pi/6
+                    slope_lower_line = slope + math.pi/6
+                    upper_x_endpoint = (20*math.cos(slope_upper_line)) + destination_coordinate[0]
+                    upper_y_endpoint = (20*math.sin(slope_upper_line)) + destination_coordinate[1]
+                    lower_x_endpoint = (20*math.cos(slope_lower_line)) + destination_coordinate[0]
+                    upper_y_endpoint = (20*math.sin(slope_lower_line)) + destination_coordinate[1]
             #upper_x_endpoint = 20*math.cos(slope_upper_line) + destination_coordinate[0]
             #upper_y_endpoint = 20*math.sin(slope_lower_line) + destination_coordinate[1]
             upper_x_endpoint = int(upper_x_endpoint)
             upper_y_endpoint = int(upper_y_endpoint)
-            upper_arrow_coordinates = [upper_x_endpoint, upper_y_endpoint]
+            lower_x_endpoint = int(lower_x_endpoint)
+            lower_y_endpoint = int(lower_y_endpoint)
+            upper_arrow_coordinates = (upper_x_endpoint, upper_y_endpoint)
+            lower_arrow_coordinates = (lower_x_endpoint, lower_y_endpoint)
+            upper_coordinates = [upper_arrow_coordinates, destination_coordinate]
+            lower_coordinates = [lower_arrow_coordinates, destination_coordinate]
+            """
             print(command_id)
+            print(command.location.name, command.origin.name, command.destination.name)
+            print(slope, slope_upper_line, slope_lower_line)
             print("dest coord", destination_coordinate)
             print("upper arrow coord", upper_arrow_coordinates)
             print(" ")
-            lower_endpoint = slope_lower_line*(20) + destination_coordinate[1]
-            lower_arrow_coordinates = [lower_endpoint, destination_coordinate]
+            """
             #print(command.unit.id, slope, slope_degrees)
             if command.succeed == True:
                 fill = "black"
             else:
                 fill = "red"
             #print(upper_arrow_coordinates)
-            drawing_image.line(coordinates, fill)
-            drawing_image.line(upper_arrow_coordinates, fill)
-            #drawing_image.line(lower_arrow_coordinates, fill)
+            drawing_image.line(coordinates, fill, width = 2)
+            drawing_image.line(upper_coordinates, fill, width = 2)
+            drawing_image.line(lower_coordinates, fill = "green")
             """
             if command.succeed == True:
                 drawing_image.line(coordinates, fill = "black")
@@ -193,7 +219,7 @@ def draw_line(map_image):
     for coordinate in coordinates:
         drawing_image.line(coordinate, fill = "red")
 
-def set_up_gui(commands, units):
+def set_up_gui(commands):
     main_window = tk.Tk()
     main_window.title('TGDP GUI')
     main_window.geometry("1000x1000")
@@ -208,7 +234,7 @@ def set_up_gui(commands, units):
     # create canvas to click on 
     canvas = tk.Canvas(main_window, width = map_width, height = map_height, cursor = "cross")
     #draw_line(map_image)
-    draw_units_test(units, map_image)
+    draw_units_test(commands, map_image)
     draw_moves(map_image, commands)
     canvas.pack(fill = tk.BOTH)
     # convert pil image to tkinter image object
@@ -244,6 +270,9 @@ def run_gui(game_objects):
     units = game_objects[turn]["Units"]
     nodes = nodes[0]
     assign_coordinates_to_nodes(nodes, coordinates_file, coastal_coordinates_file)
-    set_up_gui(commands, units)
+    set_up_gui(commands)
+    for command_id in commands:
+        command = commands[command_id]
+        #print("check", command_id, command.unit.location.name, command.location.name)
     return game_objects
 
