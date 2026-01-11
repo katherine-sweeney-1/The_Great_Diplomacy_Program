@@ -52,11 +52,35 @@ def draw_units_test(units, map_image):
         nw_coordinates = (center[0] - 5, center[1] - 5)
         se_coordinates = (center[0] + 5, center[1] + 5)
         coordinates = [nw_coordinates, se_coordinates]
-        units_coordinates.append(coordinates)
-        fill = "red"
-    for coordinate in units_coordinates:
+        #units_coordinates.append(coordinates)
+        print(unit_id[0:2])
+        if unit_id[0:2] == "AU":
+            fill = (200, 50, 50)
+        elif unit_id[0:2] == "UK":
+            fill = (255, 50, 150)
+        elif unit_id[0:2] == "FR":
+            fill = (0, 75, 100)
+        elif unit_id[0:2] == "GE":
+            fill = (100, 50, 25)
+        elif unit_id[0:2] == "IT":
+            fill = (75, 100, 0)
+        elif unit_id[0:2] == "RU":
+            fill = (75, 25, 75)
+        elif unit_id[0:2] == "TU":
+            fill = (250, 225, 20)
+    #for coordinate in units_coordinates:
         #print(coordinate)
-        drawing_image.ellipse(coordinate, fill)
+        if unit.type == "army":
+            nw_coordinates = (center[0] - 5, center[1] - 5)
+            se_coordinates = (center[0] + 5, center[1] + 5)
+            coordinates = [nw_coordinates, se_coordinates]
+            drawing_image.ellipse(coordinates, fill, outline = "black", width = 1)
+        elif unit.type == "fleet":
+            south_coordinates = (center[0], center[1] + 5)
+            nw_coordinates = (center[0] - 6, center[1] - 6)
+            ne_coordinates = (center[0] + 6, center[1] - 6)
+            coordinates = [south_coordinates, nw_coordinates, ne_coordinates]
+            drawing_image.polygon(coordinates, fill, outline = "black", width = 1)
 """
 def draw_units_on_map(units, map_image, canvas, last_unit_value= None, drawn_units = None, drawn_map_image = None):
     if last_unit_value == None:
