@@ -61,9 +61,7 @@ def assign_coordinates_to_nodes(nodes, coordinate_file, coastal_coordinate_file)
                         y_coordinate = coordinates[1][:-1]
                         y_coordinate = int(y_coordinate)
                         coordinates = (x_coordinate, y_coordinate)
-                        print(coordinates)
                         node.assign_coordinates(coordinates) 
-                        print(node.coordinate)
         else:
             continue
     return nodes
