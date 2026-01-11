@@ -134,40 +134,50 @@ def draw_moves(map_image, commands):
             slope = math.atan(slope)
             slope = round(slope, 2)
             if sign == True:
-                print("positive slope", command_id, command.location.name)
-                slope_upper_line = slope - math.pi/6
-                slope_lower_line = slope + math.pi/6
-                upper_x_endpoint = 20*math.cos(slope_upper_line) + destination_coordinate[0]
-                upper_y_endpoint = (20*math.sin(slope_upper_line))*(-1) + destination_coordinate[1]
-                lower_x_endpoint = (20*math.cos(slope_lower_line))*(-1) + destination_coordinate[0]
-                lower_y_endpoint = 20*math.sin(slope_lower_line) + destination_coordinate[1]
+                if command.destination.coordinate[1] > command.origin.coordinate[1]:
+                    #print("yes", command_id, command.location.name)
+                    slope_upper_line = slope - 5*math.pi/6
+                    slope_lower_line = slope + 5*math.pi/6
+                    upper_x_endpoint = 20*math.cos(slope_upper_line) + destination_coordinate[0]
+                    upper_y_endpoint = (20*math.sin(slope_upper_line)) + destination_coordinate[1]
+                    lower_x_endpoint = (20*math.cos(slope_lower_line)) + destination_coordinate[0]
+                    lower_y_endpoint = 20*math.sin(slope_lower_line) + destination_coordinate[1]
+                else:
+                    print("no", command_id, command.location.name)
+                #print("positive slope", command_id, command.location.name)
+                    slope_upper_line = slope - math.pi/6
+                    slope_lower_line = slope + math.pi/6
+                    upper_x_endpoint = 20*math.cos(slope_upper_line) + destination_coordinate[0]
+                    upper_y_endpoint = (20*math.sin(slope_upper_line)) + destination_coordinate[1]
+                    lower_x_endpoint = (20*math.cos(slope_lower_line)) + destination_coordinate[0]
+                    lower_y_endpoint = 20*math.sin(slope_lower_line) + destination_coordinate[1]
             else:
                 if command.destination.coordinate[1] > command.origin.coordinate[1]:
-                    print("yes", command_id, command.location)
-                    slope_upper_line = slope + math.pi/6
+                    #print("yes", command_id, command.location.name)
+                    slope_upper_line = slope + 11*math.pi/6
                     slope_lower_line = slope + math.pi/6
                     upper_x_endpoint = (20*math.cos(slope_upper_line)) + destination_coordinate[0]
                     upper_y_endpoint = (20*math.sin(slope_upper_line)) + destination_coordinate[1]
                     lower_x_endpoint = (20*math.cos(slope_lower_line)) + destination_coordinate[0]
-                    upper_y_endpoint = (20*math.sin(slope_lower_line)) + destination_coordinate[1]
+                    lower_y_endpoint = (20*math.sin(slope_lower_line)) + destination_coordinate[1]
                 else:
                 #print("negative slope", command_id, command.location.name)
-                    print("no", command_id, command.location)
-                    slope_upper_line = slope + math.pi/6
-                    slope_lower_line = slope + math.pi/6
+                    #print("no", command_id, command.location.name)
+                    slope_upper_line = slope -  5*math.pi/6
+                    slope_lower_line = slope + 5*math.pi/6
                     upper_x_endpoint = (20*math.cos(slope_upper_line)) + destination_coordinate[0]
                     upper_y_endpoint = (20*math.sin(slope_upper_line)) + destination_coordinate[1]
                     lower_x_endpoint = (20*math.cos(slope_lower_line)) + destination_coordinate[0]
-                    upper_y_endpoint = (20*math.sin(slope_lower_line)) + destination_coordinate[1]
+                    lower_y_endpoint = (20*math.sin(slope_lower_line)) + destination_coordinate[1]
             #upper_x_endpoint = 20*math.cos(slope_upper_line) + destination_coordinate[0]
             #upper_y_endpoint = 20*math.sin(slope_lower_line) + destination_coordinate[1]
             upper_x_endpoint = int(upper_x_endpoint)
             upper_y_endpoint = int(upper_y_endpoint)
+            upper_arrow_coordinates = (upper_x_endpoint, upper_y_endpoint)
+            upper_coordinates = [upper_arrow_coordinates, destination_coordinate]
             lower_x_endpoint = int(lower_x_endpoint)
             lower_y_endpoint = int(lower_y_endpoint)
-            upper_arrow_coordinates = (upper_x_endpoint, upper_y_endpoint)
             lower_arrow_coordinates = (lower_x_endpoint, lower_y_endpoint)
-            upper_coordinates = [upper_arrow_coordinates, destination_coordinate]
             lower_coordinates = [lower_arrow_coordinates, destination_coordinate]
             """
             print(command_id)
@@ -185,7 +195,7 @@ def draw_moves(map_image, commands):
             #print(upper_arrow_coordinates)
             drawing_image.line(coordinates, fill, width = 2)
             drawing_image.line(upper_coordinates, fill, width = 2)
-            drawing_image.line(lower_coordinates, fill = "green")
+            drawing_image.line(lower_coordinates, fill, width = 2)
             """
             if command.succeed == True:
                 drawing_image.line(coordinates, fill = "black")
