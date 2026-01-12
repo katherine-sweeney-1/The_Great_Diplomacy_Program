@@ -135,7 +135,6 @@ def draw_moves(map_image, commands):
             slope = round(slope, 2)
             if sign == True:
                 if command.destination.coordinate[1] > command.origin.coordinate[1]:
-                    #print("yes", command_id, command.location.name)
                     slope_upper_line = slope - 5*math.pi/6
                     slope_lower_line = slope + 5*math.pi/6
                     upper_x_endpoint = 20*math.cos(slope_upper_line) + destination_coordinate[0]
@@ -143,8 +142,6 @@ def draw_moves(map_image, commands):
                     lower_x_endpoint = (20*math.cos(slope_lower_line)) + destination_coordinate[0]
                     lower_y_endpoint = 20*math.sin(slope_lower_line) + destination_coordinate[1]
                 else:
-                    print("no", command_id, command.location.name)
-                #print("positive slope", command_id, command.location.name)
                     slope_upper_line = slope - math.pi/6
                     slope_lower_line = slope + math.pi/6
                     upper_x_endpoint = 20*math.cos(slope_upper_line) + destination_coordinate[0]
@@ -161,16 +158,12 @@ def draw_moves(map_image, commands):
                     lower_x_endpoint = (20*math.cos(slope_lower_line)) + destination_coordinate[0]
                     lower_y_endpoint = (20*math.sin(slope_lower_line)) + destination_coordinate[1]
                 else:
-                #print("negative slope", command_id, command.location.name)
-                    #print("no", command_id, command.location.name)
                     slope_upper_line = slope -  5*math.pi/6
                     slope_lower_line = slope + 5*math.pi/6
                     upper_x_endpoint = (20*math.cos(slope_upper_line)) + destination_coordinate[0]
                     upper_y_endpoint = (20*math.sin(slope_upper_line)) + destination_coordinate[1]
                     lower_x_endpoint = (20*math.cos(slope_lower_line)) + destination_coordinate[0]
                     lower_y_endpoint = (20*math.sin(slope_lower_line)) + destination_coordinate[1]
-            #upper_x_endpoint = 20*math.cos(slope_upper_line) + destination_coordinate[0]
-            #upper_y_endpoint = 20*math.sin(slope_lower_line) + destination_coordinate[1]
             upper_x_endpoint = int(upper_x_endpoint)
             upper_y_endpoint = int(upper_y_endpoint)
             upper_arrow_coordinates = (upper_x_endpoint, upper_y_endpoint)
@@ -179,49 +172,27 @@ def draw_moves(map_image, commands):
             lower_y_endpoint = int(lower_y_endpoint)
             lower_arrow_coordinates = (lower_x_endpoint, lower_y_endpoint)
             lower_coordinates = [lower_arrow_coordinates, destination_coordinate]
-            """
-            print(command_id)
-            print(command.location.name, command.origin.name, command.destination.name)
-            print(slope, slope_upper_line, slope_lower_line)
-            print("dest coord", destination_coordinate)
-            print("upper arrow coord", upper_arrow_coordinates)
-            print(" ")
-            """
-            #print(command.unit.id, slope, slope_degrees)
             if command.succeed == True:
                 fill = "black"
             else:
                 fill = "red"
-            #print(upper_arrow_coordinates)
             drawing_image.line(coordinates, fill, width = 2)
             drawing_image.line(upper_coordinates, fill, width = 2)
             drawing_image.line(lower_coordinates, fill, width = 2)
-            """
-            if command.succeed == True:
-                drawing_image.line(coordinates, fill = "black")
-                drawing_image.line(upper_arrow_coordinates, fill = "black")
-                drawing_image.line(lower_arrow_coordinates, fill = "black")
-
-            else:
-                drawing_image.line(coordinates, fill = "red")
-                drawing_image.line(upper_arrow_coordinates, fill = "black")
-                drawing_image.line(lower_arrow_coordinates, fill = "red")
-            """
     # for supports
     #for holds
         if command.location == command.origin == command.destination:
             center = command.location.coordinate
-            nw_coordinates = (center[0] - 8, center[1] - 8)
-            se_coordinates = (center[0] + 8, center[1] + 8)
+            nw_coordinates = (center[0] - 9, center[1] - 9)
+            se_coordinates = (center[0] + 9, center[1] + 9)
             coordinates = [nw_coordinates, se_coordinates]
             if command.succeed == True:
-                drawing_image.ellipse(coordinates, outline = "black", width = 3)
+                drawing_image.ellipse(coordinates, outline = "black", width = 2)
             else:
-                drawing_image.ellipse(coordinates, outline = "red", width = 3)
-
-
-
+                drawing_image.ellipse(coordinates, outline = "red", width = 2)
     # for convoys
+
+
 # Draw a line on map
 def draw_line(map_image): 
     coordinates = [[(0,0), (200, 200)],[(100, 150), 200, 250]]
@@ -273,7 +244,7 @@ def set_up_gui(commands):
     main_window.mainloop()
 
 def run_gui(game_objects):
-    turn = "81908_spring"
+    turn = "81910_spring"
     commands = game_objects[turn]["Commands"]
     commanders = game_objects[turn]["Commanders"]
     nodes = game_objects[turn]["Nodes"]
@@ -283,6 +254,6 @@ def run_gui(game_objects):
     set_up_gui(commands)
     for command_id in commands:
         command = commands[command_id]
-        #print("check", command_id, command.unit.location.name, command.location.name)
+        print("check", command_id, command.location.name, command.origin.name, command.destination.name)
     return game_objects
 
