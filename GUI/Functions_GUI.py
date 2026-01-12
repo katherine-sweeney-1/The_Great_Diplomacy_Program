@@ -3,6 +3,7 @@ from PIL import Image, ImageTk, ImageDraw
 import cv2
 from Functions_Coordinates import assign_coordinates_to_nodes
 import math
+import numpy as np
 
 coordinates = []
 territory_file = "GUI/Data_Main_Names.csv"
@@ -75,46 +76,6 @@ def draw_units_test(commands, map_image):
             ne_coordinates = (center[0] + 6, center[1] - 6)
             coordinates = [south_coordinates, nw_coordinates, ne_coordinates]
             drawing_image.polygon(coordinates, fill, outline = "black", width = 1)
-"""
-def draw_units_on_map(units, map_image, canvas, last_unit_value= None, drawn_units = None, drawn_map_image = None):
-    if last_unit_value == None:
-        for unit_id in units:
-            last_unit = unit_id
-    else:
-        last_unit = last_unit_value
-    if drawn_units == None:
-        already_drawn_units = []
-    else:
-        already_drawn_units = drawn_units
-    for unit_id in units:
-        unit = units[unit_id]
-        #print(unit_id)
-        #print("checkin", unit_id, drawn_map_image)
-        if unit_id in already_drawn_units:
-            continue
-        else:
-            #print("yes 0")
-            already_drawn_units.append(unit_id)
-            #print(len(already_drawn_units))
-            if unit_id != last_unit and unit not in already_drawn_units:
-                #print("yes 1")
-                map_image_with_previous_units = drawn_map_image
-                #print("len already drawn units", unit_id, len(already_drawn_units))
-                if len(already_drawn_units) == 1:
-                    print("check", unit_id)
-                    map_image_with_unit = draw_unit(unit, map_image, canvas)
-                else:
-                    print("test ", unit_id)
-                    map_image_with_unit = draw_unit(unit, map_image, canvas, map_image_with_previous_units)
-                print(map_image_with_unit)
-                map_image_with_unit = draw_units_on_map(units, map_image, canvas, last_unit_value = last_unit, drawn_units = already_drawn_units, drawn_map_image = map_image_with_unit)
-            elif unit_id == last_unit:
-                print("yes 2")
-                map_image_with_previous_units = drawn_map_image
-                map_image_with_units = draw_unit(unit, map_image, canvas, map_image_with_previous_units)
-                return map_image_with_units
-    #return map_image
-"""
 
 def draw_moves(map_image, commands):
     drawing_image = ImageDraw.Draw(map_image)
@@ -135,7 +96,6 @@ def draw_moves(map_image, commands):
             slope = round(slope, 2)
             if sign == True:
                 if command.destination.coordinate[1] > command.origin.coordinate[1]:
-                    #print("yes", command_id, command.location.name)
                     slope_upper_line = slope - 5*math.pi/6
                     slope_lower_line = slope + 5*math.pi/6
                     upper_x_endpoint = 20*math.cos(slope_upper_line) + destination_coordinate[0]
@@ -143,8 +103,6 @@ def draw_moves(map_image, commands):
                     lower_x_endpoint = (20*math.cos(slope_lower_line)) + destination_coordinate[0]
                     lower_y_endpoint = 20*math.sin(slope_lower_line) + destination_coordinate[1]
                 else:
-                    print("no", command_id, command.location.name)
-                #print("positive slope", command_id, command.location.name)
                     slope_upper_line = slope - math.pi/6
                     slope_lower_line = slope + math.pi/6
                     upper_x_endpoint = 20*math.cos(slope_upper_line) + destination_coordinate[0]
@@ -161,16 +119,12 @@ def draw_moves(map_image, commands):
                     lower_x_endpoint = (20*math.cos(slope_lower_line)) + destination_coordinate[0]
                     lower_y_endpoint = (20*math.sin(slope_lower_line)) + destination_coordinate[1]
                 else:
-                #print("negative slope", command_id, command.location.name)
-                    #print("no", command_id, command.location.name)
                     slope_upper_line = slope -  5*math.pi/6
                     slope_lower_line = slope + 5*math.pi/6
                     upper_x_endpoint = (20*math.cos(slope_upper_line)) + destination_coordinate[0]
                     upper_y_endpoint = (20*math.sin(slope_upper_line)) + destination_coordinate[1]
                     lower_x_endpoint = (20*math.cos(slope_lower_line)) + destination_coordinate[0]
                     lower_y_endpoint = (20*math.sin(slope_lower_line)) + destination_coordinate[1]
-            #upper_x_endpoint = 20*math.cos(slope_upper_line) + destination_coordinate[0]
-            #upper_y_endpoint = 20*math.sin(slope_lower_line) + destination_coordinate[1]
             upper_x_endpoint = int(upper_x_endpoint)
             upper_y_endpoint = int(upper_y_endpoint)
             upper_arrow_coordinates = (upper_x_endpoint, upper_y_endpoint)
@@ -179,49 +133,63 @@ def draw_moves(map_image, commands):
             lower_y_endpoint = int(lower_y_endpoint)
             lower_arrow_coordinates = (lower_x_endpoint, lower_y_endpoint)
             lower_coordinates = [lower_arrow_coordinates, destination_coordinate]
-            """
-            print(command_id)
-            print(command.location.name, command.origin.name, command.destination.name)
-            print(slope, slope_upper_line, slope_lower_line)
-            print("dest coord", destination_coordinate)
-            print("upper arrow coord", upper_arrow_coordinates)
-            print(" ")
-            """
-            #print(command.unit.id, slope, slope_degrees)
             if command.succeed == True:
                 fill = "black"
             else:
                 fill = "red"
-            #print(upper_arrow_coordinates)
             drawing_image.line(coordinates, fill, width = 2)
             drawing_image.line(upper_coordinates, fill, width = 2)
             drawing_image.line(lower_coordinates, fill, width = 2)
-            """
-            if command.succeed == True:
-                drawing_image.line(coordinates, fill = "black")
-                drawing_image.line(upper_arrow_coordinates, fill = "black")
-                drawing_image.line(lower_arrow_coordinates, fill = "black")
-
-            else:
-                drawing_image.line(coordinates, fill = "red")
-                drawing_image.line(upper_arrow_coordinates, fill = "black")
-                drawing_image.line(lower_arrow_coordinates, fill = "red")
-            """
     # for supports
+        if command.location != command.origin and command.convoy == False:
+            points = []
+            if command.destination.coordinate[1] > command.location.coordinate[1]:
+                c = command.location.coordinate[1]
+                y_larger_value = command.destination.coordinate[1]
+            else:
+                c = command.destination.coordinate[1]
+                y_larger_value = command.location.coordinate[1]
+            if command.destination.coordinate[0] > command.location.coordinate[0]:
+                x_start_point = command.location.coordinate[0]
+                y_start_point = command.location.coordinate[1]
+                x_end_point = command.destination.coordinate[0]
+                y_end_point = command.destination.coordinate[0]
+            else:
+                x_start_point = command.destination.coordinate[0]
+                y_start_point = command.destination.coordinate[1]
+                x_end_point = command.location.coordinate[0]
+                y_end_point = command.location.coordinate[0]
+            x_values = np.arange(0, x_end_point, 1)
+            x_vertex = (x_end_point - x_start_point)/2 + x_start_point
+            y_vertex = y_larger_value + 15
+            vertex = (x_vertex, y_vertex)
+            number_of_points = x_end_point - x_start_point
+            #x = np.linspace(x_start_point, x_end_point, number_of_points)
+            a = (y_start_point - vertex[1])/(x_start_point - vertex[0])**2
+            y_values = a*(x_values - vertex[0])**2 + vertex[1]
+            for x, y in zip(x_values, y_values):
+                if x > x_start_point and x < x_end_point and y > y_start_point and y < vertex[1]:
+                    x = int(x)
+                    y = int(y)
+                    points.append((x, y))           
+            if command.succeed == True:
+                outline = "black"
+            else:
+                outline = "red"
+            drawing_image.line(points, outline, width = 3)
     #for holds
         if command.location == command.origin == command.destination:
             center = command.location.coordinate
-            nw_coordinates = (center[0] - 8, center[1] - 8)
-            se_coordinates = (center[0] + 8, center[1] + 8)
+            nw_coordinates = (center[0] - 9, center[1] - 9)
+            se_coordinates = (center[0] + 9, center[1] + 9)
             coordinates = [nw_coordinates, se_coordinates]
             if command.succeed == True:
-                drawing_image.ellipse(coordinates, outline = "black", width = 3)
+                drawing_image.ellipse(coordinates, outline = "black", width = 2)
             else:
-                drawing_image.ellipse(coordinates, outline = "red", width = 3)
-
-
-
+                drawing_image.ellipse(coordinates, outline = "red", width = 2)
     # for convoys
+
+
 # Draw a line on map
 def draw_line(map_image): 
     coordinates = [[(0,0), (200, 200)],[(100, 150), 200, 250]]
@@ -273,16 +241,16 @@ def set_up_gui(commands):
     main_window.mainloop()
 
 def run_gui(game_objects):
-    turn = "81908_spring"
+    turn = "81910_spring"
     commands = game_objects[turn]["Commands"]
     commanders = game_objects[turn]["Commanders"]
     nodes = game_objects[turn]["Nodes"]
     units = game_objects[turn]["Units"]
     nodes = nodes[0]
     assign_coordinates_to_nodes(nodes, coordinates_file, coastal_coordinates_file)
-    set_up_gui(commands)
     for command_id in commands:
         command = commands[command_id]
-        #print("check", command_id, command.unit.location.name, command.location.name)
+        print("check", command_id, command.location.name, command.origin.name, command.destination.name)
+    set_up_gui(commands)
     return game_objects
 
