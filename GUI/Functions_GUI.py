@@ -170,25 +170,39 @@ def draw_moves(map_image, commands):
             for x, y in zip(x_values, y_values):
                 # destination coordinate is below location coordinate on the map
                 if command.destination.coordinate[1] > command.location.coordinate[1]:
-                    if x > x_start_point and x < x_end_point:
-                        if x < vertex[0] and y > y_start_point:
-                            x = int(x)
-                            y = int(y)
-                            points.append((x, y))
-                            #if y > y_start_point and y < y_end_point: 
-                            outline = "green"
-                        if x > vertex[0] and y > y_end_point:
-                            x = int(x)
-                            y = int(y)
-                            points.append((x, y)) 
-                            outline = "red"
+                    if x > x_start_point and x < vertex[0] and y > y_start_point:
+                        x = int(x)
+                        y = int(y)
+                        points.append((x, y)) 
+                        outline = "green"
+                    if x > vertex[0] and x < x_end_point and y > y_end_point:
+                        x = int(x)
+                        y = int(y)
+                        points.append((x, y)) 
+                        outline = "red"
                 else:
-                    if x > x_start_point and x < x_end_point:
-                        if y > y_start_point and y < vertex[1]:
-                            x = int(x)
-                            y = int(y)
-                            points.append((x, y))     
-                    outline = "black"     
+                    # may need to revise this code
+                    if x > x_start_point and x < vertex[0] and y > y_start_point:
+                        #print("yes 1", command_id)
+                        x = int(x)
+                        y = int(y)
+                        points.append((x, y))
+                        outline = "blue"
+                    #print("ues", command_id, int(x), x_end_point)
+                    #print("yes 2", command_id, int(y), y_end_point)
+                    if x > vertex[0] and x < x_end_point and y > y_end_point:
+                        print("yes 2", command_id, y_end_point)
+                        x = int(x)
+                        y = int(y)
+                        points.append((x, y))
+                        outline = "green"
+                    """ 
+                    if x > x_start_point and x < x_end_point and y > y_start_point and y < vertex[1]:
+                        x = int(x)
+                        y = int(y)
+                        points.append((x, y)) 
+                    """    
+                    #outline = "black"     
             drawing_image.line(points, outline, width = 3)
     #for holds
         if command.location == command.origin == command.destination:
@@ -254,7 +268,7 @@ def set_up_gui(commands):
     main_window.mainloop()
 
 def run_gui(game_objects):
-    turn = "81910_spring"
+    turn = "81911_spring"
     commands = game_objects[turn]["Commands"]
     commanders = game_objects[turn]["Commanders"]
     nodes = game_objects[turn]["Nodes"]
