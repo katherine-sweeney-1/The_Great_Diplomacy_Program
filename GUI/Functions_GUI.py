@@ -83,6 +83,10 @@ def draw_moves(map_image, commands):
         command = commands[command_id]
     # for attacks
         if command.location == command.origin and command.origin != command.destination:
+            first_coordinate = command.origin.coordinate
+            second_coordinate = command.destination.coordinate
+            draw_line_from_coordinates(first_coordinate, second_coordinate, command, drawing_image)
+            """
             coordinates = [command.origin.coordinate, command.destination.coordinate]
             origin_coordinate = command.origin.coordinate
             destination_coordinate = command.destination.coordinate
@@ -140,14 +144,13 @@ def draw_moves(map_image, commands):
             drawing_image.line(coordinates, fill, width = 2)
             drawing_image.line(upper_coordinates, fill, width = 2)
             drawing_image.line(lower_coordinates, fill, width = 2)
+            """
     # for supports
         if command.location != command.origin and command.convoy == False:
             points = []
             if command.destination.coordinate[1] > command.location.coordinate[1]:
-                c = command.location.coordinate[1]
                 y_larger_value = command.destination.coordinate[1]
             else:
-                c = command.destination.coordinate[1]
                 y_larger_value = command.location.coordinate[1]
             if command.destination.coordinate[0] > command.location.coordinate[0]:
                 x_start_point = command.location.coordinate[0]
@@ -159,8 +162,12 @@ def draw_moves(map_image, commands):
                 y_start_point = command.destination.coordinate[1]
                 x_end_point = command.location.coordinate[0]
                 y_end_point = command.location.coordinate[1]
+            if command.destination.coordinate[1] > command.location.coordinate[1]:
+                x_vertex = 2*(x_end_point - x_start_point)/3 + x_start_point
+            else:
+                x_vertex = (x_end_point - x_start_point)/3 + x_start_point
             x_values = np.arange(0, x_end_point, 1)
-            x_vertex = (x_end_point - x_start_point)/2 + x_start_point
+            #x_vertex = (x_end_point - x_start_point)/2 + x_start_point
             y_vertex = y_larger_value + 15
             vertex = (x_vertex, y_vertex)
             number_of_points = x_end_point - x_start_point
@@ -174,7 +181,7 @@ def draw_moves(map_image, commands):
                         x = int(x)
                         y = int(y)
                         points.append((x, y)) 
-                        outline = "green"
+                        outline = "black"
                     if x > vertex[0] and x < x_end_point and y > y_end_point:
                         x = int(x)
                         y = int(y)
@@ -191,7 +198,9 @@ def draw_moves(map_image, commands):
                     #print("ues", command_id, int(x), x_end_point)
                     #print("yes 2", command_id, int(y), y_end_point)
                     if x > vertex[0] and x < x_end_point and y > y_end_point:
-                        print("yes 2", command_id, y_end_point)
+                        print("yes 2", command_id, command.destination.name, "x", x, "y", int(y), y_end_point)
+                        print(command.location.name, command.destination.name, command.location.coordinate, command.destination.coordinate)
+                        print(" ")
                         x = int(x)
                         y = int(y)
                         points.append((x, y))
@@ -218,11 +227,64 @@ def draw_moves(map_image, commands):
 
 
 # Draw a line on map
-def draw_line(map_image): 
-    coordinates = [[(0,0), (200, 200)],[(100, 150), 200, 250]]
-    drawing_image = ImageDraw.Draw(map_image)
-    for coordinate in coordinates:
-        drawing_image.line(coordinate, fill = "red")
+def draw_line_from_coordinates(first_coordinate, second_coordinate, command, drawing_image):
+    coordinates = [first_coordinate, second_coordinate]
+    origin_coordinate = first_coordinate
+    destination_coordinate = second_coordinate
+    slope = (destination_coordinate[1] - origin_coordinate[1])/(destination_coordinate[0] - origin_coordinate[0])
+    if slope > 0:
+        sign = True
+    else:
+        sign = False
+    slope = round(slope, 2)
+    slope = math.atan(slope)
+    slope = round(slope, 2)
+    if sign == True:
+        if destination_coordinate[1] > origin_coordinate[1]:
+            slope_upper_line = slope - 5*math.pi/6
+            slope_lower_line = slope + 5*math.pi/6
+            upper_x_endpoint = 20*math.cos(slope_upper_line) + destination_coordinate[0]
+            upper_y_endpoint = (20*math.sin(slope_upper_line)) + destination_coordinate[1]
+            lower_x_endpoint = (20*math.cos(slope_lower_line)) + destination_coordinate[0]
+            lower_y_endpoint = 20*math.sin(slope_lower_line) + destination_coordinate[1]
+        else:
+            slope_upper_line = slope - math.pi/6
+            slope_lower_line = slope + math.pi/6
+            upper_x_endpoint = 20*math.cos(slope_upper_line) + destination_coordinate[0]
+            upper_y_endpoint = (20*math.sin(slope_upper_line)) + destination_coordinate[1]
+            lower_x_endpoint = (20*math.cos(slope_lower_line)) + destination_coordinate[0]
+            lower_y_endpoint = 20*math.sin(slope_lower_line) + destination_coordinate[1]
+    else:
+        if destination_coordinate[1] > origin_coordinate[1]:
+            #print("yes", command_id, command.location.name)
+            slope_upper_line = slope + 11*math.pi/6
+            slope_lower_line = slope + math.pi/6
+            upper_x_endpoint = (20*math.cos(slope_upper_line)) + destination_coordinate[0]
+            upper_y_endpoint = (20*math.sin(slope_upper_line)) + destination_coordinate[1]
+            lower_x_endpoint = (20*math.cos(slope_lower_line)) + destination_coordinate[0]
+            lower_y_endpoint = (20*math.sin(slope_lower_line)) + destination_coordinate[1]
+        else:
+            slope_upper_line = slope -  5*math.pi/6
+            slope_lower_line = slope + 5*math.pi/6
+            upper_x_endpoint = (20*math.cos(slope_upper_line)) + destination_coordinate[0]
+            upper_y_endpoint = (20*math.sin(slope_upper_line)) + destination_coordinate[1]
+            lower_x_endpoint = (20*math.cos(slope_lower_line)) + destination_coordinate[0]
+            lower_y_endpoint = (20*math.sin(slope_lower_line)) + destination_coordinate[1]
+    upper_x_endpoint = int(upper_x_endpoint)
+    upper_y_endpoint = int(upper_y_endpoint)
+    upper_arrow_coordinates = (upper_x_endpoint, upper_y_endpoint)
+    upper_coordinates = [upper_arrow_coordinates, destination_coordinate]
+    lower_x_endpoint = int(lower_x_endpoint)
+    lower_y_endpoint = int(lower_y_endpoint)
+    lower_arrow_coordinates = (lower_x_endpoint, lower_y_endpoint)
+    lower_coordinates = [lower_arrow_coordinates, destination_coordinate]
+    if command.succeed == True:
+        fill = "black"
+    else:
+        fill = "red"
+    drawing_image.line(coordinates, fill, width = 2)
+    drawing_image.line(upper_coordinates, fill, width = 2)
+    drawing_image.line(lower_coordinates, fill, width = 2)
 
 def set_up_gui(commands):
     main_window = tk.Tk()
