@@ -4,6 +4,7 @@ import cv2
 from Functions_Coordinates import assign_coordinates_to_nodes
 import math
 import numpy as np
+from scipy.optimize import curve_fit
 
 coordinates = []
 territory_file = "GUI/Data_Main_Names.csv"
@@ -148,29 +149,69 @@ def draw_moves(map_image, commands):
     # for supports
         if command.location != command.origin and command.convoy == False:
             points = []
+            """
             if command.destination.coordinate[1] > command.location.coordinate[1]:
                 y_larger_value = command.destination.coordinate[1]
             else:
                 y_larger_value = command.location.coordinate[1]
+            """
             if command.destination.coordinate[0] > command.location.coordinate[0]:
                 x_start_point = command.location.coordinate[0]
                 y_start_point = command.location.coordinate[1]
                 x_end_point = command.destination.coordinate[0]
                 y_end_point = command.destination.coordinate[1]
+                #a = x_start_point*(x_start_point - x_end_point)
             else:
                 x_start_point = command.destination.coordinate[0]
                 y_start_point = command.destination.coordinate[1]
                 x_end_point = command.location.coordinate[0]
                 y_end_point = command.location.coordinate[1]
+                a = x_end_point*(x_end_point - x_start_point)
             if command.destination.coordinate[1] > command.location.coordinate[1]:
                 x_vertex = 2*(x_end_point - x_start_point)/3 + x_start_point
             else:
                 x_vertex = (x_end_point - x_start_point)/3 + x_start_point
-            x_values = np.arange(0, x_end_point, 1)
+            x_values = np.arange(x_start_point, x_end_point, 1)
             #x_vertex = (x_end_point - x_start_point)/2 + x_start_point
-            y_vertex = y_larger_value + 15
-            vertex = (x_vertex, y_vertex)
-            number_of_points = x_end_point - x_start_point
+            #y_vertex = y_larger_value + 15
+            #vertex = (x_vertex, y_vertex)
+            x_origin = command.origin.coordinate[0]
+            y_origin = command.origin.coordinate[1]
+            #b = x_start_point*(y_start_point - y_end_point) - y_start_point
+            initial_x_values = [command.location.coordinate[0], command.destination.coordinate[0]]
+            initial_y_values = [command.location.coordinate[1], (command.origin.coordinate[0] - 5), (command.destination.coordinate[0] - 1), command.destination.coordinate[1]]
+            initial_parameter_values = [1.0, 1.0, 0.0, 0.0]
+            #parameters = curve_fit(tangent_function, xdata = initial_x_values, ydata = initial_y_values)
+            #b = parameters
+            print("initial", initial_x_values)
+            minimum_x = min(initial_x_values)
+            maximum_x = max(initial_x_values)
+            print(minimum_x, maximum_x)
+            x_values = np.linspace(minimum_x, maximum_x)
+            points = []
+            print(x_values)
+            for x in x_values:
+                b = 1
+                y = tangent_function(x, x_origin, y_origin)
+                print("x", x)
+                print("y", y)
+                points.append((x, y))
+            """
+            for x in x_values:
+                #x = np.cosh(x)
+                #y = np.sinh(x)
+                print(x, a)
+                print(x**2/a**2)
+                if x == 0 :
+                    continue
+                else:
+                    y_positive = b*math.sqrt((x**2)/(a**2) - 1)
+                    print(y_positive)
+                    points.append((x, y_positive))
+            """
+            outline = "green"
+            drawing_image.line(points, outline, width = 3)    
+            """
             #x = np.linspace(x_start_point, x_end_point, number_of_points)
             a = (y_start_point - vertex[1])/(x_start_point - vertex[0])**2
             y_values = a*(x_values - vertex[0])**2 + vertex[1]
@@ -205,14 +246,10 @@ def draw_moves(map_image, commands):
                         y = int(y)
                         points.append((x, y))
                         outline = "green"
-                    """ 
-                    if x > x_start_point and x < x_end_point and y > y_start_point and y < vertex[1]:
-                        x = int(x)
-                        y = int(y)
-                        points.append((x, y)) 
-                    """    
+
                     #outline = "black"     
             drawing_image.line(points, outline, width = 3)
+            """
     #for holds
         if command.location == command.origin == command.destination:
             center = command.location.coordinate
@@ -225,6 +262,9 @@ def draw_moves(map_image, commands):
                 drawing_image.ellipse(coordinates, outline = "red", width = 2)
     # for convoys
 
+def tangent_function(x, x_origin, y_origin):
+    y = 10*np.tanh((10*x+ x_origin)) + y_origin
+    return y
 
 # Draw a line on map
 def draw_line_from_coordinates(first_coordinate, second_coordinate, command, drawing_image):
