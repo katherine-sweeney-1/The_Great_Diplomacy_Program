@@ -183,19 +183,24 @@ def draw_moves(map_image, commands):
             initial_parameter_values = [1.0, 1.0, 0.0, 0.0]
             #parameters = curve_fit(tangent_function, xdata = initial_x_values, ydata = initial_y_values)
             #b = parameters
-            print("initial", initial_x_values)
+            #print("initial", initial_x_values)
             minimum_x = min(initial_x_values)
             maximum_x = max(initial_x_values)
-            print(minimum_x, maximum_x)
+            #print(minimum_x, maximum_x)
             x_values = np.linspace(minimum_x, maximum_x)
             points = []
-            print(x_values)
+            #print(x_values)
             for x in x_values:
                 b = 1
-                y = tangent_function(x, x_origin, y_origin)
-                print("x", x)
-                print("y", y)
-                points.append((x, y))
+                y = y = np.sinh((x - x_origin)) + y_origin
+                x = np.cosh(x - x_origin) + y_origin
+                x = int(x)
+                y = int(y)
+                if y > y_start_point:
+                    print(command.unit.id)
+                    print("x", x)
+                    print("y", y)
+                    points.append((x, y))
             """
             for x in x_values:
                 #x = np.cosh(x)
@@ -263,7 +268,7 @@ def draw_moves(map_image, commands):
     # for convoys
 
 def tangent_function(x, x_origin, y_origin):
-    y = 10*np.tanh((10*x+ x_origin)) + y_origin
+    y = np.sinh((x - x_origin)) + y_origin
     return y
 
 # Draw a line on map
