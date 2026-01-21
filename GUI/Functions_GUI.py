@@ -119,10 +119,10 @@ def draw_moves(map_image, commands):
             x_origin = command.origin.coordinate[0]
             y_origin = command.origin.coordinate[1]
             #b = x_start_point*(y_start_point - y_end_point) - y_start_point
+            """
             initial_x_values = [command.location.coordinate[0], (command.origin.coordinate[0] - 5), (command.destination.coordinate[0] - 1), command.destination.coordinate[0]]
             initial_y_values = [command.location.coordinate[1], (command.origin.coordinate[1] - 5), (command.destination.coordinate[1] - 1), command.destination.coordinate[1]]
             initial_parameter_values = [1.0, 1.0, 0.0, 0.0]
-            
             parameters = curve_fit(tangent_function, xdata = initial_x_values, ydata = initial_y_values)
             a, b = parameters[0][0], parameters[0][1]
             a = int(a)
@@ -132,7 +132,9 @@ def draw_moves(map_image, commands):
             minimum_x = min(initial_x_values)
             maximum_x = max(initial_x_values)
             #print(minimum_x, maximum_x)
+            
             x_values = np.linspace(minimum_x, maximum_x)
+            """
             points = []
             #print(x_values)
             for x in x_values:
@@ -159,23 +161,11 @@ def draw_moves(map_image, commands):
                         print(y_start_point, y_end_point)
                         print(" ")
                 """
-                x_equation, y_equation = get_trig_functions(x, x_origin, y_origin, x_start_point, y_start_point, x_end_point, y_end_point)
-                print(x_equation, y_equation)
-                
-                
-            """
-            for x in x_values:
-                #x = np.cosh(x)
-                #y = np.sinh(x)
-                print(x, a)
-                print(x**2/a**2)
-                if x == 0 :
-                    continue
-                else:
-                    y_positive = b*math.sqrt((x**2)/(a**2) - 1)
-                    print(y_positive)
-                    points.append((x, y_positive))
-            """
+                x, y = get_trig_functions(x, x_origin, y_origin, x_start_point, y_start_point, x_end_point, y_end_point)
+                if x != 0 and y != 0:
+                    x = int(x)
+                    y = int(y)   
+                    points.append((x, y))
             outline = "green"
             drawing_image.line(points, outline, width = 3)    
             """
@@ -237,29 +227,33 @@ def tangent_function(x, a, b, x_origin, y_origin):
 def get_trig_functions(x, x_origin, y_origin, x_start_point, y_start_point, x_end_point, y_end_point):
     a = 5
     b = 5
-    theta = np.arccosh((x - x_origin)/a)
-# opens left/right - use right branch
-    if x_origin < x_start_point and x_origin < x_end_point:
-        x_equation = x_origin + a*np.cosh(theta)
-        y_equation = y_origin + b*np.sinh(theta)
-    elif x_origin > x_start_point and x_origin < x_end_point:
-        # use upper branch if origin is below the y values' midpoint
-        if y_origin > y_start_point + (y_end_point - y_start_point)/2:
-            x_equation = x_origin + a*np.sinh(theta)
-            y_equation = y_origin + b*np.sinh(theta)
-        # use lower branch if origin is above the y values' midpoint
-        else:
-            x_equation = x_origin + a*np.sinh(theta)
-            y_equation = y_origin - b*np.sinh(theta)
-    # opens left/right - use left branch
-    elif x_origin > x_start_point and x_origin > x_end_point:
-        x_equation = x_origin - a*np.cosh(theta)
-        y_equation = y_origin + b*np.sinh(theta)
+    if (x - x_origin)/a >= 1:
+        theta = np.arccosh((x - x_origin)/a)
+    elif (x_origin - x)/a >= 1:
+        theta = np.arccosh((x_origin - x)/a)
+        # opens left/right - use right branch
     else:
-        print("help")
-        print("origin", x_origin)
-        print("start", x_start_point)
-        print("end", x_end_point)
+        theta = None
+    if theta:
+        if x_origin < x_start_point and x_origin < x_end_point:
+            x_equation = x_origin + a*np.cosh(theta)
+            y_equation = y_origin + b*np.sinh(theta)
+        elif x_origin > x_start_point and x_origin < x_end_point:
+            # use upper branch if origin is below the y values' midpoint
+            if y_origin > y_start_point + (y_end_point - y_start_point)/2:
+                x_equation = x_origin + a*np.sinh(theta)
+                y_equation = y_origin + b*np.sinh(theta)
+            # use lower branch if origin is above the y values' midpoint
+            else:
+                x_equation = x_origin + a*np.sinh(theta)
+                y_equation = y_origin - b*np.sinh(theta)
+        # opens left/right - use left branch
+        elif x_origin > x_start_point and x_origin > x_end_point:
+            x_equation = x_origin - a*np.cosh(theta)
+            y_equation = y_origin + b*np.sinh(theta)
+    else:
+        x_equation = 0
+        y_equation = 0
     return x_equation, y_equation
 
 # Draw a line on map
