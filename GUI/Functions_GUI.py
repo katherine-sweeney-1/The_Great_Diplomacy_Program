@@ -119,48 +119,28 @@ def draw_moves(map_image, commands):
             x_origin = command.origin.coordinate[0]
             y_origin = command.origin.coordinate[1]
             #b = x_start_point*(y_start_point - y_end_point) - y_start_point
-            """
+            
             initial_x_values = [command.location.coordinate[0], (command.origin.coordinate[0] - 5), (command.destination.coordinate[0] - 1), command.destination.coordinate[0]]
             initial_y_values = [command.location.coordinate[1], (command.origin.coordinate[1] - 5), (command.destination.coordinate[1] - 1), command.destination.coordinate[1]]
-            initial_parameter_values = [1.0, 1.0, 0.0, 0.0]
-            parameters = curve_fit(tangent_function, xdata = initial_x_values, ydata = initial_y_values)
-            a, b = parameters[0][0], parameters[0][1]
-            a = int(a)
+            initial_parameter_values = [1.0, 1.0, 1.0]
+            lower_bounds = [0, 0]
+            upper_bounds = [1000, 100]
+            parameters = curve_fit(lambda x, a: get_theta(x, x_origin, a), xdata = initial_x_values, ydata = initial_y_values, bounds = (lower_bounds, upper_bounds))
+            b = parameters[0][0], parameters[0][1]
+            #a = int(a)
             b = int(b)
             print(command.unit.id, a, b)
+            
             #print("initial", initial_x_values)
             minimum_x = min(initial_x_values)
             maximum_x = max(initial_x_values)
             #print(minimum_x, maximum_x)
             
             x_values = np.linspace(minimum_x, maximum_x)
-            """
+        
             points = []
             #print(x_values)
             for x in x_values:
-                #y = y = np.sinh((x - x_origin)) + y_origin
-                """
-                y = tangent_function(x, a, b, x_origin, y_origin)
-                x = np.cosh(x - x_origin) + y_origin
-                x = int(x)
-                y = int(y)
-                if y_start_point > command.origin.coordinate[0]:
-                    if y > command.origin.coordinate[0] and y < y_start_point:
-                        points.append((x, y))
-                        print(command.unit.id)
-                        print("x", x)
-                        print("y", y)
-                        print(y_start_point, y_end_point)
-                        print(" ")
-                else:
-                    if y > y_start_point and y < command.origin.coordinate[1]:
-                        points.append((x, y))
-                        print(command.unit.id)
-                        print("x", x)
-                        print("y", y)
-                        print(y_start_point, y_end_point)
-                        print(" ")
-                """
                 x, y = get_trig_functions(x, x_origin, y_origin, x_start_point, y_start_point, x_end_point, y_end_point)
                 if x != 0 and y != 0:
                     x = int(x)
@@ -223,10 +203,36 @@ def tangent_function(x, a, b, x_origin, y_origin):
     y = a*np.tanh((b*x + x_origin)) + y_origin
     return y
 
+"""
+def get_theta(x, x_origin, a):
+    print("x:", x)
+    print("x origin:", x_origin)
+    print("a:", a)
+    print(" ")
+    if np.any(( - x_origin)/a >= 1):
+        theta = np.arccosh((x - x_origin)/a)
+    elif np.any((x_origin - x)/a >= 1):
+        theta = np.arccosh((x_origin - x)/a)
+        # opens left/right - use right branch
+    return theta
+"""
+
+def get_theta(x, x_origin, a):
+    #theta = np.arcsinh((y - y_origin)/b)
+    print("x:", x)
+    print("x origin:", x_origin)
+    print("a:", a)
+    print(" ")
+    if np.any((x - x_origin)/a >= 1):
+        theta = np.arccosh((x - x_origin)/a)
+    elif np.any((x_origin - x)/a >= 1):
+        theta = np.arccosh((x_origin - x)/a)
+        # opens left/right - use right branch
+    return theta
 
 def get_trig_functions(x, x_origin, y_origin, x_start_point, y_start_point, x_end_point, y_end_point):
     a = 5
-    b = 5
+    b = 1
     if (x - x_origin)/a >= 1:
         theta = np.arccosh((x - x_origin)/a)
     elif (x_origin - x)/a >= 1:
