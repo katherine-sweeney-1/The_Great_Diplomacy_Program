@@ -90,12 +90,6 @@ def draw_moves(map_image, commands):
     # for supports
         if command.location != command.origin and command.origin != command.destination and command.convoy == False:
             points = []
-            """
-            if command.destination.coordinate[1] > command.location.coordinate[1]:
-                y_larger_value = command.destination.coordinate[1]
-            else:
-                y_larger_value = command.location.coordinate[1]
-            """
             if command.destination.coordinate[0] > command.location.coordinate[0]:
                 x_start_point = command.location.coordinate[0]
                 y_start_point = command.location.coordinate[1]
@@ -203,20 +197,6 @@ def tangent_function(x, a, b, x_origin, y_origin):
     y = a*np.tanh((b*x + x_origin)) + y_origin
     return y
 
-"""
-def get_theta(x, x_origin, a):
-    print("x:", x)
-    print("x origin:", x_origin)
-    print("a:", a)
-    print(" ")
-    if np.any(( - x_origin)/a >= 1):
-        theta = np.arccosh((x - x_origin)/a)
-    elif np.any((x_origin - x)/a >= 1):
-        theta = np.arccosh((x_origin - x)/a)
-        # opens left/right - use right branch
-    return theta
-"""
-
 def get_theta(x, x_origin, a):
     #theta = np.arcsinh((y - y_origin)/b)
     print("x:", x)
@@ -322,6 +302,23 @@ def draw_line_from_coordinates(first_coordinate, second_coordinate, command, dra
     drawing_image.line(upper_coordinates, fill, width = 2)
     drawing_image.line(lower_coordinates, fill, width = 2)
 
+def draw_supports(canvas, commands):
+    for command_id in commands:
+        command = commands[command_id]
+        if command.location != command.origin and command.convoy == False:
+            location_coordinate = command.location.coordinate
+            origin_coordinate = command.origin.coordinate
+            destination_coordinate = command.destination.coordinate
+            offset_origin_coordinate = (origin_coordinate[0] - 5, origin_coordinate[1] - 5)
+            offset_destination_coordiante = (destination_coordinate[0] - 5, destination_coordinate[1] - 5)
+            canvas.create_line (location_coordinate, origin_coordinate, dash = (5, 2), fill = "blue", width = 3)
+        # supports for attacks
+            if command.origin != command.destination:
+                canvas.create_line(offset_origin_coordinate, offset_destination_coordiante, dash = (5, 2), fill = "blue", width = 3)
+            else:
+                canvas.create_oval(origin_coordinate[0] - 5, origin_coordinate[1] - 5, origin_coordinate[0] + 5, origin_coordinate[1]+ 5, fill = "blue", width = 3)
+    return canvas
+
 def set_up_gui(commands):
     main_window = tk.Tk()
     main_window.title('TGDP GUI')
@@ -336,7 +333,6 @@ def set_up_gui(commands):
     map_image.thumbnail((map_width, map_height), Image.Resampling.LANCZOS)
     # create canvas to click on 
     canvas = tk.Canvas(main_window, width = map_width, height = map_height, cursor = "cross")
-    #draw_line(map_image)
     draw_units_test(commands, map_image)
     draw_moves(map_image, commands)
     canvas.pack(fill = tk.BOTH)
@@ -345,7 +341,8 @@ def set_up_gui(commands):
     # create canvas on image
     canvas.create_image(0, 0, anchor = tk.NW, image = map_image)
 
-    canvas.create_line(50, 100, 350, 100, dash = (5, 2), fill = "blue", width = 3)
+    canvas = draw_supports(canvas, commands)
+    #canvas.create_line(50, 100, 350, 100, dash = (5, 2), fill = "blue", width = 3)
     """
     # make image label
     map_label = tk.Label(main_window, image = map_image)
