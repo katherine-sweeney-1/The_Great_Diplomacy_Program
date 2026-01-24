@@ -119,7 +119,7 @@ def draw_moves(map_image, commands):
             x_origin = command.origin.coordinate[0]
             y_origin = command.origin.coordinate[1]
             #b = x_start_point*(y_start_point - y_end_point) - y_start_point
-            
+            """
             initial_x_values = [command.location.coordinate[0], (command.origin.coordinate[0] - 5), (command.destination.coordinate[0] - 1), command.destination.coordinate[0]]
             initial_y_values = [command.location.coordinate[1], (command.origin.coordinate[1] - 5), (command.destination.coordinate[1] - 1), command.destination.coordinate[1]]
             initial_parameter_values = [1.0, 1.0, 1.0]
@@ -137,7 +137,7 @@ def draw_moves(map_image, commands):
             #print(minimum_x, maximum_x)
             
             x_values = np.linspace(minimum_x, maximum_x)
-        
+            """
             points = []
             #print(x_values)
             for x in x_values:
@@ -344,6 +344,8 @@ def set_up_gui(commands):
     map_image = ImageTk.PhotoImage(map_image)
     # create canvas on image
     canvas.create_image(0, 0, anchor = tk.NW, image = map_image)
+
+    canvas.create_line(50, 100, 350, 100, dash = (5, 2), fill = "blue", width = 3)
     """
     # make image label
     map_label = tk.Label(main_window, image = map_image)
