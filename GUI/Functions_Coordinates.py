@@ -15,6 +15,33 @@ nodes_data_main = get_nodes_data_dictionary(data_nodes)
 territory_coordinates_file = open(territory_coordinates)
 territory_coordinates_file.read()
 
+coordinates = []
+territory_file = "GUI/Data_Main_Names.csv"
+coordinates_file = "GUI/Territory_Main_Coordinates.txt"
+coastal_territory_file = "GUI/Data_Coastal_Names.csv"
+coastal_coordinates_file = "GUI/Territory_Coastal_Coordinates.txt"
+
+# retrieve coordinates for territories
+def get_coordinates(click):
+    if click:
+        x_coordinate = click.x
+        y_coordinate = click.y
+        coordinate = (x_coordinate, y_coordinate)
+        coordinates.append(coordinate)
+        write_coordinates_file(coastal_territory_file, coastal_coordinates_file)
+
+# save coordinates for territories in output file
+def write_coordinates_file(territory_file, coordinates_file):
+    with open(territory_file, "r") as file_input, open(coordinates_file, "a") as file_output:
+        count = len(coordinates)
+        territory_file_count = 0
+        for line in file_input:
+            if territory_file_count == count - 1:
+                print("current territory is", line)
+                print("click the next territory", next(file_input))
+                print(line[0:3], coordinates[count - 1], file = file_output)
+            territory_file_count += 1
+            
 def get_territories_with_neighbors_coordinates(nodes_data_main, territory_coordinates, territory_neighbor_coordinates):
     # each entry in the nodes dictionary
     territories_neighbors_with_coordinates = {}
