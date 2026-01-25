@@ -6,7 +6,6 @@ def draw_units(commands, map_image):
     units_coordinates = []
     for command_id in commands:
         command = commands[command_id]
-        #print("checking", unit.location.name)
         center = command.location.coordinate
         if command_id[0:2] == "AU":
             fill = (200, 50, 50)
@@ -38,6 +37,7 @@ def draw_attacks(map_image, commands):
     drawing_image = ImageDraw.Draw(map_image)
     for command_id in commands:
         command = commands[command_id]
+    # for attacks
         if command.location == command.origin and command.origin != command.destination:
             first_coordinate = command.origin.coordinate
             second_coordinate = command.destination.coordinate
@@ -51,7 +51,7 @@ def draw_attacks(map_image, commands):
             upper_coordinates, lower_coordinates = get_arrow_coordinates(origin_coordinate, destination_coordinate)
             drawing_image.line(coordinates, fill, width = 2)
             drawing_image.line(upper_coordinates, fill, width = 2)
-            drawing_image.line(lower_coordinates, fill, width = 2) 
+            drawing_image.line(lower_coordinates, fill, width = 2)  
 
 def draw_holds(map_image, commands):
     drawing_image = ImageDraw.Draw(map_image)
@@ -80,26 +80,39 @@ def get_arrow_coordinates(origin_coordinate, destination_coordinate):
         if destination_coordinate[1] > origin_coordinate[1]:
             slope_upper_line = slope - 5*math.pi/6
             slope_lower_line = slope + 5*math.pi/6
+            upper_x_endpoint = 20*math.cos(slope_upper_line) + destination_coordinate[0]
+            upper_y_endpoint = (20*math.sin(slope_upper_line)) + destination_coordinate[1]
+            lower_x_endpoint = (20*math.cos(slope_lower_line)) + destination_coordinate[0]
+            lower_y_endpoint = 20*math.sin(slope_lower_line) + destination_coordinate[1]
         else:
             slope_upper_line = slope - math.pi/6
             slope_lower_line = slope + math.pi/6
+            upper_x_endpoint = 20*math.cos(slope_upper_line) + destination_coordinate[0]
+            upper_y_endpoint = (20*math.sin(slope_upper_line)) + destination_coordinate[1]
+            lower_x_endpoint = (20*math.cos(slope_lower_line)) + destination_coordinate[0]
+            lower_y_endpoint = 20*math.sin(slope_lower_line) + destination_coordinate[1]  
     else:
         if destination_coordinate[1] > origin_coordinate[1]:
-            slope_upper_line = slope + 11*math.pi/6
-            slope_lower_line = slope + math.pi
+            slope_upper_line = slope - math.pi/6
+            slope_lower_line = slope + math.pi/6
+            upper_x_endpoint = (20*math.cos(slope_upper_line)) + destination_coordinate[0]
+            upper_y_endpoint = (20*math.sin(slope_upper_line)) + destination_coordinate[1]
+            lower_x_endpoint = (20*math.cos(slope_lower_line)) + destination_coordinate[0]
+            lower_y_endpoint = (20*math.sin(slope_lower_line)) + destination_coordinate[1]
+            
         else:
             slope_upper_line = slope -  5*math.pi/6
             slope_lower_line = slope + 5*math.pi/6
-    upper_x_endpoint = (20*math.cos(slope_upper_line)) + destination_coordinate[0]
-    upper_y_endpoint = (20*math.sin(slope_upper_line)) + destination_coordinate[1]
-    lower_x_endpoint = (20*math.cos(slope_lower_line)) + destination_coordinate[0]
-    lower_y_endpoint = (20*math.sin(slope_lower_line)) + destination_coordinate[1]
+            upper_x_endpoint = (20*math.cos(slope_upper_line)) + destination_coordinate[0]
+            upper_y_endpoint = (20*math.sin(slope_upper_line)) + destination_coordinate[1]
+            lower_x_endpoint = (20*math.cos(slope_lower_line)) + destination_coordinate[0]
+            lower_y_endpoint = (20*math.sin(slope_lower_line)) + destination_coordinate[1]
     upper_x_endpoint = int(upper_x_endpoint)
     upper_y_endpoint = int(upper_y_endpoint)
-    lower_x_endpoint = int(lower_x_endpoint)
-    lower_y_endpoint = int(lower_y_endpoint)
     upper_arrow_coordinates = (upper_x_endpoint, upper_y_endpoint)
     upper_coordinates = [upper_arrow_coordinates, destination_coordinate]
+    lower_x_endpoint = int(lower_x_endpoint)
+    lower_y_endpoint = int(lower_y_endpoint)
     lower_arrow_coordinates = (lower_x_endpoint, lower_y_endpoint)
     lower_coordinates = [lower_arrow_coordinates, destination_coordinate]
     return upper_coordinates, lower_coordinates
