@@ -38,22 +38,20 @@ def draw_attacks(map_image, commands):
     drawing_image = ImageDraw.Draw(map_image)
     for command_id in commands:
         command = commands[command_id]
-    # for attacks
         if command.location == command.origin and command.origin != command.destination:
             first_coordinate = command.origin.coordinate
             second_coordinate = command.destination.coordinate
-            draw_line_from_coordinates(first_coordinate, second_coordinate, command, drawing_image)  
-    #for holds
-        if command.location == command.origin == command.destination:
-            center = command.location.coordinate
-            nw_coordinates = (center[0] - 9, center[1] - 9)
-            se_coordinates = (center[0] + 9, center[1] + 9)
-            coordinates = [nw_coordinates, se_coordinates]
+            coordinates = [first_coordinate, second_coordinate]
+            origin_coordinate = first_coordinate
+            destination_coordinate = second_coordinate
             if command.succeed == True:
-                drawing_image.ellipse(coordinates, outline = "black", width = 2)
+                fill = "black"
             else:
-                drawing_image.ellipse(coordinates, outline = "red", width = 2)
-    # for convoys
+                fill = "red"
+            upper_coordinates, lower_coordinates = get_arrow_coordinates(origin_coordinate, destination_coordinate)
+            drawing_image.line(coordinates, fill, width = 2)
+            drawing_image.line(upper_coordinates, fill, width = 2)
+            drawing_image.line(lower_coordinates, fill, width = 2) 
 
 def draw_holds(map_image, commands):
     drawing_image = ImageDraw.Draw(map_image)
@@ -69,11 +67,7 @@ def draw_holds(map_image, commands):
             else:
                 drawing_image.ellipse(coordinates, outline = "red", width = 2)
 
-# Draw a line on map
-def draw_line_from_coordinates(first_coordinate, second_coordinate, command, drawing_image):
-    coordinates = [first_coordinate, second_coordinate]
-    origin_coordinate = first_coordinate
-    destination_coordinate = second_coordinate
+def get_arrow_coordinates(origin_coordinate, destination_coordinate):
     slope = (destination_coordinate[1] - origin_coordinate[1])/(destination_coordinate[0] - origin_coordinate[0])
     if slope > 0:
         sign = True
@@ -86,48 +80,29 @@ def draw_line_from_coordinates(first_coordinate, second_coordinate, command, dra
         if destination_coordinate[1] > origin_coordinate[1]:
             slope_upper_line = slope - 5*math.pi/6
             slope_lower_line = slope + 5*math.pi/6
-            upper_x_endpoint = 20*math.cos(slope_upper_line) + destination_coordinate[0]
-            upper_y_endpoint = (20*math.sin(slope_upper_line)) + destination_coordinate[1]
-            lower_x_endpoint = (20*math.cos(slope_lower_line)) + destination_coordinate[0]
-            lower_y_endpoint = 20*math.sin(slope_lower_line) + destination_coordinate[1]
         else:
             slope_upper_line = slope - math.pi/6
             slope_lower_line = slope + math.pi/6
-            upper_x_endpoint = 20*math.cos(slope_upper_line) + destination_coordinate[0]
-            upper_y_endpoint = (20*math.sin(slope_upper_line)) + destination_coordinate[1]
-            lower_x_endpoint = (20*math.cos(slope_lower_line)) + destination_coordinate[0]
-            lower_y_endpoint = 20*math.sin(slope_lower_line) + destination_coordinate[1]
     else:
         if destination_coordinate[1] > origin_coordinate[1]:
-            #print("yes", command_id, command.location.name)
             slope_upper_line = slope + 11*math.pi/6
-            slope_lower_line = slope + math.pi/6
-            upper_x_endpoint = (20*math.cos(slope_upper_line)) + destination_coordinate[0]
-            upper_y_endpoint = (20*math.sin(slope_upper_line)) + destination_coordinate[1]
-            lower_x_endpoint = (20*math.cos(slope_lower_line)) + destination_coordinate[0]
-            lower_y_endpoint = (20*math.sin(slope_lower_line)) + destination_coordinate[1]
+            slope_lower_line = slope + math.pi
         else:
             slope_upper_line = slope -  5*math.pi/6
             slope_lower_line = slope + 5*math.pi/6
-            upper_x_endpoint = (20*math.cos(slope_upper_line)) + destination_coordinate[0]
-            upper_y_endpoint = (20*math.sin(slope_upper_line)) + destination_coordinate[1]
-            lower_x_endpoint = (20*math.cos(slope_lower_line)) + destination_coordinate[0]
-            lower_y_endpoint = (20*math.sin(slope_lower_line)) + destination_coordinate[1]
+    upper_x_endpoint = (20*math.cos(slope_upper_line)) + destination_coordinate[0]
+    upper_y_endpoint = (20*math.sin(slope_upper_line)) + destination_coordinate[1]
+    lower_x_endpoint = (20*math.cos(slope_lower_line)) + destination_coordinate[0]
+    lower_y_endpoint = (20*math.sin(slope_lower_line)) + destination_coordinate[1]
     upper_x_endpoint = int(upper_x_endpoint)
     upper_y_endpoint = int(upper_y_endpoint)
-    upper_arrow_coordinates = (upper_x_endpoint, upper_y_endpoint)
-    upper_coordinates = [upper_arrow_coordinates, destination_coordinate]
     lower_x_endpoint = int(lower_x_endpoint)
     lower_y_endpoint = int(lower_y_endpoint)
+    upper_arrow_coordinates = (upper_x_endpoint, upper_y_endpoint)
+    upper_coordinates = [upper_arrow_coordinates, destination_coordinate]
     lower_arrow_coordinates = (lower_x_endpoint, lower_y_endpoint)
     lower_coordinates = [lower_arrow_coordinates, destination_coordinate]
-    if command.succeed == True:
-        fill = "black"
-    else:
-        fill = "red"
-    drawing_image.line(coordinates, fill, width = 2)
-    drawing_image.line(upper_coordinates, fill, width = 2)
-    drawing_image.line(lower_coordinates, fill, width = 2)
+    return upper_coordinates, lower_coordinates
 
 def draw_supports(canvas, commands):
     for command_id in commands:
@@ -141,11 +116,15 @@ def draw_supports(canvas, commands):
             origin_coordinate = command.origin.coordinate
             destination_coordinate = command.destination.coordinate
             offset_origin_coordinate = (origin_coordinate[0] - 5, origin_coordinate[1] - 5)
-            offset_destination_coordiante = (destination_coordinate[0] - 5, destination_coordinate[1] - 5)
+            offset_destination_coordinate = (destination_coordinate[0] - 5, destination_coordinate[1] - 5)
             canvas.create_line (location_coordinate, origin_coordinate, dash = (5, 2), fill = fill_color, width = 3)
-        # supports for attacks
+            # supports for attacks
             if command.origin != command.destination:
-                canvas.create_line(offset_origin_coordinate, offset_destination_coordiante, dash = (5, 2), fill = fill_color, width = 2)
+                upper_coordinates, lower_coordinates = get_arrow_coordinates(origin_coordinate, destination_coordinate)
+                canvas.create_line(offset_origin_coordinate, offset_destination_coordinate, dash = (5, 2), fill = fill_color, width = 2)
+                canvas.create_line(upper_coordinates, fill = fill_color, width = 2)
+                canvas.create_line(lower_coordinates, fill = fill_color, width = 2)
+            # supports for holds
             else:
                 canvas.create_oval(origin_coordinate[0] - 5, origin_coordinate[1] - 5, origin_coordinate[0] + 5, origin_coordinate[1]+ 5, fill = fill_color, width = 2)
     return canvas
