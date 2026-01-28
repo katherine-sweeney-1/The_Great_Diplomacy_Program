@@ -32,6 +32,8 @@ def set_up_gui(commands):
     # Close window button
     button = tk.Button(main_window, text = "Close", width = 25, command = main_window.destroy)
     button.pack()
+    button = tk.Button(main_window, text = "Next Turn", width = 20)
+    button.pack()
     # image
     map_image = Image.open("GUI/kamrans_map_png.png")
     map_width = map_image.width
@@ -70,9 +72,18 @@ def set_up_gui(commands):
     scrollbar.config(command = listbox.yview)
     canvas.image = map_image
     main_window.mainloop()
+    return main_window
 
-def run_gui(game_objects):
-    turn = "81911_spring"
+def show_next_turn(click):
+    if click:
+        turn = "81911_fall"
+        run_gui(turn)
+            #print("check", command_id, command.location.name, command.origin.name, command.destination.name)
+
+def run_gui(game_objects, turn = None):
+    if turn == None:
+        turn = "81911_spring"
+    objects = game_objects
     commands = game_objects[turn]["Commands"]
     commanders = game_objects[turn]["Commanders"]
     nodes = game_objects[turn]["Nodes"]
@@ -81,7 +92,6 @@ def run_gui(game_objects):
     assign_coordinates_to_nodes(nodes, coordinates_file, coastal_coordinates_file)
     for command_id in commands:
         command = commands[command_id]
-        print("check", command_id, command.location.name, command.origin.name, command.destination.name)
-    set_up_gui(commands)
-    return game_objects
-
+        #print("check", command_id, command.location.name, command.origin.name, command.destination.name)
+    main_window = set_up_gui(commands)
+    main_window.bind("<Button-2>", show_next_turn)
