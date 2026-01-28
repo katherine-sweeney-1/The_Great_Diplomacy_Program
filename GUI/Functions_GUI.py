@@ -40,7 +40,7 @@ def set_up_gui(commands):
     # create canvas to click on 
     canvas = tk.Canvas(main_window, width = map_width, height = map_height, cursor = "cross")
     draw_units(commands, map_image)
-    #draw_attacks(map_image, commands)
+    draw_attacks(map_image, commands)
     draw_holds(map_image, commands)
     canvas.pack(fill = tk.BOTH)
     # convert pil image to tkinter image object
