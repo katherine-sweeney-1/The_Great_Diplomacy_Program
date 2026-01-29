@@ -85,8 +85,9 @@ def show_next_turn(event, main_window, map_image, canvas, game_objects, current_
             turns.append(turn)
         current_turn_index = turns.index(current_turn)
         print("current turn index", current_turn_index, current_turn)
-        next_turn = current_turn_index + 1
-        print(next_turn)
+        next_turn_index = current_turn_index + 1
+        next_turn = turns[next_turn_index]
+        print(next_turn, next_turn_index)
         commands = game_objects[next_turn]["Commands"]
         commanders = game_objects[next_turn]["Commanders"]
         nodes = game_objects[next_turn]["Nodes"]
@@ -111,5 +112,5 @@ def run_gui(game_objects, turn = None):
         #print("check", command_id, command.location.name, command.origin.name, command.destination.name)
     main_window, map_image, canvas = set_up_gui(commands)
     main_window = display_moves(main_window, map_image, canvas, commands)
-    main_window.bind("<Button-2>", lambda event: show_next_turn(event, main_window, map_image, canvas, game_objects, first_turn))
+    main_window.bind("<Button-1>", lambda event: show_next_turn(event, main_window, map_image, canvas, game_objects, first_turn))
     main_window.mainloop()
