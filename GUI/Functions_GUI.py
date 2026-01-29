@@ -76,7 +76,7 @@ def display_moves(main_window, map_image, canvas, commands):
     scrollbar.config(command = listbox.yview)
     canvas.image = map_image
     #main_window.mainloop()
-    return main_window
+    return main_window, unit_drawings
 
 def show_next_turn(event, main_window, map_image, canvas, game_objects, current_turn):
     if event:
@@ -95,6 +95,7 @@ def show_next_turn(event, main_window, map_image, canvas, game_objects, current_
         units = game_objects[next_turn]["Units"]
         nodes = nodes[0]
         assign_coordinates_to_nodes(nodes, coordinates_file, coastal_coordinates_file)
+        canvas.delete("drawing rta")
         main_window = display_moves(main_window, map_image, canvas, commands)
             #print("check", command_id, command.location.name, command.origin.name, command.destination.name)
 
@@ -102,7 +103,7 @@ def run_gui(game_objects, turn = None):
     turns = []
     for turn in game_objects:
         turns.append(turn)
-    first_turn = turns[0]
+    first_turn = turns[1]
     commands = game_objects[first_turn]["Commands"]
     commanders = game_objects[first_turn]["Commanders"]
     nodes = game_objects[first_turn]["Nodes"]
@@ -113,6 +114,6 @@ def run_gui(game_objects, turn = None):
         command = commands[command_id]
         #print("check", command_id, command.location.name, command.origin.name, command.destination.name)
     main_window, map_image, canvas = set_up_gui(commands)
-    main_window = display_moves(main_window, map_image, canvas, commands)
+    main_window , unit_drawings = display_moves(main_window, map_image, canvas, commands)
     main_window.bind("<Button-1>", lambda event: show_next_turn(event, main_window, map_image, canvas, game_objects, first_turn))
     main_window.mainloop()
