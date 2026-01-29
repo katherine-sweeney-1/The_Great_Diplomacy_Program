@@ -44,7 +44,8 @@ def set_up_gui(commands):
     return main_window, map_image, canvas
 
 def display_moves(main_window, map_image, canvas, commands):
-    draw_units(commands, map_image)
+    unit_drawings = draw_units(commands, map_image)
+    print(unit_drawings)
     draw_attacks(map_image, commands)
     draw_holds(map_image, commands)
     canvas.pack(fill = tk.BOTH)

@@ -3,6 +3,7 @@ from PIL import Image, ImageTk, ImageDraw
 
 def draw_units(commands, map_image):
     drawing_image = ImageDraw.Draw(map_image)
+    unit_drawings = []
     for command_id in commands:
         command = commands[command_id]
         center = command.location.coordinate
@@ -24,13 +25,15 @@ def draw_units(commands, map_image):
             nw_coordinates = (center[0] - 5, center[1] - 5)
             se_coordinates = (center[0] + 5, center[1] + 5)
             coordinates = [nw_coordinates, se_coordinates]
-            drawing_image.ellipse(coordinates, fill, outline = "black", width = 1)
+            unit_drawing = drawing_image.ellipse(coordinates, fill, outline = "black", width = 1)
         else:
             south_coordinates = (center[0], center[1] + 5)
             nw_coordinates = (center[0] - 6, center[1] - 6)
             ne_coordinates = (center[0] + 6, center[1] - 6)
             coordinates = [south_coordinates, nw_coordinates, ne_coordinates]
-            drawing_image.polygon(coordinates, fill, outline = "black", width = 1)
+            unit_drawing = drawing_image.polygon(coordinates, fill, outline = "black", width = 1)
+        unit_drawings.append(unit_drawing)
+    return unit_drawings
 
 def draw_attacks(map_image, commands):
     drawing_image = ImageDraw.Draw(map_image)
