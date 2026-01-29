@@ -93,6 +93,7 @@ def show_next_turn(event, main_window, map_image, canvas, game_objects, current_
         nodes = game_objects[next_turn]["Nodes"]
         units = game_objects[next_turn]["Units"]
         nodes = nodes[0]
+        assign_coordinates_to_nodes(nodes, coordinates_file, coastal_coordinates_file)
         main_window = display_moves(main_window, map_image, canvas, commands)
             #print("check", command_id, command.location.name, command.origin.name, command.destination.name)
 
