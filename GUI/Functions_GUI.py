@@ -41,6 +41,9 @@ def set_up_gui(commands):
     map_image.thumbnail((map_width, map_height), Image.Resampling.LANCZOS)
     # create canvas to click on 
     canvas = tk.Canvas(main_window, width = map_width, height = map_height, cursor = "cross")
+    return main_window, map_image, canvas
+
+def display_moves(main_window, map_image, canvas, commands):
     draw_units(commands, map_image)
     draw_attacks(map_image, commands)
     draw_holds(map_image, commands)
@@ -71,27 +74,42 @@ def set_up_gui(commands):
     listbox = create_territory_listbox(main_window, territory_file, scrollbar)
     scrollbar.config(command = listbox.yview)
     canvas.image = map_image
-    main_window.mainloop()
+    #main_window.mainloop()
     return main_window
 
-def show_next_turn(click):
-    if click:
+def show_next_turn(event, main_window, map_image, canvas, game_objects, current_turn):
+    if event:
         turn = "81911_fall"
-        run_gui(turn)
+        turns = []
+        for turn in game_objects:
+            turns.append(turn)
+        current_turn_index = turns.index(current_turn)
+        print("current turn index", current_turn_index, current_turn)
+        next_turn = current_turn_index + 1
+        print(next_turn)
+        commands = game_objects[next_turn]["Commands"]
+        commanders = game_objects[next_turn]["Commanders"]
+        nodes = game_objects[next_turn]["Nodes"]
+        units = game_objects[next_turn]["Units"]
+        nodes = nodes[0]
+        main_window = display_moves(main_window, map_image, canvas, commands)
             #print("check", command_id, command.location.name, command.origin.name, command.destination.name)
 
 def run_gui(game_objects, turn = None):
-    if turn == None:
-        turn = "81911_spring"
-    objects = game_objects
-    commands = game_objects[turn]["Commands"]
-    commanders = game_objects[turn]["Commanders"]
-    nodes = game_objects[turn]["Nodes"]
-    units = game_objects[turn]["Units"]
+    turns = []
+    for turn in game_objects:
+        turns.append(turn)
+    first_turn = turns[0]
+    commands = game_objects[first_turn]["Commands"]
+    commanders = game_objects[first_turn]["Commanders"]
+    nodes = game_objects[first_turn]["Nodes"]
+    units = game_objects[first_turn]["Units"]
     nodes = nodes[0]
     assign_coordinates_to_nodes(nodes, coordinates_file, coastal_coordinates_file)
     for command_id in commands:
         command = commands[command_id]
         #print("check", command_id, command.location.name, command.origin.name, command.destination.name)
-    main_window = set_up_gui(commands)
-    main_window.bind("<Button-2>", show_next_turn)
+    main_window, map_image, canvas = set_up_gui(commands)
+    main_window = display_moves(main_window, map_image, canvas, commands)
+    main_window.bind("<Button-2>", lambda event: show_next_turn(event, main_window, map_image, canvas, game_objects, first_turn))
+    main_window.mainloop()
