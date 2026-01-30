@@ -1,74 +1,5 @@
 import math
-from PIL import Image, ImageTk, ImageDraw
-"""
-def draw_units(commands, map_image):
-    drawing_image = ImageDraw.Draw(map_image)
-    for command_id in commands:
-        command = commands[command_id]
-        center = command.location.coordinate
-        if command_id[0:2] == "AU":
-            fill = (200, 50, 50)
-        elif command_id[0:2] == "UK":
-            fill = (255, 50, 150)
-        elif command_id[0:2] == "FR":
-            fill = (0, 75, 100)
-        elif command_id[0:2] == "GE":
-            fill = (100, 50, 25)
-        elif command_id[0:2] == "IT":
-            fill = (75, 100, 0)
-        elif command_id[0:2] == "RU":
-            fill = (75, 25, 75)
-        elif command_id[0:2] == "TU":
-            fill = (250, 225, 20)
-        if command.unit.type == "army":
-            nw_coordinates = (center[0] - 5, center[1] - 5)
-            se_coordinates = (center[0] + 5, center[1] + 5)
-            coordinates = [nw_coordinates, se_coordinates]
-            line_id = drawing_image.ellipse(coordinates, fill, outline = "black", width = 1)
-        else:
-            south_coordinates = (center[0], center[1] + 5)
-            nw_coordinates = (center[0] - 6, center[1] - 6)
-            ne_coordinates = (center[0] + 6, center[1] - 6)
-            coordinates = [south_coordinates, nw_coordinates, ne_coordinates]
-            line_id = drawing_image.polygon(coordinates, fill, outline = "black", width = 1)
-"""
-"""
-def draw_attacks(map_image, commands):
-    drawing_image = ImageDraw.Draw(map_image)
-    for command_id in commands:
-        command = commands[command_id]
-    # for attacks
-        if command.location == command.origin and command.origin != command.destination:
-            first_coordinate = command.origin.coordinate
-            second_coordinate = command.destination.coordinate
-            second_coordinate = get_offset_destination(first_coordinate, second_coordinate)
-            coordinates = [first_coordinate, second_coordinate]
-            origin_coordinate = first_coordinate
-            destination_coordinate = second_coordinate
-            if command.succeed == True:
-                fill = "black"
-            else:
-                fill = "red"
-            upper_coordinates, lower_coordinates = get_arrow_coordinates(origin_coordinate, destination_coordinate)
-            drawing_image.line(coordinates, fill, width = 2)
-            drawing_image.line(upper_coordinates, fill, width = 2)
-            drawing_image.line(lower_coordinates, fill, width = 2)  
-"""
-"""
-def draw_holds(map_image, commands):
-    drawing_image = ImageDraw.Draw(map_image)
-    for command_id in commands:
-        command = commands[command_id]
-        if command.location == command.origin == command.destination:
-            center = command.location.coordinate
-            nw_coordinates = (center[0] - 9, center[1] - 9)
-            se_coordinates = (center[0] + 9, center[1] + 9)
-            coordinates = [nw_coordinates, se_coordinates]
-            if command.succeed == True:
-                drawing_image.ellipse(coordinates, outline = "black", width = 2)
-            else:
-                drawing_image.ellipse(coordinates, outline = "red", width = 2)
-"""
+
 def get_offset_destination (first_coordinate, second_coordinate):
     if second_coordinate[0] > first_coordinate[0]:
         # destination is bottom right of origin
@@ -85,7 +16,6 @@ def get_offset_destination (first_coordinate, second_coordinate):
         else:
             second_coordinate = (second_coordinate[0] + 6, second_coordinate[1]+ 6)
     return second_coordinate
-
 
 def get_arrow_coordinates(origin_coordinate, destination_coordinate):
     slope = (destination_coordinate[1] - origin_coordinate[1])/(destination_coordinate[0] - origin_coordinate[0])
