@@ -80,17 +80,31 @@ def draw_pieces(canvas, commands):
     canvas = draw_supports(canvas, commands)
     return canvas
 
-def show_next_turn(event, main_window, map_image, canvas, game_objects, current_turn):
+count = 1 
+
+def count_turn(event):
     if event:
-        turn = "81911_fall"
+        global count
+        count += 1
+        print("counting", count)
+
+def show_next_turn(main_window, event, canvas, game_objects, current_turn, turns):
+    #count = 1
+    if event:
+        #count += 1
+        #turn = "81911_fall"
         turns = []
         for turn in game_objects:
             turns.append(turn)
         current_turn_index = turns.index(current_turn)
-        print("current turn index", current_turn_index, current_turn)
+        #print("current turn index", current_turn_index, current_turn)
         next_turn_index = current_turn_index + 1
         next_turn = turns[next_turn_index]
-        print(next_turn, next_turn_index)
+        #print(next_turn, next_turn_index)
+        print("current and next turn")
+        print(current_turn)
+        print(next_turn)
+        print(" ")
         commands = game_objects[next_turn]["Commands"]
         commanders = game_objects[next_turn]["Commanders"]
         nodes = game_objects[next_turn]["Nodes"]
@@ -100,8 +114,12 @@ def show_next_turn(event, main_window, map_image, canvas, game_objects, current_
         canvas.delete("draw")
         #main_window = display_moves(main_window, map_image, canvas, commands)
         canvas = draw_pieces(canvas, commands)
+        main_window.bind("<Button-1>", lambda event: show_next_turn(main_window, event, canvas, game_objects, next_turn, turns))
+        #return next_turn
+
 
 def run_gui(game_objects, turn = None):
+    count = 1
     turns = []
     for turn in game_objects:
         turns.append(turn)
@@ -114,5 +132,6 @@ def run_gui(game_objects, turn = None):
     assign_coordinates_to_nodes(nodes, coordinates_file, coastal_coordinates_file)
     main_window, map_image, canvas = set_up_gui(commands)
     main_window = display_moves(main_window, map_image, canvas, commands)
-    main_window.bind("<Button-1>", lambda event: show_next_turn(event, main_window, map_image, canvas, game_objects, first_turn))
+    #main_window.bind("<Button-1>", lambda event: count_turn(event))
+    main_window.bind("<Button-1>", lambda event: show_next_turn(main_window, event, canvas, game_objects, first_turn, turns))
     main_window.mainloop()
