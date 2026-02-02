@@ -1,71 +1,4 @@
 import math
-from PIL import Image, ImageTk, ImageDraw
-
-def draw_units(commands, map_image):
-    drawing_image = ImageDraw.Draw(map_image)
-    for command_id in commands:
-        command = commands[command_id]
-        center = command.location.coordinate
-        if command_id[0:2] == "AU":
-            fill = (200, 50, 50)
-        elif command_id[0:2] == "UK":
-            fill = (255, 50, 150)
-        elif command_id[0:2] == "FR":
-            fill = (0, 75, 100)
-        elif command_id[0:2] == "GE":
-            fill = (100, 50, 25)
-        elif command_id[0:2] == "IT":
-            fill = (75, 100, 0)
-        elif command_id[0:2] == "RU":
-            fill = (75, 25, 75)
-        elif command_id[0:2] == "TU":
-            fill = (250, 225, 20)
-        if command.unit.type == "army":
-            nw_coordinates = (center[0] - 5, center[1] - 5)
-            se_coordinates = (center[0] + 5, center[1] + 5)
-            coordinates = [nw_coordinates, se_coordinates]
-            line_id = drawing_image.ellipse(coordinates, fill, outline = "black", width = 1)
-        else:
-            south_coordinates = (center[0], center[1] + 5)
-            nw_coordinates = (center[0] - 6, center[1] - 6)
-            ne_coordinates = (center[0] + 6, center[1] - 6)
-            coordinates = [south_coordinates, nw_coordinates, ne_coordinates]
-            line_id = drawing_image.polygon(coordinates, fill, outline = "black", width = 1)
-
-def draw_attacks(map_image, commands):
-    drawing_image = ImageDraw.Draw(map_image)
-    for command_id in commands:
-        command = commands[command_id]
-    # for attacks
-        if command.location == command.origin and command.origin != command.destination:
-            first_coordinate = command.origin.coordinate
-            second_coordinate = command.destination.coordinate
-            second_coordinate = get_offset_destination(first_coordinate, second_coordinate)
-            coordinates = [first_coordinate, second_coordinate]
-            origin_coordinate = first_coordinate
-            destination_coordinate = second_coordinate
-            if command.succeed == True:
-                fill = "black"
-            else:
-                fill = "red"
-            upper_coordinates, lower_coordinates = get_arrow_coordinates(origin_coordinate, destination_coordinate)
-            drawing_image.line(coordinates, fill, width = 2)
-            drawing_image.line(upper_coordinates, fill, width = 2)
-            drawing_image.line(lower_coordinates, fill, width = 2)  
-
-def draw_holds(map_image, commands):
-    drawing_image = ImageDraw.Draw(map_image)
-    for command_id in commands:
-        command = commands[command_id]
-        if command.location == command.origin == command.destination:
-            center = command.location.coordinate
-            nw_coordinates = (center[0] - 9, center[1] - 9)
-            se_coordinates = (center[0] + 9, center[1] + 9)
-            coordinates = [nw_coordinates, se_coordinates]
-            if command.succeed == True:
-                drawing_image.ellipse(coordinates, outline = "black", width = 2)
-            else:
-                drawing_image.ellipse(coordinates, outline = "red", width = 2)
 
 def get_offset_destination (first_coordinate, second_coordinate):
     if second_coordinate[0] > first_coordinate[0]:
@@ -121,6 +54,82 @@ def get_arrow_coordinates(origin_coordinate, destination_coordinate):
     lower_coordinates = [lower_arrow_coordinates, destination_coordinate]
     return upper_coordinates, lower_coordinates
 
+def retrieve_hex_color(r, g, b):
+    return "#{:02x}{:02x}{:02x}".format(r, g, b)
+
+def draw_units(canvas, commands):
+    for command_id in commands:
+        command = commands[command_id]
+        center = command.location.coordinate
+        if command_id[0:2] == "AU":
+            fill_color = (200, 50, 50)
+            fill_color = retrieve_hex_color(200, 50, 50)
+        elif command_id[0:2] == "UK":
+            fill_color = (255, 50, 150)
+            fill_color = retrieve_hex_color(255, 50, 150)
+        elif command_id[0:2] == "FR":
+            fill_color = (0, 75, 100)
+            fill_color = retrieve_hex_color(0, 75, 100)
+        elif command_id[0:2] == "GE":
+            fill_color = (100, 50, 25)
+            fill_color = retrieve_hex_color(100, 50, 25)
+        elif command_id[0:2] == "IT":
+            fill_color = (75, 100, 0)
+            fill_color = retrieve_hex_color(75, 100, 0)
+        elif command_id[0:2] == "RU":
+            fill_color = (75, 25, 75)
+            fill_color = retrieve_hex_color(75, 25, 75)
+        elif command_id[0:2] == "TU":
+            fill_color = (250, 225, 20)
+            fill_color = retrieve_hex_color(250, 225, 20)
+        if command.unit.type == "army":
+            nw_coordinates = (center[0] - 5, center[1] - 5)
+            se_coordinates = (center[0] + 5, center[1] + 5)
+            coordinates = [nw_coordinates, se_coordinates]
+            canvas.create_oval(coordinates, fill = fill_color, outline = "black", width = 1, tags = ("draw"))
+        else:
+            south_coordinates = (center[0], center[1] + 5)
+            nw_coordinates = (center[0] - 6, center[1] - 6)
+            ne_coordinates = (center[0] + 6, center[1] - 6)
+            coordinates = [south_coordinates, nw_coordinates, ne_coordinates]
+            canvas.create_polygon(coordinates, fill = fill_color, outline = "black", width = 1, tags = ("draw"))
+    return canvas 
+
+def draw_attacks(canvas, commands):
+    for command_id in commands:
+        command = commands[command_id]
+    # for attacks
+        if command.location == command.origin and command.origin != command.destination:
+            first_coordinate = command.origin.coordinate
+            second_coordinate = command.destination.coordinate
+            second_coordinate = get_offset_destination(first_coordinate, second_coordinate)
+            coordinates = [first_coordinate, second_coordinate]
+            origin_coordinate = first_coordinate
+            destination_coordinate = second_coordinate
+            if command.succeed == True:
+                fill_color = "black"
+            else:
+                fill_color = "red"
+            upper_coordinates, lower_coordinates = get_arrow_coordinates(origin_coordinate, destination_coordinate)
+            canvas.create_line(coordinates, fill = fill_color, width = 2, tags = ("draw"))
+            canvas.create_line(upper_coordinates, fill = fill_color, width = 2, tags = ("draw"))
+            canvas.create_line(lower_coordinates, fill = fill_color, width = 2, tags = ("draw"))  
+    return canvas
+
+def draw_holds(canvas, commands):
+    for command_id in commands:
+        command = commands[command_id]
+        if command.location == command.origin == command.destination:
+            center = command.location.coordinate
+            nw_coordinates = (center[0] - 9, center[1] - 9)
+            se_coordinates = (center[0] + 9, center[1] + 9)
+            coordinates = [nw_coordinates, se_coordinates]
+            if command.succeed == True:
+                canvas.create_oval(coordinates, outline = "black", width = 2, tags = ("draw"))
+            else:
+                canvas.create_oval(coordinates, outline = "red", width = 2, tags = ("draw"))
+    return canvas
+
 def draw_supports(canvas, commands):
     for command_id in commands:
         command = commands[command_id]
@@ -144,5 +153,5 @@ def draw_supports(canvas, commands):
                 canvas.create_line(lower_coordinates, fill = fill_color, width = 2, tags = ("draw"))
             # supports for holds
             else:
-                canvas.create_oval(origin_coordinate[0] - 5, origin_coordinate[1] - 5, origin_coordinate[0] + 5, origin_coordinate[1]+ 5, width = 2, tags = "draw")
+                canvas.create_oval(origin_coordinate[0] - 5, origin_coordinate[1] - 5, origin_coordinate[0] + 5, origin_coordinate[1]+ 5, width = 2, tags = ("draw"))
     return canvas

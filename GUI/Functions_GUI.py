@@ -44,17 +44,11 @@ def set_up_gui(commands):
     return main_window, map_image, canvas
 
 def display_moves(main_window, map_image, canvas, commands):
-    unit_drawings = draw_units(commands, map_image)
-    print(unit_drawings)
-    draw_attacks(map_image, commands)
-    draw_holds(map_image, commands)
     canvas.pack(fill = tk.BOTH)
     # convert pil image to tkinter image object
     map_image = ImageTk.PhotoImage(map_image)
     # create canvas on image
     canvas.create_image(0, 0, anchor = tk.NW, image = map_image)
-
-    canvas = draw_supports(canvas, commands)
     #canvas.create_line(50, 100, 350, 100, dash = (5, 2), fill = "blue", width = 3)
     """
     # make image label
@@ -75,8 +69,16 @@ def display_moves(main_window, map_image, canvas, commands):
     listbox = create_territory_listbox(main_window, territory_file, scrollbar)
     scrollbar.config(command = listbox.yview)
     canvas.image = map_image
+    canvas = draw_pieces(canvas, commands)
     #main_window.mainloop()
-    return main_window, unit_drawings
+    return main_window
+
+def draw_pieces(canvas, commands):
+    canvas = draw_units(canvas, commands)
+    canvas = draw_attacks(canvas, commands)
+    canvas = draw_holds(canvas, commands)
+    canvas = draw_supports(canvas, commands)
+    return canvas
 
 def show_next_turn(event, main_window, map_image, canvas, game_objects, current_turn):
     if event:
@@ -95,9 +97,9 @@ def show_next_turn(event, main_window, map_image, canvas, game_objects, current_
         units = game_objects[next_turn]["Units"]
         nodes = nodes[0]
         assign_coordinates_to_nodes(nodes, coordinates_file, coastal_coordinates_file)
-        canvas.delete("drawing rta")
-        main_window = display_moves(main_window, map_image, canvas, commands)
-            #print("check", command_id, command.location.name, command.origin.name, command.destination.name)
+        canvas.delete("draw")
+        #main_window = display_moves(main_window, map_image, canvas, commands)
+        canvas = draw_pieces(canvas, commands)
 
 def run_gui(game_objects, turn = None):
     turns = []
@@ -110,10 +112,7 @@ def run_gui(game_objects, turn = None):
     units = game_objects[first_turn]["Units"]
     nodes = nodes[0]
     assign_coordinates_to_nodes(nodes, coordinates_file, coastal_coordinates_file)
-    for command_id in commands:
-        command = commands[command_id]
-        #print("check", command_id, command.location.name, command.origin.name, command.destination.name)
     main_window, map_image, canvas = set_up_gui(commands)
-    main_window , unit_drawings = display_moves(main_window, map_image, canvas, commands)
+    main_window = display_moves(main_window, map_image, canvas, commands)
     main_window.bind("<Button-1>", lambda event: show_next_turn(event, main_window, map_image, canvas, game_objects, first_turn))
     main_window.mainloop()
