@@ -144,7 +144,7 @@ def draw_supports(canvas, commands):
             offset_destination_coordinate = get_offset_destination(origin_coordinate, destination_coordinate)
             offset_origin_coordinate = get_offset_destination(destination_coordinate, origin_coordinate)
             #offset_destination_coordinate = (destination_coordinate[0] - 5, destination_coordinate[1] - 5)
-            canvas.create_line (location_coordinate, origin_coordinate, dash = (5, 2), fill = fill_color, width = 3)
+            canvas.create_line (location_coordinate, origin_coordinate, dash = (5, 2), fill = fill_color, width = 3, tags = ("draw"))
             # supports for attacks
             if command.origin != command.destination:
                 upper_coordinates, lower_coordinates = get_arrow_coordinates(offset_origin_coordinate, offset_destination_coordinate)
