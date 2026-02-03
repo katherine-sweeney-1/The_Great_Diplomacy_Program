@@ -1,23 +1,31 @@
 import math
 
-def get_offset_destination (first_coordinate, second_coordinate):
+def get_offset_destination (first_coordinate, second_coordinate, integer):
     if second_coordinate[0] > first_coordinate[0]:
         # destination is bottom right of origin
         if second_coordinate[1] > first_coordinate[1]:
-            second_coordinate = (second_coordinate[0] - 6, second_coordinate[1] - 6)
+            second_coordinate = (second_coordinate[0] - integer, second_coordinate[1] - integer)
         # destination is top right of origin
         else:
-            second_coordinate = (second_coordinate[0] - 6, second_coordinate[1] + 6)
+            second_coordinate = (second_coordinate[0] - integer, second_coordinate[1] + integer)
     else:
         # destination is bottom left of origin
         if second_coordinate[1] > first_coordinate[1]:
-            second_coordinate = (second_coordinate[0] + 6, second_coordinate[1] - 6)
+            second_coordinate = (second_coordinate[0] + integer, second_coordinate[1] - integer)
         # destination is top left of origin
         else:
-            second_coordinate = (second_coordinate[0] + 6, second_coordinate[1]+ 6)
+            second_coordinate = (second_coordinate[0] + integer, second_coordinate[1]+ integer)
     return second_coordinate
 
 def get_arrow_coordinates(origin_coordinate, destination_coordinate):
+    print(destination_coordinate)
+    if destination_coordinate[0] - origin_coordinate[0] == 0:
+        destination_x_value = destination_coordinate[0] + 1
+        destination_y_value = destination_coordinate[1]
+        destination_coordinate = (destination_x_value, destination_y_value)
+        #destination_coordinate[0] = destination_coordinate[0] + 1
+    print(destination_coordinate)
+    print(" ")
     slope = (destination_coordinate[1] - origin_coordinate[1])/(destination_coordinate[0] - origin_coordinate[0])
     if slope > 0:
         sign = True
@@ -61,7 +69,7 @@ def get_arrow_coordinates(origin_coordinate, destination_coordinate):
     upper_coordinates = [upper_arrow_coordinates, destination_coordinate]
     lower_arrow_coordinates = (lower_x_endpoint, lower_y_endpoint)
     lower_coordinates = [lower_arrow_coordinates, destination_coordinate]
-    return upper_coordinates, lower_coordinates, fill_color
+    return upper_coordinates, lower_coordinates
 
 def retrieve_hex_color(r, g, b):
     return "#{:02x}{:02x}{:02x}".format(r, g, b)
@@ -111,7 +119,7 @@ def draw_attacks(canvas, commands):
         if command.location == command.origin and command.origin != command.destination:
             first_coordinate = command.origin.coordinate
             second_coordinate = command.destination.coordinate
-            second_coordinate = get_offset_destination(first_coordinate, second_coordinate)
+            second_coordinate = get_offset_destination(first_coordinate, second_coordinate, 3)
             coordinates = [first_coordinate, second_coordinate]
             origin_coordinate = first_coordinate
             destination_coordinate = second_coordinate
@@ -119,7 +127,7 @@ def draw_attacks(canvas, commands):
                 fill_color = "black"
             else:
                 fill_color = "red"
-            upper_coordinates, lower_coordinates, fill_color = get_arrow_coordinates(origin_coordinate, destination_coordinate)
+            upper_coordinates, lower_coordinates= get_arrow_coordinates(origin_coordinate, destination_coordinate)
             canvas.create_line(coordinates, fill = fill_color, width = 2, tags = ("draw"))
             canvas.create_line(upper_coordinates, fill = fill_color, width = 2, tags = ("draw"))
             canvas.create_line(lower_coordinates, fill = fill_color, width = 2, tags = ("draw"))  
@@ -150,13 +158,18 @@ def draw_supports(canvas, commands):
             location_coordinate = command.location.coordinate
             origin_coordinate = command.origin.coordinate
             destination_coordinate = command.destination.coordinate
-            offset_destination_coordinate = get_offset_destination(origin_coordinate, destination_coordinate)
-            offset_origin_coordinate = get_offset_destination(destination_coordinate, origin_coordinate)
+            offset_destination_coordinate = get_offset_destination(origin_coordinate, destination_coordinate, 6)
+            offset_origin_coordinate = get_offset_destination(destination_coordinate, origin_coordinate, 3)
+            #offset_origin_coordinate = origin_coordinate
+            print(command.unit.id, command.location.name)
+            print(destination_coordinate)
+            print(offset_destination_coordinate)
+            print(" ")
             #offset_destination_coordinate = (destination_coordinate[0] - 5, destination_coordinate[1] - 5)
             canvas.create_line (location_coordinate, origin_coordinate, dash = (5, 2), fill = fill_color, width = 3, tags = ("draw"))
             # supports for attacks
             if command.origin != command.destination:
-                upper_coordinates, lower_coordinates, fill_color = get_arrow_coordinates(offset_origin_coordinate, offset_destination_coordinate)
+                upper_coordinates, lower_coordinates = get_arrow_coordinates(offset_origin_coordinate, offset_destination_coordinate)
                 canvas.create_line(offset_origin_coordinate, offset_destination_coordinate, dash = (5, 2), fill = fill_color, width = 2, tags = ("draw"))
                 canvas.create_line(upper_coordinates, fill = fill_color, width = 2, tags = ("draw"))
                 canvas.create_line(lower_coordinates, fill = fill_color, width = 2, tags = ("draw"))
