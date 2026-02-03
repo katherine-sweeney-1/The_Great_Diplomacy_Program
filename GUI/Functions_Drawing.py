@@ -21,8 +21,10 @@ def get_arrow_coordinates(origin_coordinate, destination_coordinate):
     slope = (destination_coordinate[1] - origin_coordinate[1])/(destination_coordinate[0] - origin_coordinate[0])
     if slope > 0:
         sign = True
-    else:
+    elif slope < 0:
         sign = False
+    else:
+        sign = "zero slope"
     slope = round(slope, 2)
     slope = math.atan(slope)
     slope = round(slope, 2)
@@ -33,13 +35,20 @@ def get_arrow_coordinates(origin_coordinate, destination_coordinate):
         else:
             slope_upper_line = slope - math.pi/6
             slope_lower_line = slope + math.pi/6
-    else:
+    elif sign == False:
         if destination_coordinate[1] > origin_coordinate[1]:
             slope_upper_line = slope - math.pi/6
             slope_lower_line = slope + math.pi/6
         else:
             slope_upper_line = slope -  5*math.pi/6
             slope_lower_line = slope + 5*math.pi/6
+    elif sign == "zero slope":
+        if destination_coordinate[0] > origin_coordinate[0]:
+            slope_upper_line = slope - 5*math.pi/6
+            slope_lower_line = slope + 5*math.pi/6
+        else:
+            slope_upper_line = slope - math.pi/6
+            slope_lower_line = slope + math.pi/6
     upper_x_endpoint = (20*math.cos(slope_upper_line)) + destination_coordinate[0]
     upper_y_endpoint = (20*math.sin(slope_upper_line)) + destination_coordinate[1]
     lower_x_endpoint = (20*math.cos(slope_lower_line)) + destination_coordinate[0]
@@ -52,7 +61,7 @@ def get_arrow_coordinates(origin_coordinate, destination_coordinate):
     upper_coordinates = [upper_arrow_coordinates, destination_coordinate]
     lower_arrow_coordinates = (lower_x_endpoint, lower_y_endpoint)
     lower_coordinates = [lower_arrow_coordinates, destination_coordinate]
-    return upper_coordinates, lower_coordinates
+    return upper_coordinates, lower_coordinates, fill_color
 
 def retrieve_hex_color(r, g, b):
     return "#{:02x}{:02x}{:02x}".format(r, g, b)
@@ -110,7 +119,7 @@ def draw_attacks(canvas, commands):
                 fill_color = "black"
             else:
                 fill_color = "red"
-            upper_coordinates, lower_coordinates = get_arrow_coordinates(origin_coordinate, destination_coordinate)
+            upper_coordinates, lower_coordinates, fill_color = get_arrow_coordinates(origin_coordinate, destination_coordinate)
             canvas.create_line(coordinates, fill = fill_color, width = 2, tags = ("draw"))
             canvas.create_line(upper_coordinates, fill = fill_color, width = 2, tags = ("draw"))
             canvas.create_line(lower_coordinates, fill = fill_color, width = 2, tags = ("draw"))  
@@ -147,7 +156,7 @@ def draw_supports(canvas, commands):
             canvas.create_line (location_coordinate, origin_coordinate, dash = (5, 2), fill = fill_color, width = 3, tags = ("draw"))
             # supports for attacks
             if command.origin != command.destination:
-                upper_coordinates, lower_coordinates = get_arrow_coordinates(offset_origin_coordinate, offset_destination_coordinate)
+                upper_coordinates, lower_coordinates, fill_color = get_arrow_coordinates(offset_origin_coordinate, offset_destination_coordinate)
                 canvas.create_line(offset_origin_coordinate, offset_destination_coordinate, dash = (5, 2), fill = fill_color, width = 2, tags = ("draw"))
                 canvas.create_line(upper_coordinates, fill = fill_color, width = 2, tags = ("draw"))
                 canvas.create_line(lower_coordinates, fill = fill_color, width = 2, tags = ("draw"))
