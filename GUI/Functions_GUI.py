@@ -34,6 +34,8 @@ def set_up_gui(game_objects, current_turn, turns):
     close_button.pack()
     next_turn_button = tk.Button(main_window, text = "Next Turn", width = 20)
     next_turn_button.pack()
+    previous_turn_button = tk.Button(main_window, text = "Previous Turn", width = 20)
+    previous_turn_button.pack()
     # image
     map_image = Image.open("GUI/kamrans_map_png.png")
     map_width = map_image.width
@@ -43,7 +45,7 @@ def set_up_gui(game_objects, current_turn, turns):
     canvas = tk.Canvas(main_window, width = map_width, height = map_height, cursor = "cross")
     #next_turn_button = tk.Button(main_window, text = "Next Turn", width = 20, command = lambda event: show_next_turn (event, main_window, canvas, game_objects, current_turn, turns))
     #next_turn_button.pack()
-    return main_window, map_image, canvas, close_button, next_turn_button
+    return main_window, map_image, canvas, close_button, next_turn_button, previous_turn_button
 
 def display_moves(main_window, map_image, canvas, commands):
     canvas.pack(fill = tk.BOTH)
@@ -82,21 +84,18 @@ def draw_pieces(canvas, commands):
     canvas = draw_supports(canvas, commands)
     return canvas
 
-count = 1 
-
-def count_turn(event):
-    if event:
-        global count
-        count += 1
-        print("counting", count)
-
-def show_next_turn(event, main_window, canvas, game_objects, current_turn, turns, next_turn_button):
+def show_next_turn(event, main_window, canvas, game_objects, current_turn, turns, next_turn_button, previous_turn_button):
     if event:
         turns = []
         for turn in game_objects:
             turns.append(turn)
         current_turn_index = turns.index(current_turn)
         next_turn_index = current_turn_index + 1
+        if current_turn_index != 1:
+            previous_turn_index = current_turn_index - 1
+        else:
+            previous_turn_index = current_turn_index
+        previous_turn = turns[previous_turn_index]
         next_turn = turns[next_turn_index]
         commands = game_objects[next_turn]["Commands"]
         commanders = game_objects[next_turn]["Commanders"]
@@ -106,8 +105,31 @@ def show_next_turn(event, main_window, canvas, game_objects, current_turn, turns
         assign_coordinates_to_nodes(nodes, coordinates_file, coastal_coordinates_file)
         canvas.delete("draw")
         canvas = draw_pieces(canvas, commands)
-        next_turn_button.bind("<Button-1>", lambda event: show_next_turn(event, main_window, canvas, game_objects, next_turn, turns, next_turn_button))
+        next_turn_button.bind("<Button-1>", lambda event: show_next_turn(event, main_window, canvas, game_objects, next_turn, turns, next_turn_button, previous_turn_button))
+        previous_turn_button.bind("<Button-1>", lambda event: show_previous_turn(event, main_window, canvas, game_objects, next_turn, turns, previous_turn_button, next_turn_button))
 
+def show_previous_turn(event, main_window, canvas, game_objects, current_turn, turns, previous_turn_button, next_turn_button):
+    if event:
+        turns = []
+        for turn in game_objects:
+            turns.append(turn)
+        current_turn_index = turns.index(current_turn)
+        next_turn = current_turn_index + 1
+        if current_turn_index != 1:
+            previous_turn_index = current_turn_index - 1
+        else:
+            previous_turn_index = current_turn_index
+        previous_turn = turns[previous_turn_index]
+        commands = game_objects[previous_turn]["Commands"]
+        commanders = game_objects[previous_turn]["Commanders"]
+        nodes = game_objects[previous_turn]["Nodes"]
+        units = game_objects[previous_turn]["Units"]
+        nodes = nodes[0]
+        assign_coordinates_to_nodes(nodes, coordinates_file, coastal_coordinates_file)
+        canvas.delete("draw")
+        canvas = draw_pieces(canvas, commands)
+        previous_turn_button.bind("<Button-1>", lambda event: show_previous_turn(event, main_window, canvas, game_objects, previous_turn, turns, previous_turn_button, next_turn_button))
+        next_turn_button.bind("<Button-1>", lambda event: show_next_turn(event, main_window, canvas, game_objects, previous_turn, turns, next_turn_button, previous_turn_button))
 
 def run_gui(game_objects, turn = None):
     turns = []
@@ -120,7 +142,8 @@ def run_gui(game_objects, turn = None):
     units = game_objects[first_turn]["Units"]
     nodes = nodes[0]
     assign_coordinates_to_nodes(nodes, coordinates_file, coastal_coordinates_file)
-    main_window, map_image, canvas, close_button, next_turn_button = set_up_gui(game_objects, first_turn, turns)
+    main_window, map_image, canvas, close_button, next_turn_button, previous_turn_button = set_up_gui(game_objects, first_turn, turns)
     main_window = display_moves(main_window, map_image, canvas, commands)
-    next_turn_button.bind("<Button-1>", lambda event: show_next_turn(main_window, event, canvas, game_objects, first_turn, turns, next_turn_button))
+    next_turn_button.bind("<Button-1>", lambda event: show_next_turn(main_window, event, canvas, game_objects, first_turn, turns, next_turn_button, previous_turn_button))
+    previous_turn_button.bind("<Button-1>", lambda event: show_previous_turn(main_window, event, canvas, game_objects, first_turn, turns, previous_turn_button, next_turn_button))
     main_window.mainloop()
