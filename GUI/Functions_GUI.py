@@ -25,15 +25,15 @@ def create_territory_listbox(main_window, territory_file, scrollbar):
     listbox.pack()
     return listbox
 
-def set_up_gui(commands):
+def set_up_gui(game_objects, current_turn, turns):
     main_window = tk.Tk()
     main_window.title('TGDP GUI')
     main_window.geometry("1000x1000")
     # Close window button
-    button = tk.Button(main_window, text = "Close", width = 25, command = main_window.destroy)
-    button.pack()
-    button = tk.Button(main_window, text = "Next Turn", width = 20)
-    button.pack()
+    close_button = tk.Button(main_window, text = "Close", width = 25, command = main_window.destroy)
+    close_button.pack()
+    next_turn_button = tk.Button(main_window, text = "Next Turn", width = 20)
+    next_turn_button.pack()
     # image
     map_image = Image.open("GUI/kamrans_map_png.png")
     map_width = map_image.width
@@ -41,7 +41,9 @@ def set_up_gui(commands):
     map_image.thumbnail((map_width, map_height), Image.Resampling.LANCZOS)
     # create canvas to click on 
     canvas = tk.Canvas(main_window, width = map_width, height = map_height, cursor = "cross")
-    return main_window, map_image, canvas
+    #next_turn_button = tk.Button(main_window, text = "Next Turn", width = 20, command = lambda event: show_next_turn (event, main_window, canvas, game_objects, current_turn, turns))
+    #next_turn_button.pack()
+    return main_window, map_image, canvas, close_button, next_turn_button
 
 def display_moves(main_window, map_image, canvas, commands):
     canvas.pack(fill = tk.BOTH)
@@ -88,7 +90,7 @@ def count_turn(event):
         count += 1
         print("counting", count)
 
-def show_next_turn(main_window, event, canvas, game_objects, current_turn, turns):
+def show_next_turn(event, main_window, canvas, game_objects, current_turn, turns, next_turn_button):
     if event:
         turns = []
         for turn in game_objects:
@@ -104,7 +106,7 @@ def show_next_turn(main_window, event, canvas, game_objects, current_turn, turns
         assign_coordinates_to_nodes(nodes, coordinates_file, coastal_coordinates_file)
         canvas.delete("draw")
         canvas = draw_pieces(canvas, commands)
-        main_window.bind("<Button-1>", lambda event: show_next_turn(main_window, event, canvas, game_objects, next_turn, turns))
+        next_turn_button.bind("<Button-1>", lambda event: show_next_turn(event, main_window, canvas, game_objects, next_turn, turns, next_turn_button))
 
 
 def run_gui(game_objects, turn = None):
@@ -118,7 +120,7 @@ def run_gui(game_objects, turn = None):
     units = game_objects[first_turn]["Units"]
     nodes = nodes[0]
     assign_coordinates_to_nodes(nodes, coordinates_file, coastal_coordinates_file)
-    main_window, map_image, canvas = set_up_gui(commands)
+    main_window, map_image, canvas, close_button, next_turn_button = set_up_gui(game_objects, first_turn, turns)
     main_window = display_moves(main_window, map_image, canvas, commands)
-    main_window.bind("<Button-1>", lambda event: show_next_turn(main_window, event, canvas, game_objects, first_turn, turns))
+    next_turn_button.bind("<Button-1>", lambda event: show_next_turn(main_window, event, canvas, game_objects, first_turn, turns, next_turn_button))
     main_window.mainloop()
