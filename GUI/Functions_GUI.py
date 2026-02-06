@@ -89,42 +89,38 @@ def draw_pieces(canvas, commands):
     canvas = draw_supports(canvas, commands)
     return canvas
 
+def display_different_turn(main_window, canvas, game_objects, turns, next_turn_button, previous_turn_button, different_turn):
+    commands, commanders, nodes, units = get_objects(game_objects, different_turn)
+    canvas.delete("draw")
+    canvas = draw_pieces(canvas, commands)
+    next_turn_button.bind("<Button-1>", lambda event: show_next_turn(event, main_window, canvas, game_objects, different_turn, turns, next_turn_button, previous_turn_button))
+    previous_turn_button.bind("<Button-1>", lambda event: show_previous_turn(event, main_window, canvas, game_objects, different_turn, turns, previous_turn_button, next_turn_button))
+
 def show_next_turn(event, main_window, canvas, game_objects, current_turn, turns, next_turn_button, previous_turn_button):
     if event:
-        turns = []
-        for turn in game_objects:
-            turns.append(turn)
         current_turn_index = turns.index(current_turn)
-        next_turn_index = current_turn_index + 1
+        if current_turn_index != len(turns) - 1:
+            next_turn_index = current_turn_index + 1
+        else:
+            next_turn_index = current_turn_index
         next_turn = turns[next_turn_index]
-        commands, commanders, nodes, units = get_objects(game_objects, next_turn)
-        canvas.delete("draw")
-        canvas = draw_pieces(canvas, commands)
-        next_turn_button.bind("<Button-1>", lambda event: show_next_turn(event, main_window, canvas, game_objects, next_turn, turns, next_turn_button, previous_turn_button))
-        previous_turn_button.bind("<Button-1>", lambda event: show_previous_turn(event, main_window, canvas, game_objects, next_turn, turns, previous_turn_button, next_turn_button))
+        display_different_turn(main_window, canvas, game_objects, turns, next_turn_button, previous_turn_button, next_turn)
 
 def show_previous_turn(event, main_window, canvas, game_objects, current_turn, turns, previous_turn_button, next_turn_button):
     if event:
-        turns = []
-        for turn in game_objects:
-            turns.append(turn)
         current_turn_index = turns.index(current_turn)
         if current_turn_index != 1:
             previous_turn_index = current_turn_index - 1
         else:
             previous_turn_index = current_turn_index
         previous_turn = turns[previous_turn_index]
-        commands, commanders, nodes, units = get_objects(game_objects, previous_turn)
-        canvas.delete("draw")
-        canvas = draw_pieces(canvas, commands)
-        previous_turn_button.bind("<Button-1>", lambda event: show_previous_turn(event, main_window, canvas, game_objects, previous_turn, turns, previous_turn_button, next_turn_button))
-        next_turn_button.bind("<Button-1>", lambda event: show_next_turn(event, main_window, canvas, game_objects, previous_turn, turns, next_turn_button, previous_turn_button))
+        display_different_turn(main_window, canvas, game_objects, turns, next_turn_button, previous_turn_button, previous_turn)
 
 def run_gui(game_objects, turn = None):
     turns = []
     for turn in game_objects:
         turns.append(turn)
-    first_turn = turns[1]
+    first_turn = turns[0]
     commands, commanders, nodes, units = get_objects(game_objects, first_turn)
     main_window, map_image, canvas, close_button, next_turn_button, previous_turn_button = set_up_gui(game_objects, first_turn, turns)
     main_window = display_moves(main_window, map_image, canvas, commands)
