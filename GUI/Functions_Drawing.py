@@ -1,5 +1,12 @@
 import math
 
+def get_fill_color(command):
+    if command.succeed == True:
+        fill_color = "black"
+    else:
+        fill_color = "red"
+    return fill_color
+
 def get_offset_destination (first_coordinate, second_coordinate, integer):
     if second_coordinate[0] > first_coordinate[0]:
         # destination is bottom right of origin
@@ -119,11 +126,8 @@ def draw_attacks(canvas, commands):
             coordinates = [first_coordinate, second_coordinate]
             origin_coordinate = first_coordinate
             destination_coordinate = second_coordinate
-            if command.succeed == True:
-                fill_color = "black"
-            else:
-                fill_color = "red"
             upper_coordinates, lower_coordinates= get_arrow_coordinates(origin_coordinate, destination_coordinate)
+            fill_color = get_fill_color(command)
             canvas.create_line(coordinates, fill = fill_color, width = 2, tags = ("draw"))
             canvas.create_line(upper_coordinates, fill = fill_color, width = 2, tags = ("draw"))
             canvas.create_line(lower_coordinates, fill = fill_color, width = 2, tags = ("draw"))  
@@ -137,27 +141,20 @@ def draw_holds(canvas, commands):
             nw_coordinates = (center[0] - 9, center[1] - 9)
             se_coordinates = (center[0] + 9, center[1] + 9)
             coordinates = [nw_coordinates, se_coordinates]
-            if command.succeed == True:
-                canvas.create_oval(coordinates, outline = "black", width = 2, tags = ("draw"))
-            else:
-                canvas.create_oval(coordinates, outline = "red", width = 2, tags = ("draw"))
+            fill_color = get_fill_color(command)
+            canvas.create_oval(coordinates, outline = fill_color, width = 2, tags = ("draw"))
     return canvas
 
 def draw_supports(canvas, commands):
     for command_id in commands:
         command = commands[command_id]
         if command.location != command.origin and command.convoy == False:
-            if command.succeed == True:
-                fill_color = "black"
-            else:
-                fill_color = "red"
             location_coordinate = command.location.coordinate
             origin_coordinate = command.origin.coordinate
             destination_coordinate = command.destination.coordinate
             offset_destination_coordinate = get_offset_destination(origin_coordinate, destination_coordinate, 6)
             offset_origin_coordinate = get_offset_destination(destination_coordinate, origin_coordinate, 3)
-            #offset_origin_coordinate = origin_coordinate
-            #offset_destination_coordinate = (destination_coordinate[0] - 5, destination_coordinate[1] - 5)
+            fill_color = get_fill_color(command)
             canvas.create_line (location_coordinate, origin_coordinate, dash = (5, 2), fill = fill_color, width = 3, tags = ("draw"))
             # supports for attacks
             if command.origin != command.destination:
