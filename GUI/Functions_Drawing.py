@@ -18,14 +18,10 @@ def get_offset_destination (first_coordinate, second_coordinate, integer):
     return second_coordinate
 
 def get_arrow_coordinates(origin_coordinate, destination_coordinate):
-    print(destination_coordinate)
     if destination_coordinate[0] - origin_coordinate[0] == 0:
         destination_x_value = destination_coordinate[0] + 1
         destination_y_value = destination_coordinate[1]
         destination_coordinate = (destination_x_value, destination_y_value)
-        #destination_coordinate[0] = destination_coordinate[0] + 1
-    print(destination_coordinate)
-    print(" ")
     slope = (destination_coordinate[1] - origin_coordinate[1])/(destination_coordinate[0] - origin_coordinate[0])
     if slope > 0:
         sign = True
@@ -161,10 +157,6 @@ def draw_supports(canvas, commands):
             offset_destination_coordinate = get_offset_destination(origin_coordinate, destination_coordinate, 6)
             offset_origin_coordinate = get_offset_destination(destination_coordinate, origin_coordinate, 3)
             #offset_origin_coordinate = origin_coordinate
-            print(command.unit.id, command.location.name)
-            print(destination_coordinate)
-            print(offset_destination_coordinate)
-            print(" ")
             #offset_destination_coordinate = (destination_coordinate[0] - 5, destination_coordinate[1] - 5)
             canvas.create_line (location_coordinate, origin_coordinate, dash = (5, 2), fill = fill_color, width = 3, tags = ("draw"))
             # supports for attacks
