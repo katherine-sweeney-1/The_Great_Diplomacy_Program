@@ -43,8 +43,10 @@ def set_up_gui(game_objects, current_turn, turns):
     close_button.pack()
     next_turn_button = tk.Button(main_window, text = "Next Turn", width = 20)
     next_turn_button.pack()
+    next_turn_button.place(x = 800, y = 0)
     previous_turn_button = tk.Button(main_window, text = "Previous Turn", width = 20)
     previous_turn_button.pack()
+    previous_turn_button.place(x = 0, y = 0)
     # image
     map_image = Image.open("GUI/kamrans_map_png.png")
     map_width = map_image.width
