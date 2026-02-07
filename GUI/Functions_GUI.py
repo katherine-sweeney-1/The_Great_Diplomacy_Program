@@ -37,7 +37,7 @@ def create_territory_listbox(main_window, territory_file, scrollbar):
 
 def create_treeview(main_window, commanders, commands):
     columns = ("Commander", "Unit ID", "Unit Type", "Location", "Origin", "Destination")
-    treeview = tk.ttk.Treeview(main_window, columns = columns, show = "headings")
+    treeview = tk.ttk.Treeview(main_window, columns = columns, height = 25, show = "headings")
     treeview = add_treeview_data(treeview, commanders, commands)
     return treeview
 
