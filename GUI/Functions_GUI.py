@@ -1,4 +1,5 @@
 import tkinter as tk
+from tkinter import ttk
 from PIL import Image, ImageTk, ImageDraw
 import cv2
 from Functions_Coordinates import assign_coordinates_to_nodes
@@ -34,6 +35,29 @@ def create_territory_listbox(main_window, territory_file, scrollbar):
     listbox.pack()
     return listbox
 
+def create_treeview(main_window, commanders, commands):
+    columns = ("Commander", "Unit ID", "Unit Type", "Location", "Origin", "Destination")
+    treeview = tk.ttk.Treeview(main_window, columns = columns, show = "headings")
+    treeview = add_treeview_data(treeview, commanders, commands)
+    return treeview
+
+def add_treeview_data(treeview, commanders, commands):
+    columns = ("Commander", "Unit ID", "Unit Type", "Location", "Origin", "Destination")
+    for column_entry in columns:
+        treeview.heading(column_entry, text = column_entry)
+        treeview.column(column_entry, width = 100)
+    for commander_id in commanders:
+        commander = commanders[commander_id]
+        print(commander.unit_members)
+        unit_members = commander.unit_members
+        for unit_id in unit_members:
+            unit = unit_members[unit_id]
+            command = commands[unit_id]
+            entry_values = (commander_id, unit_id, unit.type, command.location.name, command.origin.name, command.destination.name)
+            treeview.insert("", "end", values = entry_values)
+    treeview.pack()
+    return treeview
+
 def set_up_gui(game_objects, current_turn, turns):
     main_window = tk.Tk()
     main_window.title('TGDP GUI')
@@ -51,17 +75,19 @@ def set_up_gui(game_objects, current_turn, turns):
     map_image = Image.open("GUI/kamrans_map_png.png")
     map_width = map_image.width
     map_height = map_image.height
+    
     map_image.thumbnail((map_width, map_height), Image.Resampling.LANCZOS)
     # create canvas to click on 
     canvas = tk.Canvas(main_window, width = map_width, height = map_height, cursor = "cross")
     return main_window, map_image, canvas, close_button, next_turn_button, previous_turn_button
 
-def display_moves(main_window, map_image, canvas, commands):
+def display_moves(main_window, map_image, canvas, commands, commanders):
     canvas.pack(fill = tk.BOTH)
     # convert pil image to tkinter image object
     map_image = ImageTk.PhotoImage(map_image)
     # create canvas on image
-    canvas.create_image(0, 0, anchor = tk.NW, image = map_image)
+    canvas.create_image(0,0, anchor = tk.NW, image = map_image)
+    #canvas.create_image(500, 200, anchor = "center", image = map_image)
     """
     # make image label
     map_label = tk.Label(main_window, image = map_image)
@@ -78,11 +104,12 @@ def display_moves(main_window, map_image, canvas, commands):
     commented out so extra coordinates don't get recorded unintentionally
     """
     #coords = main_window.bind("<Button-1>", get_coordinates)
-    listbox = create_territory_listbox(main_window, territory_file, scrollbar)
-    scrollbar.config(command = listbox.yview)
+    #listbox = create_territory_listbox(main_window, territory_file, scrollbar)
+    #scrollbar.config(command = listbox.yview)
     canvas.image = map_image
     canvas = draw_pieces(canvas, commands)
-    return main_window
+    treeview = create_treeview(main_window, commanders, commands)
+    return main_window, treeview
 
 def draw_pieces(canvas, commands):
     canvas = draw_units(canvas, commands)
@@ -91,14 +118,18 @@ def draw_pieces(canvas, commands):
     canvas = draw_supports(canvas, commands)
     return canvas
 
-def display_different_turn(main_window, canvas, game_objects, turns, next_turn_button, previous_turn_button, different_turn):
+def display_different_turn(main_window, canvas, game_objects, turns, next_turn_button, previous_turn_button, different_turn, commanders, treeview):
     commands, commanders, nodes, units = get_objects(game_objects, different_turn)
     canvas.delete("draw")
     canvas = draw_pieces(canvas, commands)
-    next_turn_button.bind("<Button-1>", lambda event: show_next_turn(event, main_window, canvas, game_objects, different_turn, turns, next_turn_button, previous_turn_button))
-    previous_turn_button.bind("<Button-1>", lambda event: show_previous_turn(event, main_window, canvas, game_objects, different_turn, turns, previous_turn_button, next_turn_button))
+    for item in treeview.get_children():
+        treeview.delete(item)
+    add_treeview_data(treeview, commanders, commands)
+    next_turn_button.bind("<Button-1>", lambda event: show_next_turn(event, main_window, canvas, game_objects, different_turn, turns, next_turn_button, previous_turn_button, commanders, treeview))
+    previous_turn_button.bind("<Button-1>", lambda event: show_previous_turn(event, main_window, canvas, game_objects, different_turn, turns, previous_turn_button, next_turn_button, commanders, treeview))
+    #commanders_data_treeview.bind("<Button-1>", lambda event: create_commanders_info_treeview(event: main_window, commanders, commands))
 
-def show_next_turn(event, main_window, canvas, game_objects, current_turn, turns, next_turn_button, previous_turn_button):
+def show_next_turn(event, main_window, canvas, game_objects, current_turn, turns, next_turn_button, previous_turn_button, commanders, treeview):
     if event:
         current_turn_index = turns.index(current_turn)
         if current_turn_index != len(turns) - 1:
@@ -106,9 +137,9 @@ def show_next_turn(event, main_window, canvas, game_objects, current_turn, turns
         else:
             next_turn_index = current_turn_index
         next_turn = turns[next_turn_index]
-        display_different_turn(main_window, canvas, game_objects, turns, next_turn_button, previous_turn_button, next_turn)
+        display_different_turn(main_window, canvas, game_objects, turns, next_turn_button, previous_turn_button, next_turn, commanders, treeview)
 
-def show_previous_turn(event, main_window, canvas, game_objects, current_turn, turns, previous_turn_button, next_turn_button):
+def show_previous_turn(event, main_window, canvas, game_objects, current_turn, turns, previous_turn_button, next_turn_button, commanders, treeview):
     if event:
         current_turn_index = turns.index(current_turn)
         if current_turn_index != 1:
@@ -116,7 +147,7 @@ def show_previous_turn(event, main_window, canvas, game_objects, current_turn, t
         else:
             previous_turn_index = current_turn_index
         previous_turn = turns[previous_turn_index]
-        display_different_turn(main_window, canvas, game_objects, turns, next_turn_button, previous_turn_button, previous_turn)
+        display_different_turn(main_window, canvas, game_objects, turns, next_turn_button, previous_turn_button, previous_turn, commanders, treeview)
 
 def run_gui(game_objects, turn = None):
     turns = []
@@ -125,7 +156,8 @@ def run_gui(game_objects, turn = None):
     first_turn = turns[0]
     commands, commanders, nodes, units = get_objects(game_objects, first_turn)
     main_window, map_image, canvas, close_button, next_turn_button, previous_turn_button = set_up_gui(game_objects, first_turn, turns)
-    main_window = display_moves(main_window, map_image, canvas, commands)
-    next_turn_button.bind("<Button-1>", lambda event: show_next_turn(main_window, event, canvas, game_objects, first_turn, turns, next_turn_button, previous_turn_button))
-    previous_turn_button.bind("<Button-1>", lambda event: show_previous_turn(main_window, event, canvas, game_objects, first_turn, turns, previous_turn_button, next_turn_button))
+    main_window, treeview = display_moves(main_window, map_image, canvas, commands, commanders)
+    #create_commanders_info_treeview(main_window, commanders, commands)
+    next_turn_button.bind("<Button-1>", lambda event: show_next_turn(main_window, event, canvas, game_objects, first_turn, turns, next_turn_button, previous_turn_button, commanders, treeview))
+    previous_turn_button.bind("<Button-1>", lambda event: show_previous_turn(main_window, event, canvas, game_objects, first_turn, turns, previous_turn_button, next_turn_button, commanders, treeview))
     main_window.mainloop()
