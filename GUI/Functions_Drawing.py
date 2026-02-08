@@ -148,7 +148,7 @@ def draw_holds(canvas, commands):
 def draw_supports(canvas, commands):
     for command_id in commands:
         command = commands[command_id]
-        if command.location != command.origin and command.convoy == False:
+        if command.location != command.origin: # and command.convoy == False:
             location_coordinate = command.location.coordinate
             origin_coordinate = command.origin.coordinate
             destination_coordinate = command.destination.coordinate

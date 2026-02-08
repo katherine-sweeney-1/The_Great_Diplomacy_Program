@@ -36,24 +36,31 @@ def create_territory_listbox(main_window, territory_file, scrollbar):
     return listbox
 
 def create_treeview(main_window, commanders, commands):
-    columns = ("Commander", "Unit ID", "Unit Type", "Location", "Origin", "Destination")
+    columns = ("Commander", "Unit ID", "Unit Type", "Action", "Location", "Origin", "Destination")
     treeview = tk.ttk.Treeview(main_window, columns = columns, height = 25, show = "headings")
     treeview = add_treeview_data(treeview, commanders, commands)
     return treeview
 
 def add_treeview_data(treeview, commanders, commands):
-    columns = ("Commander", "Unit ID", "Unit Type", "Location", "Origin", "Destination")
+    columns = ("Commander", "Unit ID", "Unit Type", "Action", "Location", "Origin", "Destination")
     for column_entry in columns:
         treeview.heading(column_entry, text = column_entry)
         treeview.column(column_entry, width = 100)
     for commander_id in commanders:
         commander = commanders[commander_id]
-        print(commander.unit_members)
         unit_members = commander.unit_members
         for unit_id in unit_members:
             unit = unit_members[unit_id]
             command = commands[unit_id]
-            entry_values = (commander_id, unit_id, unit.type, command.location.name, command.origin.name, command.destination.name)
+            if command.location == command.origin and command.origin != command.destination:
+                action_type = "Attack"
+            elif command.location == command.origin and command.origin == command.destination:
+                action_type = "Hold"
+            elif command.location != command.origin and command.convoy == False:
+                action_type = "Support"
+            elif command.convoy == True:
+                action_type = "Convoy"
+            entry_values = (commander_id, unit_id, unit.type, action_type, command.location.name, command.origin.name, command.destination.name)
             treeview.insert("", "end", values = entry_values)
     treeview.pack()
     return treeview
@@ -62,6 +69,7 @@ def set_up_gui(game_objects, current_turn, turns):
     main_window = tk.Tk()
     main_window.title('TGDP GUI')
     main_window.geometry("1000x1000")
+    #main_window.configure(background = "white")
     # Close window button
     close_button = tk.Button(main_window, text = "Close", width = 25, command = main_window.destroy)
     close_button.pack()
