@@ -303,13 +303,16 @@ def get_success_attacks(commands):
         command = commands[command_id]
     for command_id in commands:
         command = commands[command_id]
-        if command.location == command.destination:
-            get_hold_outcome(command_id, commands[command_id], commands)
-        elif command.location == command.origin and command.origin != command.destination:
-            get_attack_outcome(command_id, commands[command_id], commands)
-        # if not an attack or hold then continue to next command
+        if command.legal == 1:
+            if command.location == command.destination:
+                get_hold_outcome(command_id, commands[command_id], commands)
+            elif command.location == command.origin and command.origin != command.destination:
+                get_attack_outcome(command_id, commands[command_id], commands)
+            # if not an attack or hold then continue to next command
+            else:
+                continue
         else:
-            continue
+            command.succeed = False
     return commands
 
 

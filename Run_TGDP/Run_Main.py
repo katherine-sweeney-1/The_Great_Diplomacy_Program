@@ -19,7 +19,7 @@ def run_main_unit_testing(input_data, game_number_string):
     turns_objects = {}
     for commands_data in input_data:
         objects = {}
-        game_year = 1908 + count/2
+        game_year = 1901 + count/2
         game_year = int(game_year)
         game_season = count % 2
         match game_season:
@@ -28,23 +28,33 @@ def run_main_unit_testing(input_data, game_number_string):
             case 1:
                 game_season = "Fall"
         game_season = game_season.lower()
-        game_and_turn = str(game_number_string) + "_" + str(game_year) + "_" + game_season
+        game_and_turn = "game" + str(game_number_string) + "_" + str(game_year) + "_" + game_season
         commanders_data = input_data[commands_data]
         parsed_cmds, parsed_units = parse_commands_and_units(commands_data)
         commands, commanders, nodes, units = create_objects(data_nodes, data_coastal, data_fleet_coastal, data_fleet_special_coastal, commanders_data, parsed_units, parsed_cmds)
+        #print("Game 2 {} {}".format(game_year, game_season))
         nodes, units, processed_commands = run_processing(commands, commanders, nodes, units)
         print(game_and_turn)
         for command_id in commands:
-            print(command_id, commands[command_id].succeed)
+            if commands[command_id].succeed == commands[command_id].predet_outcome and commands[command_id].legal == 1:
+                print(command_id, "Correct outcome", commands[command_id].succeed)
+            else:
+                print("uh oh", command_id, commands[command_id].strength, commands[command_id].legal, commands[command_id].succeed)
         print(" ")
-        #db_table = yield_table(processed_commands, game_and_turn)
+        db_table = yield_table(processed_commands, game_and_turn)
+        #print(" ")
         count += 1
         objects["Commands"] = commands
         objects["Commanders"] = commanders
         objects["Nodes"] = nodes
         objects["Units"] = units
         turns_objects[game_and_turn] = objects
+        #print(turns_objects)
     return turns_objects
+        #return commands, commanders, nodes, units
+
+
+#run_main_unit_testing(input_data_1)
 
 """
 

@@ -214,13 +214,16 @@ def get_success_supports(commands, id = None, recur_bool = None):
             continue
         command = commands[command_id]
         # if a unit is supporting
-        if command.location != command.origin and command.convoy == False:
-            command_success = get_valid_support(commands, command)
-            command.success(command_success)
+        if command.legal == 1:
+            if command.location != command.origin and command.convoy == False:
+                command_success = get_valid_support(commands, command)
+                command.success(command_success)
+        else:
+            command.succeed = False
     # get command strength from supports
     for command_id in commands:
         command = commands[command_id]
-        if command.location != command.origin and command.convoy == False:
+        if command.legal == 1 and command.location != command.origin and command.convoy == False:
             commands = get_command_strength(commands, command, command.succeed)
     # determine any convoy dislodgements
     for command_id in commands:
@@ -235,5 +238,6 @@ def get_success_supports(commands, id = None, recur_bool = None):
                         if convoyed_army.origin == command.origin and convoyed_army.destination == command.destination:
                             convoyed_army.origin = convoyed_army.location
                             convoyed_army.destination = convoyed_army.location
-                            convoyed_army.legal = "False - invalid path move from dislodged convoy"    
+                            convoyed_army.legal = "False - invalid path move from dislodged convoy" 
+                            convoyed_army.succeed = False   
     return commands
