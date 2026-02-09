@@ -23,10 +23,14 @@ def parse_commands_and_units (txt):
             unit_count = 1
         # command --> get success and fail status
         else:
+            """
             if stripped_line[-5:-1] == "FAIL":
                 outcome = False
-            else:
+            elif stripped_line[-8:-1] == "SUCCEED":
                 outcome = True
+            else:
+                outcome = False
+            """
         # commands --> get location, origin, and destination
         if stripped_line != commander and stripped_line != country and stripped_line != "":
             # unit name
@@ -69,7 +73,7 @@ def parse_commands_and_units (txt):
                  "destination": destination,
                  "country": country,
                  "owner": commander,
-                 "outcome": outcome,
+                 #"outcome": outcome,
                  "convoy": convoy_boolean
             }
             parsed_units[unit_name] = {

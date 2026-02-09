@@ -14,24 +14,6 @@ data_fleet_coastal = "data/Data_Ter_Fleet.csv"
 commands_data = "data/Txt_Hard_Data/Game2_1906_Fall.txt"
 data_fleet_special_coastal = "data/Data_Ter_Fleet_Special_Coasts.csv"
 
-#game_and_turn = "game1_1903_fall"
-
-def run_main_original():
-    cmdrs_data_list = cmdrs_3
-    cmds = cmds_3a
-    units_data_list = units_3a
-    commands, commanders, nodes, units = create_objects(data_nodes, data_coastal, cmdrs_data_list, units_data_list, cmds)
-    nodes, units, processed_commands = run_processing(commands, commanders, nodes, units)
-    db_table = yield_table(processed_commands)
-
-def run_main_testing():
-    commanders_data = cmdrs_2_1906
-    parsed_cmds, parsed_units = parse_commands_and_units(commands_data)
-    commands, commanders, nodes, units = create_objects(data_nodes, data_coastal, data_fleet_coastal, commanders_data, parsed_units, parsed_cmds)
-    nodes, units, processed_commands = run_processing(commands, commanders, nodes, units)
-    #db_table = yield_table(processed_commands)
-
-
 def run_main_unit_testing(input_data, game_number_string):
     count = 0
     turns_objects = {}
@@ -46,20 +28,24 @@ def run_main_unit_testing(input_data, game_number_string):
             case 1:
                 game_season = "Fall"
         game_season = game_season.lower()
-        game_and_turn = str(game_number_string) + str(game_year) + "_" + game_season
-        #print(game_and_turn)
+        game_and_turn = "game" + str(game_number_string) + "_" + str(game_year) + "_" + game_season
         commanders_data = input_data[commands_data]
         parsed_cmds, parsed_units = parse_commands_and_units(commands_data)
         commands, commanders, nodes, units = create_objects(data_nodes, data_coastal, data_fleet_coastal, data_fleet_special_coastal, commanders_data, parsed_units, parsed_cmds)
         #print("Game 2 {} {}".format(game_year, game_season))
         nodes, units, processed_commands = run_processing(commands, commanders, nodes, units)
-        """
+        print(game_and_turn)
         for command_id in commands:
-            if commands[command_id].succeed == commands[command_id].predet_outcome and commands[command_id].legal == 1:
-                print(command_id, "Correct outcome", commands[command_id].succeed)
+            """
+            if commands[command_id].succeed == commands[command_id].predet_outcome:
+                print(command_id, "Correct outcome", commands[command_id].succeed, commands[command_id].legal)
             else:
+                print(command_id, commands[command_id].predet_outcome)
                 print("uh oh", command_id, commands[command_id].strength, commands[command_id].legal, commands[command_id].succeed)
-        """
+            """
+            command = commands[command_id]
+            print(command_id, command.legal, command.succeed)
+        print(" ")
         db_table = yield_table(processed_commands, game_and_turn)
         #print(" ")
         count += 1

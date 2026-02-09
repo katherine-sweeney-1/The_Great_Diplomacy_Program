@@ -1,49 +1,5 @@
+
 """
-Convoy affected outcomes
-
-    Game 1
-
-        1903 Spring: GE02
-
-        1905 Fall: RU07
-
-        1907 Spring: RU08
-
-    Game 2
-
-        1902 Fall: RU04
-
-        1903 Spring: GE02
-
-    Game 3
-
-        1903 Fall: GE02
-
-        1908 Fall: RU04
-
-    Game 4
-
-        1901 Fall: RU04
-    
-    Game 7
-
-        1901 Fall: AU02
-    
-    Game 8
-
-        1905 Spring: FR01
-
-        1905 Fall: IT01
-
-        1905 Fall: IT02
-
-        1912 Spring: TU07
-
-        1914 Spring: UK08
-
-        1914 Spring: TU09 => convoy cut support
-
-
 Invalid Move Affected Outcomes
 
     Game 1
@@ -461,38 +417,4 @@ Convoys
         1915 Spring:    UK01 (fleet convoying)  => succeed
                         UK02 (army convoyed)    => succeed
                         Note: destination is occupied by UK06, UK06 has a successful attack, no other attacks on destination 
-
-
-
-
-"""
-
-"""
-Convoy affected outcomes with convoy filters working
-
-    Game 1
-
-        1905 Fall: UK06 => convoy support
-
-    Game 2
-
-        1903 Fall: UK07 => beats the convoy attack; convoy attack says it has a strength of 2
-
-    Game 4
-
-        1905 Spring: GE02 => beats the invalid convoy attack; convoy attack says it has a strength of 3 (for double convoy)
-
-        1905 Spring: UK08 => assumes that the convoy works so UK08 moves to convoy army's spot when convoy was actually invalid
-
-    Game 8
-
-        1914 Spring: UK02 => convoyed army
-
-        1914 Spring: UK08 => assumes convoy works when it doesnt work
-        
-
-
-
-
-
 """
