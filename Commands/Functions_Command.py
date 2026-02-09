@@ -10,7 +10,7 @@ def create_commands(commands_starting_data, commanders, nodes, units):
         command.assign_location(commands_starting_data[each_command]["location"], nodes)
         command.assign_origin(commands_starting_data[each_command]["origin"], nodes)
         command.assign_destination(commands_starting_data[each_command]["destination"], nodes)
-        command.predetermined_outcome(commands_starting_data[each_command]["outcome"])
+        #command.predetermined_outcome(commands_starting_data[each_command]["outcome"])
         command.convoy_status(commands_starting_data[each_command]["convoy"])
         if command.unit != 0:
             cmds_dict[command.unit.id] = command

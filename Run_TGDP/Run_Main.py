@@ -19,7 +19,7 @@ def run_main_unit_testing(input_data, game_number_string):
     turns_objects = {}
     for commands_data in input_data:
         objects = {}
-        game_year = 1901 + count/2
+        game_year = 1908 + count/2
         game_year = int(game_year)
         game_season = count % 2
         match game_season:
@@ -36,11 +36,15 @@ def run_main_unit_testing(input_data, game_number_string):
         nodes, units, processed_commands = run_processing(commands, commanders, nodes, units)
         print(game_and_turn)
         for command_id in commands:
+            """
             if commands[command_id].succeed == commands[command_id].predet_outcome:
                 print(command_id, "Correct outcome", commands[command_id].succeed, commands[command_id].legal)
             else:
                 print(command_id, commands[command_id].predet_outcome)
                 print("uh oh", command_id, commands[command_id].strength, commands[command_id].legal, commands[command_id].succeed)
+            """
+            command = commands[command_id]
+            print(command_id, command.legal, command.succeed)
         print(" ")
         db_table = yield_table(processed_commands, game_and_turn)
         #print(" ")

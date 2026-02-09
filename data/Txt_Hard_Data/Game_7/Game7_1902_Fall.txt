@@ -35,7 +35,7 @@ IT
 Adam
 A Apu - Gre  SUCCEEDS
 F ION C Apu - Gre  SUCCEEDS
-A Ven H  SUCCEED
+A Ven H  SUCCEEDS
 
 
 RU
