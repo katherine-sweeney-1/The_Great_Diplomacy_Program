@@ -1,6 +1,3 @@
-import sys
-import os
-
 def check_other_attacks(command_id, command, commands, destination_command_id, count = None):
     if command.success == True or command.success == False:
         outcome = command.success
@@ -117,7 +114,6 @@ def check_other_attacks(command_id, command, commands, destination_command_id, c
                                     outcome = False
                         else:
                             outcome = True
-
         # check if another command attacks the same destination as the command in question
         else:
             for relevant_attack_id in commands:
@@ -267,7 +263,6 @@ def get_hold_outcome(command_id, command, commands):
     command.success(outcome)
     return command.succeed
 
-
 def check_commanders(command_id, command, commands, destination_command):
     # if the two commands have the same human then the outcome is false
     # a command cannot dislodge a unit of the same country
@@ -297,7 +292,6 @@ def get_convoy_dislodgement_outcome(command_id, command, commands):
             outcome = True
     return outcome
 
-
 def get_success_attacks(commands):
     for command_id in commands:
         command = commands[command_id]
@@ -314,7 +308,6 @@ def get_success_attacks(commands):
         else:
             command.succeed = False
     return commands
-
 
 def get_relevant_attacks(command_id, destination_command_id, commands, relevant_attacking_commands, last_relevant_attack = None):
     command = commands[command_id]

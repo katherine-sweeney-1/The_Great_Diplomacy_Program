@@ -1,8 +1,3 @@
-import sys
-import os
-sys.path.append(os.path.join("C:\\Users\\kathe\\Documents\\Py_Code\\Diplomacy\\Nodes"))
-from Class_Sub_Node import Coastal_Node
-
 # filter fleets that convoy
 def filter_convoyer(command):
     # Convoy must have a different origin, location, and destination

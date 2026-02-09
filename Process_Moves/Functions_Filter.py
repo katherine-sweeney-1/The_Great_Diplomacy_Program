@@ -2,8 +2,6 @@ import sys
 import os
 sys.path.append(os.path.join("C:\\Users\\kathe\\Documents\\Py_Code\\Diplomacy\\Nodes"))
 from Class_Sub_Node import Coastal_Node
-sys.path.append(os.path.join("C:\\Users\\kathe\\Documents\\Py_Code\\Diplomacy\\Units"))
-from Class_Unit import Unit
 
 # filter by unit owners
 def filter_owner(command, commanders):
@@ -14,23 +12,7 @@ def filter_owner(command, commanders):
         command.legal = command.legal
     else:
         command.legal = "owner type error - command for wrong country"
-        #cmd.legal = 0
     return command
-
-"""
-# Filter commands by who owns the units
-# Not sure if I need this code
-def run_filter_owners(commands, commanders, units):
-    valid_commands = {}
-    invalid_commands = {}
-    for command_id in commands:
-        command = filter_owner(commands[command_id], commanders, units)
-        if command.legal != 1:
-            invalid_commands[command_id] = command
-        else:
-            valid_commands[command_id] = command
-    return valid_commands, invalid_commands
-"""
 
 # filter by neighboring destinations
 def filter_neighbors(command):
@@ -110,7 +92,6 @@ def filter_unit_type(command):
     if command.unit.type == "army":
         if command.destination.node_type == "Sea":
             command.legal = "unit type error - army attempts move directed at sea"
-            #cmd.legal = 0
     else:
         if command.destination.node_type == "Land":
             command.legal = "unit type error - fleet attempts move directed at inland"
@@ -120,7 +101,6 @@ def filter_unit_type(command):
             else:
                 if command.location != command.destination:
                     command.legal = "unit type error - coastal error non neighbor"
-            #cmd.legal = 0
     return command
 
 def filter_support(command, commands):
@@ -142,7 +122,6 @@ def filter_support(command, commands):
                     else:
                         count += 1
                 else:
-
                     count += 1
             else:
                 count +=1 
@@ -154,7 +133,6 @@ def filter_support(command, commands):
 
 def filter_commands(commands, commanders):
     valid_commands = {}
-    invalid_commands = {}
     filtered_commands = {}
     for command_id in commands:
         command = commands[command_id]
@@ -167,10 +145,8 @@ def filter_commands(commands, commanders):
         command = filtered_commands[command_id]
         command = filter_support(command, filtered_commands)
         if command.legal != 1:
-            invalid_commands[command_id] = command
             valid_commands[command_id] = command
         else:
             valid_commands[command_id] = command
-        
         valid_commands[command_id] = command
-    return valid_commands, invalid_commands
+    return valid_commands
