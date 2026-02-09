@@ -81,6 +81,7 @@ def set_up_gui(game_objects, current_turn, turns):
     previous_turn_button.place(x = 0, y = 0)
     # image
     map_image = Image.open("GUI/kamrans_map_png.png")
+    #map_image = Image.open("GUI/Europe_Map.png")
     map_width = map_image.width
     map_height = map_image.height
     
