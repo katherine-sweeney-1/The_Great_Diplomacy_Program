@@ -1,5 +1,3 @@
-from Input_Commands_and_Commanders import input_data_1, input_data_2, input_data_3, input_data_4, input_data_5, input_data_6
-from Input_Commands_and_Commanders import input_data_7, input_data_8, input_data_8b
 import sys
 sys.path.append("../The_Great_Diplomacy_Program/Parse")
 from Parse_Objects import parse_commands_and_units
@@ -14,7 +12,7 @@ data_fleet_coastal = "data/Data_Ter_Fleet.csv"
 commands_data = "data/Txt_Hard_Data/Game2_1906_Fall.txt"
 data_fleet_special_coastal = "data/Data_Ter_Fleet_Special_Coasts.csv"
 
-def run_main_unit_testing(input_data, game_number_string):
+def run_main_process_moves(input_data, game_number_string):
     count = 0
     turns_objects = {}
     for commands_data in input_data:
@@ -32,7 +30,6 @@ def run_main_unit_testing(input_data, game_number_string):
         commanders_data = input_data[commands_data]
         parsed_cmds, parsed_units = parse_commands_and_units(commands_data)
         commands, commanders, nodes, units = create_objects(data_nodes, data_coastal, data_fleet_coastal, data_fleet_special_coastal, commanders_data, parsed_units, parsed_cmds)
-        #print("Game 2 {} {}".format(game_year, game_season))
         nodes, units, processed_commands = run_processing(commands, commanders, nodes, units)
         print(game_and_turn)
         for command_id in commands:
@@ -47,19 +44,13 @@ def run_main_unit_testing(input_data, game_number_string):
             print(command_id, command.legal, command.succeed)
         print(" ")
         db_table = yield_table(processed_commands, game_and_turn)
-        #print(" ")
         count += 1
         objects["Commands"] = commands
         objects["Commanders"] = commanders
         objects["Nodes"] = nodes
         objects["Units"] = units
         turns_objects[game_and_turn] = objects
-        #print(turns_objects)
     return turns_objects
-        #return commands, commanders, nodes, units
-
-
-#run_main_unit_testing(input_data_1)
 
 """
 

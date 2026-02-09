@@ -1,6 +1,4 @@
 import sys
-#import os
-#sys.path.append(os.path.join("/home/katherine/Documents/The-Great-Diplomacy-Program/Nodes"))
 sys.path.append("../The_Great_Diplomacy_Program/Nodes")
 from Functions_Node import create_nodes
 from Functions_Node import assign_occupied
