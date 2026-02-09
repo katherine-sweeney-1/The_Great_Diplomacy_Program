@@ -25,8 +25,10 @@ def parse_commands_and_units (txt):
         else:
             if stripped_line[-5:-1] == "FAIL":
                 outcome = False
-            else:
+            elif stripped_line[-8:-1] == "SUCCEED":
                 outcome = True
+            else:
+                outcome = False
         # commands --> get location, origin, and destination
         if stripped_line != commander and stripped_line != country and stripped_line != "":
             # unit name
@@ -77,5 +79,6 @@ def parse_commands_and_units (txt):
                  "loc": location,
                  "country": country
             }
+            print(unit_name, stripped_line[-8:-1])
         line_count += 1
     return parsed_cmds, parsed_units

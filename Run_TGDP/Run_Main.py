@@ -36,9 +36,10 @@ def run_main_unit_testing(input_data, game_number_string):
         nodes, units, processed_commands = run_processing(commands, commanders, nodes, units)
         print(game_and_turn)
         for command_id in commands:
-            if commands[command_id].succeed == commands[command_id].predet_outcome and commands[command_id].legal == 1:
-                print(command_id, "Correct outcome", commands[command_id].succeed)
+            if commands[command_id].succeed == commands[command_id].predet_outcome:
+                print(command_id, "Correct outcome", commands[command_id].succeed, commands[command_id].legal)
             else:
+                print(command_id, commands[command_id].predet_outcome)
                 print("uh oh", command_id, commands[command_id].strength, commands[command_id].legal, commands[command_id].succeed)
         print(" ")
         db_table = yield_table(processed_commands, game_and_turn)
