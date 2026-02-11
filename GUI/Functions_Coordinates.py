@@ -5,8 +5,8 @@ from Functions_Node import get_nodes_data_dictionary
 data_nodes = "data/Data_Ter_Main.csv"
 data_coastal = "data/Data_Ter_Special_Coasts.csv"
 data_fleet_coastal = "data/Data_Ter_Fleet.csv"
-commands_data = "data/Txt_Hard_Data/Game2_1906_Fall.txt"
-data_fleet_special_coastal = "data/Data_Ter_Fleet_Special_Coasts.csv"
+#commands_data = "data/Txt_Hard_Data/Game2_1906_Fall.txt"
+#data_fleet_special_coastal = "data/Data_Ter_Fleet_Special_Coasts.csv"
 
 territory_coordinates = "GUI/Territory_Main_Coordinates.txt"
 territory_neighbor_coordinates = "GUI/Territory_Main_and_Neighbors_Coordinates.csv"
@@ -17,9 +17,11 @@ territory_coordinates_file.read()
 
 coordinates = []
 territory_file = "GUI/Data_Main_Names.csv"
-coordinates_file = "GUI/Territory_Main_Coordinates.txt"
 coastal_territory_file = "GUI/Data_Coastal_Names.csv"
-coastal_coordinates_file = "GUI/Territory_Coastal_Coordinates.txt"
+# coordinates_file = "GUI/Territory_Main_Coordinates.txt"
+# coastal_coordinates_file = "GUI/Territory_Coastal_Coordinates.txt"
+coordinates_file = "GUI/Europe_Map_Main_Coordinates.txt"
+coastal_coordinates_file = "GUI/Europe_Map_Coastal_Coordinates.txt"
 
 # retrieve coordinates for territories
 def get_coordinates(click):

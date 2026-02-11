@@ -2,17 +2,19 @@ import tkinter as tk
 from tkinter import ttk
 from PIL import Image, ImageTk, ImageDraw
 import cv2
-from Functions_Coordinates import assign_coordinates_to_nodes
 import math
 import numpy as np
 from Functions_Drawing import draw_units, draw_attacks, draw_holds, draw_supports
-from Functions_Coordinates import get_coordinates, write_coordinates_file
+from Functions_Coordinates import get_coordinates, assign_coordinates_to_nodes, write_coordinates_file
 
 coordinates = []
 territory_file = "GUI/Data_Main_Names.csv"
-coordinates_file = "GUI/Territory_Main_Coordinates.txt"
 coastal_territory_file = "GUI/Data_Coastal_Names.csv"
-coastal_coordinates_file = "GUI/Territory_Coastal_Coordinates.txt"
+
+# coordinates_file = "GUI/Territory_Main_Coordinates.txt"
+# coastal_coordinates_file = "GUI/Territory_Coastal_Coordinates.txt"
+coordinates_file = "GUI/Europe_Map_Main_Coordinates.txt"
+coastal_coordinates_file = "GUI/Europe_Map_Coastal_Coordinates.txt"
 
 def get_objects(objects_dictionary, turn):
     commands = objects_dictionary[turn]["Commands"]
@@ -65,7 +67,7 @@ def add_treeview_data(treeview, commanders, commands):
     treeview.pack()
     return treeview
 
-def set_up_gui(game_objects, current_turn, turns):
+def set_up_gui():
     main_window = tk.Tk()
     main_window.title('TGDP GUI')
     main_window.geometry("1000x1000")
@@ -88,7 +90,7 @@ def set_up_gui(game_objects, current_turn, turns):
     map_image.thumbnail((map_width, map_height), Image.Resampling.LANCZOS)
     # create canvas to click on 
     canvas = tk.Canvas(main_window, width = map_width, height = map_height, cursor = "cross")
-    return main_window, map_image, canvas, close_button, next_turn_button, previous_turn_button
+    return main_window, map_image, canvas, next_turn_button, previous_turn_button
 
 def display_moves(main_window, map_image, canvas, commands, commanders):
     canvas.pack(fill = tk.BOTH)
@@ -112,7 +114,7 @@ def display_moves(main_window, map_image, canvas, commands, commanders):
     bind images for clicks to get territory coordinates
     commented out so extra coordinates don't get recorded unintentionally
     """
-    #coords = main_window.bind("<Button-1>", get_coordinates)
+    coords = main_window.bind("<Button-1>", get_coordinates)
     #listbox = create_territory_listbox(main_window, territory_file, scrollbar)
     #scrollbar.config(command = listbox.yview)
     canvas.image = map_image
@@ -158,13 +160,16 @@ def show_previous_turn(event, main_window, canvas, game_objects, current_turn, t
         previous_turn = turns[previous_turn_index]
         display_different_turn(main_window, canvas, game_objects, turns, next_turn_button, previous_turn_button, previous_turn, commanders, treeview)
 
+def set_up_nodes():
+    main_window, map_image, canvas, next_turn_button, previous_turn_button = set_up_gui()
+
 def run_gui(game_objects, turn = None):
     turns = []
     for turn in game_objects:
         turns.append(turn)
     first_turn = turns[0]
     commands, commanders, nodes, units = get_objects(game_objects, first_turn)
-    main_window, map_image, canvas, close_button, next_turn_button, previous_turn_button = set_up_gui(game_objects, first_turn, turns)
+    main_window, map_image, canvas, next_turn_button, previous_turn_button = set_up_gui()
     main_window, treeview = display_moves(main_window, map_image, canvas, commands, commanders)
     #create_commanders_info_treeview(main_window, commanders, commands)
     next_turn_button.bind("<Button-1>", lambda event: show_next_turn(main_window, event, canvas, game_objects, first_turn, turns, next_turn_button, previous_turn_button, commanders, treeview))
