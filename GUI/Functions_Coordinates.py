@@ -48,6 +48,7 @@ def get_territories_with_neighbors_coordinates(nodes_data_main, territory_coordi
     # each entry in the nodes dictionary
     territories_neighbors_with_coordinates = {}
     for node_entry in nodes_data_main:
+        print(node_entry)
         neighbors = nodes_data_main[node_entry]["Neighbors"]
         neighbors = neighbors.split(" ")
         # get the coordinates for each neighbor for each entry in the nodes dictionary
