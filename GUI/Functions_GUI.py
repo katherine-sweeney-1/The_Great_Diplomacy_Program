@@ -191,9 +191,12 @@ def set_up_nodes():
     data_nodes = "data/Data_Ter_Main.csv"
     data_coastal = "data/Data_Ter_Special_Coasts.csv"
     territory_neighbor_coordinates = "GUI/Europe_Map_Main_and_Neighbors_Coordinates.csv"
+    territory_coordinates_file = "GUI/Europe_Map_Main_Coordinates.txt"
     nodes_data_main = get_nodes_data_dictionary(data_nodes)
-    territory_coordinates_file = open(territory_file)
+    territory_coordinates_file = open(territory_coordinates_file)
     territory_coordinates_file.read()
+    for line in territory_coordinates_file:
+        print(line)
     get_territories_with_neighbors_coordinates(nodes_data_main, territory_file, territory_neighbor_coordinates)
     #main_window.mainloop()
 
