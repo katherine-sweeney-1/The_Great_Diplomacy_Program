@@ -82,9 +82,7 @@ def set_up_gui():
     previous_turn_button.pack()
     previous_turn_button.place(x = 0, y = 0)
     # image
-    #map_image = Image.open("GUI/kamrans_map_png.png")
     map_image = Image.open("GUI/Europe_Map.png")
-    #map_image = Image.open("GUI/Europe_Map.png")
     map_width = map_image.width
     map_height = map_image.height
     
@@ -99,7 +97,6 @@ def display_moves(main_window, map_image, canvas, commands, commanders):
     map_image = ImageTk.PhotoImage(map_image)
     # create canvas on image
     canvas.create_image(0,0, anchor = tk.NW, image = map_image)
-    #canvas.create_image(500, 200, anchor = "center", image = map_image)
     """
     # make image label
     map_label = tk.Label(main_window, image = map_image)
@@ -111,13 +108,6 @@ def display_moves(main_window, map_image, canvas, commands, commanders):
     # Scroll bar
     scrollbar = tk.Scrollbar(main_window)
     scrollbar.pack(side = 'right', fill = 'y')
-    """
-    bind images for clicks to get territory coordinates
-    commented out so extra coordinates don't get recorded unintentionally
-    """
-    coords = main_window.bind("<Button-1>", get_coordinates)
-    #listbox = create_territory_listbox(main_window, territory_file, scrollbar)
-    #scrollbar.config(command = listbox.yview)
     canvas.image = map_image
     canvas = draw_pieces(canvas, commands)
     treeview = create_treeview(main_window, commanders, commands)
@@ -199,8 +189,6 @@ def set_up_nodes():
         print(line)
     get_territories_with_neighbors_coordinates(nodes_data_main, territory_file, territory_neighbor_coordinates)
     #main_window.mainloop()
-
-
 
 def run_gui(game_objects, turn = None):
     turns = []
