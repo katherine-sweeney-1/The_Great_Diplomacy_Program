@@ -31,7 +31,7 @@ def run_main_process_moves(input_data, game_number_string):
         parsed_cmds, parsed_units = parse_commands_and_units(commands_data)
         commands, commanders, nodes, units = create_objects(data_nodes, data_coastal, data_fleet_coastal, data_fleet_special_coastal, commanders_data, parsed_units, parsed_cmds)
         nodes, units, processed_commands = run_processing(commands, commanders, nodes, units)
-        print(game_and_turn)
+        #print(game_and_turn)
         for command_id in commands:
             """
             if commands[command_id].succeed == commands[command_id].predet_outcome:
@@ -41,8 +41,8 @@ def run_main_process_moves(input_data, game_number_string):
                 print("uh oh", command_id, commands[command_id].strength, commands[command_id].legal, commands[command_id].succeed)
             """
             command = commands[command_id]
-            print(command_id, command.legal, command.succeed)
-        print(" ")
+            #print(command_id, command.legal, command.succeed)
+        #print(" ")
         db_table = yield_table(processed_commands, game_and_turn)
         count += 1
         objects["Commands"] = commands
