@@ -164,7 +164,7 @@ def show_next_turn(event, main_window, canvas, game_objects, current_turn, turns
 def show_previous_turn(event, main_window, canvas, game_objects, current_turn, turns, previous_turn_button, next_turn_button, commanders, treeview):
     if event:
         current_turn_index = turns.index(current_turn)
-        if current_turn_index != 1:
+        if current_turn_index != 0:
             previous_turn_index = current_turn_index - 1
         else:
             previous_turn_index = current_turn_index
