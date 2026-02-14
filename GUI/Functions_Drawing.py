@@ -122,7 +122,7 @@ def draw_attacks(canvas, commands):
         if command.location == command.origin and command.origin != command.destination:
             first_coordinate = command.origin.coordinate
             second_coordinate = command.destination.coordinate
-            second_coordinate = get_offset_destination(first_coordinate, second_coordinate, 3)
+            second_coordinate = get_offset_destination(first_coordinate, second_coordinate, 6)
             coordinates = [first_coordinate, second_coordinate]
             origin_coordinate = first_coordinate
             destination_coordinate = second_coordinate
@@ -152,7 +152,7 @@ def draw_supports(canvas, commands):
             location_coordinate = command.location.coordinate
             origin_coordinate = command.origin.coordinate
             destination_coordinate = command.destination.coordinate
-            offset_destination_coordinate = get_offset_destination(origin_coordinate, destination_coordinate, 6)
+            offset_destination_coordinate = get_offset_destination(origin_coordinate, destination_coordinate, 10)
             offset_origin_coordinate = get_offset_destination(destination_coordinate, origin_coordinate, 3)
             fill_color = get_fill_color(command)
             canvas.create_line (location_coordinate, origin_coordinate, dash = (5, 2), fill = fill_color, width = 3, tags = ("draw"))

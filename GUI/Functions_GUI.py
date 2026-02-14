@@ -22,8 +22,7 @@ def get_objects(objects_dictionary, turn):
     nodes = objects_dictionary[turn]["Nodes"]
     units = objects_dictionary[turn]["Units"]
     nodes = nodes[0]
-    #assign_coordinates_to_nodes(nodes, coordinates_file, coastal_coordinates_file)
-    assign_coordinates_to_nodes()
+    assign_coordinates_to_nodes(nodes, coordinates_file, coastal_coordinates_file)
     return commands, commanders, nodes, units
 
 # Create listbox of territories
@@ -177,19 +176,12 @@ def retrieve_node_coordinates():
     main_window = display_static_map(main_window, map_image, canvas)
     main_window.mainloop()
 
-def assign_coordinates_to_nodes():
+def assign_neighbor_coordinates():
     data_nodes = "data/Data_Ter_Main.csv"
     data_coastal = "data/Data_Ter_Special_Coasts.csv"
     territory_neighbor_coordinates = "GUI/Europe_Map_Main_and_Neighbors_Coordinates.csv"
     coordinates_file = "GUI/Europe_Map_Main_Coordinates.txt"
     nodes_data_main = get_nodes_data_dictionary(data_nodes)
-    """
-    coordinates_file = open(coordinates_file)
-    
-    print(coordinates_file)
-    for line in coordinates_file:
-        print(line[:-1])
-    """
     get_territories_with_neighbors_coordinates(nodes_data_main, coordinates_file, territory_neighbor_coordinates)
 
 def run_gui(game_objects, turn = None):
