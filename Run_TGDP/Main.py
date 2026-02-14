@@ -6,5 +6,5 @@ from Functions_GUI import run_gui, retrieve_node_coordinates, assign_coordinates
 
 game_objects = run_main_process_moves(input_data_8b, "8")
 # retrieve_node_coordinates()
-assign_coordinates_to_nodes()
-#gui = run_gui(game_objects)
+#assign_coordinates_to_nodes()
+gui = run_gui(game_objects)

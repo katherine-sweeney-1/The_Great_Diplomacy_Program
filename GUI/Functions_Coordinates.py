@@ -48,31 +48,27 @@ def get_territories_with_neighbors_coordinates(nodes_data_main, territory_coordi
     # each entry in the nodes dictionary
     territories_neighbors_with_coordinates = {}
     coordinates_file = open(territory_coordinates)
-    """
+    number_of_lines = 0
     for line in coordinates_file:
-        print(line)
-    """
+        number_of_lines += 1
+    coordinates_file = coordinates_file.close()
+    coordinates_file = open(territory_coordinates)
     for node_entry in nodes_data_main:
         neighbors = nodes_data_main[node_entry]["Neighbors"]
         neighbors = neighbors.split(" ")
         # get the coordinates for each neighbor for each entry in the nodes dictionary
         neighbors_coordinates = {}
         for neighbor in neighbors:
-            line_count = 1
             with open(territory_coordinates, "r") as file_input, open(territory_neighbor_coordinates, "a") as file_output:
-                number_of_lines = 0
+                line_count = 0
                 for line in file_input:
-                    number_of_lines += 1
-                for line in file_input:
-                    print("yes", line)
+                    line_count += 1
                     if line[0:3] == neighbor:
                         if line_count != number_of_lines:
                             coordinate_tuple = line[4:-1]
                         else:
-                            coordinate_tuple = line[4:0]
+                            coordinate_tuple = line[4:]
                         neighbors_coordinates[line[0:3]] = coordinate_tuple
-                    line_count += 1
-            
         territories_neighbors_with_coordinates[node_entry] = neighbors_coordinates
         with open(territory_neighbor_coordinates, "a") as file_output:
             print(node_entry, territories_neighbors_with_coordinates[node_entry], file = file_output)

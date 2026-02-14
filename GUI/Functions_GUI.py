@@ -22,7 +22,8 @@ def get_objects(objects_dictionary, turn):
     nodes = objects_dictionary[turn]["Nodes"]
     units = objects_dictionary[turn]["Units"]
     nodes = nodes[0]
-    assign_coordinates_to_nodes(nodes, coordinates_file, coastal_coordinates_file)
+    #assign_coordinates_to_nodes(nodes, coordinates_file, coastal_coordinates_file)
+    assign_coordinates_to_nodes()
     return commands, commanders, nodes, units
 
 # Create listbox of territories
