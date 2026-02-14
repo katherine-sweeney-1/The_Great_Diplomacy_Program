@@ -1,15 +1,3 @@
-<!--
-<!DOCTYPE html>
-</html>
-<head>
-    <title> Diplomacy Game</title>
-</head>
-<body>
-    <h1>Heading 1 test</h1>
-    <h2> Heading 2 test</h2>
-
-</body>
--->
 <!DOCTYPE html>
 <html>
 <body>

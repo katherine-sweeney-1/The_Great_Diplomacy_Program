@@ -5,6 +5,8 @@ from Run_Objects import create_objects
 from Run_Processing import run_processing
 sys.path.append("../The_Great_Diplomacy_Program/Tables")
 from Functions_Table import yield_table
+sys.path.append("../The_Great_Diplomacy_Program/GUI")
+from Functions_GUI import run_gui, retrieve_node_coordinates, assign_neighbor_coordinates
 
 data_nodes = "data/Data_Ter_Main.csv"
 data_coastal = "data/Data_Ter_Special_Coasts.csv"
@@ -12,7 +14,7 @@ data_fleet_coastal = "data/Data_Ter_Fleet.csv"
 commands_data = "data/Txt_Hard_Data/Game2_1906_Fall.txt"
 data_fleet_special_coastal = "data/Data_Ter_Fleet_Special_Coasts.csv"
 
-def run_main_process_moves(input_data, game_number_string):
+def run_tgdp(input_data, game_number_string):
     count = 0
     turns_objects = {}
     for commands_data in input_data:
@@ -50,6 +52,7 @@ def run_main_process_moves(input_data, game_number_string):
         objects["Nodes"] = nodes
         objects["Units"] = units
         turns_objects[game_and_turn] = objects
+    gui = run_gui(turns_objects)
     return turns_objects
 
 """
