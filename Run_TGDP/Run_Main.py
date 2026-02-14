@@ -7,6 +7,7 @@ sys.path.append("../The_Great_Diplomacy_Program/Tables")
 from Functions_Table import yield_table
 sys.path.append("../The_Great_Diplomacy_Program/GUI")
 from Functions_GUI import run_gui, retrieve_node_coordinates, assign_neighbor_coordinates
+from flask import Flask
 
 data_nodes = "data/Data_Ter_Main.csv"
 data_coastal = "data/Data_Ter_Special_Coasts.csv"
@@ -62,4 +63,14 @@ Game 1 starts at year 1903
 Game 8b starts at year 1908
 
 
+"""
+
+app = Flask(__name__)
+@app.route('/')
+def hello_world():
+    return "<p>Hello World!</p>"
+
+"""
+if __name__ == "__main__":
+    app.run(debug = True)
 """
