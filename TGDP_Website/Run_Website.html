@@ -13,12 +13,34 @@
 .header{
     padding: 80px;
     text-align: center;
-    background: #1abc9c;
-    color: white;
+    /*background: #1abc9c;*/
+    color: black;
 }
 /*increase h1 element font size*/
 .header h1{
     font-size: 40px;
+}
+/* navigation bar*/
+.navbar one {
+    float: left;
+    display: block;
+    color: blue;
+    text-align: center;
+    padding: 14px 20px;
+    text-decoration: none;
+}
+.navbar one.right{
+    float: right
+}
+/*change color on hover*/
+.navbar one:hover {
+    background-color: #edc;
+    color: black;
+}
+/*footer*/
+.footer {
+    padding: 20px;
+    text-align: center;
 }
 </style>
 </head>
@@ -32,9 +54,18 @@
         <h2> Second Header test </h2>
         <p> testing p2 </p>
     </div>
-<button type = "button"
-onclick = "document.getElementById('demo').innerHTML = Date()">
-    Click me</button>
-<p id = "demo"></p>
+    <div class = "navbar">
+        <one href = "#">Google</one>
+        <one href = "#">Link 2</one>
+        <one href = "#">Link</one>
+        <one href = "#" class = "right">Link</one>
+    </div>
+    <button type = "button"
+    onclick = "document.getElementById('demo').innerHTML = Date()">
+        Click me</button>
+    <p id = "demo"></p>
+    <div class = "footer">
+        <h2>Huge thank you to Mercy for helping me along the way.</h2>
+    </div>
 </body>
 </html>
