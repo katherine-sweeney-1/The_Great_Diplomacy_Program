@@ -2,13 +2,39 @@
 <html>
 <head>
     <title> Diplomacy </title>
+    <meta charset = "UTF-8">
+    <meta name = "viewpoint" content = "width=device-width, initial-scale = 1">
+<style>
+    body {
+        font-family: Arial;
+        margin: 0;
+    }
+/*style header with css */
+.header{
+    padding: 80px;
+    text-align: center;
+    background: #1abc9c;
+    color: white;
+}
+/*increase h1 element font size*/
+.header h1{
+    font-size: 40px;
+}
+</style>
 </head>
 <body>
-    <h1> Heading 1 test </h1>
+    <div class = "header">
+        <h1> Heading 1 test </h1>
+        <p> testing p </p>
+        </body>
+    </div>
+    <div class = "header 2">
+        <h2> Second Header test </h2>
+        <p> testing p2 </p>
+    </div>
 <button type = "button"
 onclick = "document.getElementById('demo').innerHTML = Date()">
     Click me</button>
-
 <p id = "demo"></p>
 </body>
 </html>
