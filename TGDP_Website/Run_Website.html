@@ -101,7 +101,7 @@ function getUsers(){
     xhr = getXmlHttpRequestObject();
     xhr.onreadystatechange = dataCallback;
     // asynchronous requests
-    xhr.open("GET", "http://127.0.0.1/example_json_data", true);
+    xhr.open("GET", "http://127.0.0.1/example", true);
     // send request over network
     xhr.send(null);
 }
