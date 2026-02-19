@@ -1,5 +1,7 @@
 import os
+import flask
 from flask import Flask
+import json
 
 app = Flask(__name__, instance_relative_config = True)
 """
@@ -27,13 +29,26 @@ def create_app(test_config = None):
 """
 app = Flask(__name__)
 
-@app.route("/https://the-great-diplomacy-program.netlify.app/")
+@app.route("/hello")
 def hello():
     return "Hello World!!!"
 
+@app.route("/")
+def index():
+    return "homepage"
+
+@app.route("/example_json_data", methods = ["GET"])
+def users():
+    print("users endpoint reached")
+    with open("example_json_data.json", "r") as file_input:
+        data = json.load(file_input)
+        data.append({
+            "owner": "Nicola",
+            "pets": ["Mango"]
+        })
+        return flask.jsonify(data)
+
 # runs if I use http://127.0.0.1:5000/hello
 if __name__ == "__main__":
-    app.run("localhost", 5000)
-
-
+    app.run(debug = True)
 
