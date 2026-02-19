@@ -2,8 +2,10 @@ import os
 import flask
 from flask import Flask
 import json
+from flask_cors import CORS
 
 app = Flask(__name__, instance_relative_config = True)
+CORS(app)
 """
 @app.route("/")
 def create_app(test_config = None):
@@ -41,10 +43,10 @@ def index():
 def show_diplomacy_game(diplomacy_game_number):
     return f"Here is {diplomacy_game_number}!"
 
-@app.route("/example_json_data", methods = ["GET"])
+@app.route("/example", methods = ["GET"])
 def users():
     print("owners endpoint reached")
-    with open("example_json_data.json", "r") as file_input:
+    with open("TGDP_Website/example_json_data.json", "r") as file_input:
         data = json.load(file_input)
         data.append({
             "owner": "Nicola",
