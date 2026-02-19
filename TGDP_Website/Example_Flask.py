@@ -37,9 +37,13 @@ def hello():
 def index():
     return "homepage"
 
+@app.route("/game/<diplomacy_game_number>")
+def show_diplomacy_game(diplomacy_game_number):
+    return f"Here is {diplomacy_game_number}!"
+
 @app.route("/example_json_data", methods = ["GET"])
 def users():
-    print("users endpoint reached")
+    print("owners endpoint reached")
     with open("example_json_data.json", "r") as file_input:
         data = json.load(file_input)
         data.append({
