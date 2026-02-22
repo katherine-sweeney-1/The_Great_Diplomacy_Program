@@ -1,0 +1,7 @@
+website-format
++ .gitignore
++-- backend
+    + Example_Flask.py
+    +-- source
++-- frontend
+    + Run_website.html

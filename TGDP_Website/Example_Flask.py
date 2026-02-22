@@ -4,8 +4,8 @@ from flask import Flask
 import json
 from flask_cors import CORS
 
-app = Flask(__name__, instance_relative_config = True)
-CORS(app)
+#app = Flask(__name__, instance_relative_config = True)
+#CORS(app)
 """
 @app.route("/")
 def create_app(test_config = None):
@@ -30,6 +30,7 @@ def create_app(test_config = None):
     return app
 """
 app = Flask(__name__)
+CORS(app)
 
 @app.route("/hello")
 def hello():
@@ -56,5 +57,5 @@ def users():
 
 # runs if I use http://127.0.0.1:5000/hello
 if __name__ == "__main__":
-    app.run(debug = True)
+    app.run("localhols", 5000, debug = True)
 
