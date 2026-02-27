@@ -60,12 +60,61 @@
         <one href = "#">Link</one>
         <one href = "#" class = "right">Link</one>
     </div>
-    <button type = "button"
-    onclick = "document.getElementById('demo').innerHTML = Date()">
+    <!-- <button type = "button"></button> -->
+    <div><span> Last: update: </span><span id = "time-container"></div>
+    <button onclick = "getUsers()">Get user data</button>
+    <div id = "result-container"></div>
+        <!--
+        onclick = "document.getElementById('get pet owners')">
         Click me</button>
     <p id = "demo"></p>
+    -->
+    <!--
     <div class = "footer">
         <h2>Huge thank you to Mercy for helping me along the way.</h2>
     </div>
+    -->
 </body>
+<script>
+
+    // XMLHttpRequest => xhr
+    var xhr = null;
+
+    getXmlHttpRequestObject = function() {
+        if (!xhr) {
+            // Create new XMLHttpRequest objects
+            xhr = new XMLHttpRequest();
+        }
+        return xhr;
+    };
+
+    function dataCallback(){
+        //check response is ready or not
+        if (xhr.readyState == 4 && xhr.status == 200){
+            console.log("user data received");
+            getDate();
+            dataDiv = document.getElementById("result-container");
+            // set current data text
+            dataDiv.innerHTML = xhr.responseTextl
+        }
+    }
+
+    function getUsers(){
+        console.log("Get owners");
+        xhr = getXmlHttpRequestObject();
+        xhr.onreadystatechange = dataCallback;
+        // asynchronous requests
+        xhr.open("GET", "http://127.0.0.1/example", true);
+        // send request over network
+        xhr.send(null);
+    }
+
+    function getDate(){
+        date = new Date().toString();
+        document.getElementById("time-container").textContent = date;
+    }
+    (function () {
+        getDate();
+    })();
+</script>
 </html>
