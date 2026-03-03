@@ -61,7 +61,7 @@
         <one href = "#" class = "right">Link</one>
     </div>
     <!-- <button type = "button"></button> -->
-    <div><span> Last: update: </span><span id = "time-container"></div>
+    <div><span> Last update: </span><span id = "time-container"></span></div>
     <button onclick = "getUsers()">Get user data</button>
     <div id = "result-container"></div>
         <!--
@@ -82,7 +82,7 @@
 
     getXmlHttpRequestObject = function() {
         if (!xhr) {
-            // Create new XMLHttpRequest objects
+            // Create new XMLHttpRequest object
             xhr = new XMLHttpRequest();
         }
         return xhr;
@@ -91,11 +91,11 @@
     function dataCallback(){
         //check response is ready or not
         if (xhr.readyState == 4 && xhr.status == 200){
-            console.log("user data received");
+            console.log("user data received!");
             getDate();
             dataDiv = document.getElementById("result-container");
             // set current data text
-            dataDiv.innerHTML = xhr.responseTextl
+            dataDiv.innerHTML = xhr.responseText;
         }
     }
 
@@ -103,8 +103,8 @@
         console.log("Get owners");
         xhr = getXmlHttpRequestObject();
         xhr.onreadystatechange = dataCallback;
-        // asynchronous requests
-        xhr.open("GET", "http://127.0.0.1/example", true);
+        // asynchronous requests - added :5000 to link
+        xhr.open("GET", "http://127.0.0.1:5000/example", true);
         // send request over network
         xhr.send(null);
     }
