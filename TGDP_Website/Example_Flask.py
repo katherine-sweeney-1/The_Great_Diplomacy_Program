@@ -57,5 +57,5 @@ def users():
 
 # runs if I use http://127.0.0.1:5000/hello
 if __name__ == "__main__":
-    app.run("localhols", 5000, debug = True)
+    app.run("localhost", 5000, debug = True)
 
