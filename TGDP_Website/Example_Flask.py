@@ -42,7 +42,7 @@ def index():
 def show_diplomacy_game(diplomacy_game_number):
     return f"Here is {diplomacy_game_number}!"
 
-@app.route("/example", methods = ["GET"])
+@app.route("/example", methods = ["GET", "POST"])
 def users():
     print("owners endpoint reached")
     if request.method == "GET":
@@ -61,7 +61,7 @@ def users():
             "status": "success",
             "message": f"received: {message}"
         }
-        return flask.Response(respons = json.dumps(return_data), status = 201)
+        return flask.Response(response = json.dumps(return_data), status = 201)
 
 # runs if I use http://127.0.0.1:5000/hello
 if __name__ == "__main__":
