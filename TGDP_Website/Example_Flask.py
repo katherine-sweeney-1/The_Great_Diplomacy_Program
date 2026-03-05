@@ -1,11 +1,9 @@
 import os
 import flask
-from flask import Flask
+from flask import Flask, request
 import json
 from flask_cors import CORS
 
-#app = Flask(__name__, instance_relative_config = True)
-#CORS(app)
 """
 @app.route("/")
 def create_app(test_config = None):
@@ -47,15 +45,24 @@ def show_diplomacy_game(diplomacy_game_number):
 @app.route("/example", methods = ["GET"])
 def users():
     print("owners endpoint reached")
-    with open("TGDP_Website/example_json_data.json", "r") as file_input:
-        data = json.load(file_input)
-        data.append({
-            "owner": "Nicola",
-            "pets": ["Mango"]
-        })
-        return flask.jsonify(data)
+    if request.method == "GET":
+        with open("TGDP_Website/example_json_data.json", "r") as file_input:
+            data = json.load(file_input)
+            data.append({
+                "owner": "Nicola",
+                "pets": ["Mango"]
+            })
+            return flask.jsonify(data)
+    if request.method == "POST":
+        received_data = request.get_json()
+        print(f"received data: {received_data}")
+        message = received_data["data"]
+        return_data = {
+            "status": "success",
+            "message": f"received: {message}"
+        }
+        return flask.Response(respons = json.dumps(return_data), status = 201)
 
 # runs if I use http://127.0.0.1:5000/hello
 if __name__ == "__main__":
     app.run("localhost", 5000, debug = True)
-
