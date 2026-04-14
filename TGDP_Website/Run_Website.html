@@ -87,10 +87,12 @@
     -->
 
     <!--
+    <img src = "{{image_url}}" alt = "Image from external source">
     <img src = "{{url_for (filename = 'Europe_Map_For_Website.png')}}" 
     align = "middle"/>
     -->
-    <img src = "{{image_url}}" alt = "Image from external source">
+    <img src = "{{url_for ('static', filename = 'Europe_Map_For_Website.png')}}" 
+    align = "middle"/>
 <script>
 
     // XMLHttpRequest => xhr
