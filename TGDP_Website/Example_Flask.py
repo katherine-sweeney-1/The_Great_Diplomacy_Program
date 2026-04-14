@@ -1,31 +1,9 @@
 import os
 import flask
-from flask import Flask, request
+from flask import Flask, request, render_template
 import json
 from flask_cors import CORS
-"""
-@app.route("/")
-def create_app(test_config = None):
-    # create and configure the app
-    app = Flask(__name__, instance_relative_config = True)
-    app.config.from_mapping(
-        SECRET_KEY = "password",
-        DATABASE = os.path.join(app.instance_path, "flaskr.sqlite")
-    )
 
-    if test_config is None:
-        # load the instance config, if it exists, when not testing
-        app.config.from_pyfile("config.py", silent = True)
-    else:
-        # load the test config if passed in
-        app.config.from_mapping(test_config)
-
-    os.makedirs(app.instance_path, exist_ok = True)
-    @app.route("/hello")
-    def hello():
-        return "Hello World!!!"
-    return app
-"""
 app = Flask(__name__)
 CORS(app)
 
@@ -36,6 +14,12 @@ def hello():
 @app.route("/")
 def index():
     return "homepage"
+
+@app.route("/")
+def home():
+    europe_map_url = "The_Great_Diplomacy_Program/GUI/Europe_Map.png"
+    return render_template("index.html", image_url = europe_map_url)
+
 
 @app.route("/game/<diplomacy_game_number>")
 def show_diplomacy_game(diplomacy_game_number):
