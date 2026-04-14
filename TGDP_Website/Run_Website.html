@@ -90,9 +90,10 @@
     <img src = "{{image_url}}" alt = "Image from external source">
     <img src = "{{url_for (filename = 'Europe_Map_For_Website.png')}}" 
     align = "middle"/>
+    <img src = "{{url_for ('Static', filename = 'Static/Europe_Map_For_Website.png')}}" class = "image" />
     -->
-    <img src = "{{url_for ('static', filename = 'Europe_Map_For_Website.png')}}" 
-    align = "middle"/>
+    <img src = 'Static/Europe_Map_For_Website.png' class = "image" />
+
 <script>
 
     // XMLHttpRequest => xhr
