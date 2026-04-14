@@ -17,10 +17,12 @@ def index():
 
 @app.route("/")
 def home():
-    europe_map_url = "The_Great_Diplomacy_Program/GUI/Europe_Map.png"
+    #europe_map_url = "/home/katherine/Documents/The_Great_Diplomacy_Program/GUI/Europe_Map.png"
+    #europe_map_url = "The_Great_Diplomacy_Program/GUI/Europe_Map.png"
+    europe_map_url = "/home/katherine/Documents/The_Great_Diplomacy_Program/TGDP_Website/Europe_Map_For_Website.png"
     return render_template("index.html", image_url = europe_map_url)
 
-
+@app.rout()
 @app.route("/game/<diplomacy_game_number>")
 def show_diplomacy_game(diplomacy_game_number):
     return f"Here is {diplomacy_game_number}!"
