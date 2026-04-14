@@ -195,4 +195,6 @@ def run_gui(game_objects, turn = None):
     #create_commanders_info_treeview(main_window, commanders, commands)
     next_turn_button.bind("<Button-1>", lambda event: show_next_turn(main_window, event, canvas, game_objects, first_turn, turns, next_turn_button, previous_turn_button, commanders, treeview))
     previous_turn_button.bind("<Button-1>", lambda event: show_previous_turn(main_window, event, canvas, game_objects, first_turn, turns, previous_turn_button, next_turn_button, commanders, treeview))
+    print("main window type", type(main_window))
+    print("canvas type", type(canvas))
     main_window.mainloop()

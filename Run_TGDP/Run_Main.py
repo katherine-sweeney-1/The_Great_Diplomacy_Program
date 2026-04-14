@@ -62,15 +62,5 @@ Game 1 starts at year 1903
 
 Game 8b starts at year 1908
 
-
 """
 
-app = Flask(__name__)
-@app.route('/')
-def hello_world():
-    return "<p>Hello World!</p>"
-
-"""
-if __name__ == "__main__":
-    app.run(debug = True)
-"""

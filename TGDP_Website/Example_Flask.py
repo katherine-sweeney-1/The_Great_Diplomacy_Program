@@ -3,7 +3,6 @@ import flask
 from flask import Flask, request
 import json
 from flask_cors import CORS
-
 """
 @app.route("/")
 def create_app(test_config = None):
@@ -63,6 +62,16 @@ def users():
         }
         return flask.Response(response = json.dumps(return_data), status = 201)
 
+
 # runs if I use http://127.0.0.1:5000/hello
 if __name__ == "__main__":
     app.run("localhost", 5000, debug = True)
+
+
+
+"""
+
+run python file first
+then run html file
+
+"""
