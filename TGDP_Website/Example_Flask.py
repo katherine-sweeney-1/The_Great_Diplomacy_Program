@@ -19,7 +19,7 @@ def index():
 def home():
     #europe_map_url = "/home/katherine/Documents/The_Great_Diplomacy_Program/GUI/Europe_Map.png"
     #europe_map_url = "The_Great_Diplomacy_Program/GUI/Europe_Map.png"
-    europe_map_url = "/home/katherine/Documents/The_Great_Diplomacy_Program/TGDP_Website/Europe_Map_For_Website.png"
+    europe_map_url = "/home/katherine/Documents/The_Great_Diplomacy_Program/TGDP_Website/Static/Europe_Map_For_Website.png"
     return render_template("index.html", image_url = europe_map_url)
 
 @app.rout()
