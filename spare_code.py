@@ -1,68 +1,67 @@
-import os
-import flask
-from flask import Flask, request
-import json
-from flask_cors import CORS
+"""
+
+COMMENTED OUT CODE FOR /The_Great_Diplomacy_Program/GUI/Class_GUI.py
+I think this code is not needed so it's going here. May need to re-add it 
 
 """
-@app.route("/")
-def create_app(test_config = None):
-    # create and configure the app
-    app = Flask(__name__, instance_relative_config = True)
-    app.config.from_mapping(
-        SECRET_KEY = "password",
-        DATABASE = os.path.join(app.instance_path, "flaskr.sqlite")
-    )
 
-    if test_config is None:
-        # load the instance config, if it exists, when not testing
-        app.config.from_pyfile("config.py", silent = True)
-    else:
-        # load the test config if passed in
-        app.config.from_mapping(test_config)
 
-    os.makedirs(app.instance_path, exist_ok = True)
-    @app.route("/hello")
-    def hello():
-        return "Hello World!!!"
-    return app
-"""
-app = Flask(__name__)
-CORS(app)
+import pymysql
+import cv2
+import numpy as np
+import json 
+import base64
+import io
+from PIL import Image
 
-@app.route("/hello")
-def hello():
-    return "Hello World!!!"
+class Map_Image ():
+    def __init__(self):
+        self.db = pymysql.connect(
+            #self.db = mysql.connector.connect(
+            user = "diplomacy",
+            passwd = "password",
+            host = 'localhost',
+            db = 'tgdp_map_images'
+            )
+    def open_jpg_image(self, image_path):
+        with open (image_path, "rb") as f_in, open("Map_Data.json", "w") as outfile:
+            image_data = base64.b64encode(f_in.read())
+            image_bytes = image_data
+            image_json = image_data.decode('utf-8')
+            json.dump({"image": f"data:image/png;base64,{image_json}"}, outfile)
+            self.outfile = outfile
+        #print(self.json_formatted_data)
+        return self.outfile
 
-@app.route("/")
-def index():
-    return "homepage"
+    def create_image_from_data(self, image_bytes):
+        image = Image.open(io.BytesIO(image_bytes))
+        return image
 
-@app.route("/game/<diplomacy_game_number>")
-def show_diplomacy_game(diplomacy_game_number):
-    return f"Here is {diplomacy_game_number}!"
+    # working on this
+    def insert_map_jpg_image(self, image_data):
+        sql = """USE tgdp_map_images"""
+        self.db.query(sql)
+        sql = """
+            INSERT INTO tgdp_map_images VALUES (%s, %s)
+            """
+        self.db.query
+        return self.db
 
-@app.route("/example", methods = ["GET"])
-def users():
-    print("owners endpoint reached")
-    if request.method == "GET":
-        with open("TGDP_Website/example_json_data.json", "r") as file_input:
-            data = json.load(file_input)
-            data.append({
-                "owner": "Nicola",
-                "pets": ["Mango"]
-            })
-            return flask.jsonify(data)
-    if request.method == "POST":
-        received_data = request.get_json()
-        print(f"received data: {received_data}")
-        message = received_data["data"]
-        return_data = {
-            "status": "success",
-            "message": f"received: {message}"
-        }
-        return flask.Response(respons = json.dumps(return_data), status = 201)
-
-# runs if I use http://127.0.0.1:5000/hello
-if __name__ == "__main__":
-    app.run("localhost", 5000, debug = True)
+    def drop_old_tables(self):
+        sql = """USE tgdp_testing_1;"""
+        self.db.query(sql)
+        sql = """
+            DROP TABLE game2_1903_fall;
+            """
+        self.db.query(sql)
+        sql = """
+            DROP TABLE game1_1901_fall;
+            """
+        self.db.query(sql) 
+        return self.db 
+    
+image_path = "GUI/kamrans_map_jpg.jpg"
+tgdp_europe_map = Map_Image()
+image_data = tgdp_europe_map.open_jpg_image(image_path)
+#convert_data_to_image = tgdp_europe_map.create_image_from_data(image_data)
+#print(image_data)
