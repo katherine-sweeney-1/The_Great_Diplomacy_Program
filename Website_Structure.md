@@ -1,4 +1,4 @@
-"""
+
 
 Website Structure
 
@@ -24,7 +24,3 @@ Game Page Template
 
     - view option: all turns in one page
 
-
-
-
-"""
