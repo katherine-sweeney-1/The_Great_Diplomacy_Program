@@ -11,18 +11,12 @@ CORS(app)
 def hello():
     return "Hello World!!!"
 
-
-"""
-@app.route("/")
-def index():
-    return "homepage"
-"""
 @app.route("/")
 def home():
     #europe_map_url = "/home/katherine/Documents/The_Great_Diplomacy_Program/GUI/Europe_Map.png"
     europe_map_url = "Static/Europe_Map.png"
     #europe_map_url = "/home/katherine/Documents/The_Great_Diplomacy_Program/TGDP_Website/Static/Europe_Map_For_Website.png"
-    return render_template("Run_Website.html", image_url = europe_map_url)
+    return render_template("TGDP_Home.html", image_url = europe_map_url)
 
 @app.route("/game/<diplomacy_game_number>")
 def show_diplomacy_game(diplomacy_game_number):
