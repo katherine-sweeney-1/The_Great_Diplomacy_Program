@@ -1,3 +1,20 @@
+_____________________________________________________________________________________________________
+
+
+
+Create image locally of moves on map, save the image with the arrows et al, upload that image to website
+
+
+Different ways to look at map => side by side view 
+- not tricky
+- create standard view (one image) and comparison view map (two images)
+- next turn => image on right goes to image on left
+
+Have a page that adds all images to file. Can append most recent turn's image to the end of the page
+
+
+
+_____________________________________________________________________________________________________
 
 Commander Class
 
