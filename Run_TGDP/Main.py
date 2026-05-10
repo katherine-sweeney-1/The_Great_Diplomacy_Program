@@ -4,4 +4,4 @@ import flask
 import sys
 sys.path.append("../The_Great_Diplomacy_Program/TGDP_Website")
 
-run_tgdp(input_data_8b, "8")
+run_tgdp(input_data_8, "8")
