@@ -4,4 +4,18 @@ import flask
 import sys
 sys.path.append("../The_Great_Diplomacy_Program/TGDP_Website")
 
-run_tgdp(input_data_8b, "8")
+"""
+
+Arguments:
+
+    1. Input data file
+
+    2. Game number
+
+    3. Starting year
+
+    4. Boolean => save images (True), run GUI (False)
+
+"""
+
+run_tgdp(input_data_8, "8", "1901", False)

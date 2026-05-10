@@ -1,4 +1,4 @@
-"""
+
 
 Website Structure
 
@@ -16,6 +16,10 @@ Game Page Template
 
     - pictures of turns 
 
+        - save picture of each turn
+
+        - need to create a save picture function
+
     - view option: side by side of two turns
 
         - would need arrows that change the images
@@ -24,7 +28,3 @@ Game Page Template
 
     - view option: all turns in one page
 
-
-
-
-"""

@@ -7,6 +7,7 @@ from flask_cors import CORS
 app = Flask(__name__)
 CORS(app)
 
+
 @app.route("/hello")
 def hello():
     return "Hello World!!!"
@@ -42,6 +43,7 @@ def users():
             "message": f"received: {message}"
         }
         return flask.Response(response = json.dumps(return_data), status = 201)
+
 
 
 # runs if I use http://127.0.0.1:5000/hello
