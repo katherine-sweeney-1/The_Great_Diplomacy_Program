@@ -189,15 +189,10 @@ def save_images(game_objects, game_and_turn_string):
         commands, commanders, nodes, units = get_objects(game_objects, turn)
         main_window, map_image, canvas, next_turn_button, previous_turn_button = set_up_gui()
         main_window, treeview = display_moves(main_window, map_image, canvas, commands, commanders)
-        x1 = main_window.winfo_rootx()
-        y1 = main_window.winfo_rooty()
-        x2 = x1 + main_window.winfo_width()
-        y2 = y1 + main_window.winfo_height()
-        ImageGrab.grab().crop((x1, y1, x2, y2)).save(game_and_turn_string)
-
-
-
-
+        map_width = map_image.width
+        map_height = map_image.height
+        print("map width and height map_dimension", map_width, map_height)
+        ImageGrab.grab(xdisplay = "0").crop((0, 0, map_width, map_height)).save(game_and_turn_string)
 
 def run_gui(game_objects, game_and_turn_string, save_images_boolean, turn = None):
     turns = []
