@@ -3,7 +3,7 @@ sys.path.append("../The_Great_Diplomacy_Program/Nodes")
 from Functions_Node import get_nodes_data_dictionary
 import tkinter as tk
 from tkinter import ttk
-from PIL import Image, ImageTk, ImageDraw
+from PIL import Image, ImageTk, ImageGrab
 from Functions_Drawing import draw_units, draw_attacks, draw_holds, draw_supports
 from Functions_Coordinates import get_coordinates, assign_coordinates_to_nodes, get_territories_with_neighbors_coordinates
 
@@ -184,17 +184,36 @@ def assign_neighbor_coordinates():
     nodes_data_main = get_nodes_data_dictionary(data_nodes)
     get_territories_with_neighbors_coordinates(nodes_data_main, coordinates_file, territory_neighbor_coordinates)
 
-def run_gui(game_objects, turn = None):
+def save_images(game_objects, game_and_turn_string):
+    for turn in game_objects:
+        commands, commanders, nodes, units = get_objects(game_objects, turn)
+        main_window, map_image, canvas, next_turn_button, previous_turn_button = set_up_gui()
+        main_window, treeview = display_moves(main_window, map_image, canvas, commands, commanders)
+        x1 = main_window.winfo_rootx()
+        y1 = main_window.winfo_rooty()
+        x2 = x1 + main_window.winfo_width()
+        y2 = y1 + main_window.winfo_height()
+        ImageGrab.grab().crop((x1, y1, x2, y2)).save(game_and_turn_string)
+
+
+
+
+
+def run_gui(game_objects, game_and_turn_string, save_images_boolean, turn = None):
     turns = []
     for turn in game_objects:
         turns.append(turn)
     first_turn = turns[0]
-    commands, commanders, nodes, units = get_objects(game_objects, first_turn)
-    main_window, map_image, canvas, next_turn_button, previous_turn_button = set_up_gui()
-    main_window, treeview = display_moves(main_window, map_image, canvas, commands, commanders)
-    #create_commanders_info_treeview(main_window, commanders, commands)
-    next_turn_button.bind("<Button-1>", lambda event: show_next_turn(main_window, event, canvas, game_objects, first_turn, turns, next_turn_button, previous_turn_button, commanders, treeview))
-    previous_turn_button.bind("<Button-1>", lambda event: show_previous_turn(main_window, event, canvas, game_objects, first_turn, turns, previous_turn_button, next_turn_button, commanders, treeview))
-    print("main window type", type(main_window))
-    print("canvas type", type(canvas))
-    main_window.mainloop()
+    if save_images_boolean:
+        save_images(game_objects, game_and_turn_string)
+    else:
+        commands, commanders, nodes, units = get_objects(game_objects, first_turn)
+        main_window, map_image, canvas, next_turn_button, previous_turn_button = set_up_gui()
+        main_window, treeview = display_moves(main_window, map_image, canvas, commands, commanders)
+        print("checking", type(main_window))
+        #create_commanders_info_treeview(main_window, commanders, commands)
+        next_turn_button.bind("<Button-1>", lambda event: show_next_turn(main_window, event, canvas, game_objects, first_turn, turns, next_turn_button, previous_turn_button, commanders, treeview))
+        previous_turn_button.bind("<Button-1>", lambda event: show_previous_turn(main_window, event, canvas, game_objects, first_turn, turns, previous_turn_button, next_turn_button, commanders, treeview))
+        print("main window type", type(main_window))
+        print("canvas type", type(canvas))
+        main_window.mainloop()
