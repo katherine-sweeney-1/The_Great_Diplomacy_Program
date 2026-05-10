@@ -16,7 +16,6 @@ def filter_owner(command, commanders):
 
 # filter by neighboring destinations
 def filter_neighbors(command):
-    # attacks and supports
     if command.location != command.origin:
         if command.unit.type == "fleet" and isinstance(command.location, Coastal_Node):
             if command.destination in command.location.fleet_neighbors.values() and command.destination in command.location.neighbors.values():
@@ -37,7 +36,6 @@ def filter_neighbors(command):
             command.legal = command.legal
         else:
             command.legal = "neighboring territory error coastal"
-    # holds
     else:
         if command.location in command.destination.neighbors.values():
             if command.origin in command.destination.neighbors.values():
@@ -103,6 +101,7 @@ def filter_unit_type(command):
                     command.legal = "unit type error - coastal error non neighbor"
     return command
 
+# Filter validity of supports 
 def filter_support(command, commands):
     if command.location != command.origin and command.legal == 1:
         count = 0
@@ -131,6 +130,7 @@ def filter_support(command, commands):
             command.legal = command.legal
     return command
 
+# Primary function to filter commands
 def filter_commands(commands, commanders):
     valid_commands = {}
     filtered_commands = {}

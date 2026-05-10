@@ -1,5 +1,6 @@
 import math
 
+# Fill color of arrows
 def get_fill_color(command):
     if command.succeed == True:
         fill_color = "black"
@@ -7,6 +8,7 @@ def get_fill_color(command):
         fill_color = "red"
     return fill_color
 
+# Offset arrows so they don't begin and end exactly where the units are 
 def get_offset_destination (first_coordinate, second_coordinate, integer):
     if second_coordinate[0] > first_coordinate[0]:
         # destination is bottom right of origin
@@ -24,6 +26,7 @@ def get_offset_destination (first_coordinate, second_coordinate, integer):
             second_coordinate = (second_coordinate[0] + integer, second_coordinate[1]+ integer)
     return second_coordinate
 
+# Retrieve coordinates of arrows 
 def get_arrow_coordinates(origin_coordinate, destination_coordinate):
     if destination_coordinate[0] - origin_coordinate[0] == 0:
         destination_x_value = destination_coordinate[0] + 1
@@ -74,9 +77,11 @@ def get_arrow_coordinates(origin_coordinate, destination_coordinate):
     lower_coordinates = [lower_arrow_coordinates, destination_coordinate]
     return upper_coordinates, lower_coordinates
 
+# Hex color
 def retrieve_hex_color(r, g, b):
     return "#{:02x}{:02x}{:02x}".format(r, g, b)
 
+# Draw units on map
 def draw_units(canvas, commands):
     for command_id in commands:
         command = commands[command_id]
@@ -115,10 +120,10 @@ def draw_units(canvas, commands):
             canvas.create_polygon(coordinates, fill = fill_color, outline = "black", width = 1, tags = ("draw"))
     return canvas 
 
+# Draw attack arrows 
 def draw_attacks(canvas, commands):
     for command_id in commands:
         command = commands[command_id]
-    # for attacks
         if command.location == command.origin and command.origin != command.destination:
             first_coordinate = command.origin.coordinate
             second_coordinate = command.destination.coordinate
@@ -133,6 +138,7 @@ def draw_attacks(canvas, commands):
             canvas.create_line(lower_coordinates, fill = fill_color, width = 2, tags = ("draw"))  
     return canvas
 
+# Draw hold circles
 def draw_holds(canvas, commands):
     for command_id in commands:
         command = commands[command_id]
@@ -145,6 +151,7 @@ def draw_holds(canvas, commands):
             canvas.create_oval(coordinates, outline = fill_color, width = 2, tags = ("draw"))
     return canvas
 
+# Draw support dashed lines
 def draw_supports(canvas, commands):
     for command_id in commands:
         command = commands[command_id]
