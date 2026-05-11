@@ -1,3 +1,81 @@
+"""
+
+# GUI display with buttons for next turn and previous turn
+def set_up_gui():
+    main_window = tk.Tk()
+    main_window.title('TGDP GUI')
+    main_window.geometry("1000x1000")
+    close_button = tk.Button(main_window, text = "Close", width = 25, command = main_window.destroy)
+    close_button.pack()
+    next_turn_button = tk.Button(main_window, text = "Next Turn", width = 20)
+    next_turn_button.pack()
+    next_turn_button.place(x = 800, y = 0)
+    previous_turn_button = tk.Button(main_window, text = "Previous Turn", width = 20)
+    previous_turn_button.pack()
+    previous_turn_button.place(x = 0, y = 0)
+    map_image = Image.open("GUI/Europe_Map.png")
+    map_width = map_image.width
+    map_height = map_image.height
+    map_image.thumbnail((map_width, map_height), Image.Resampling.LANCZOS) 
+    canvas = tk.Canvas(main_window, width = map_width, height = map_height, cursor = "cross")
+    return main_window, map_image, canvas, next_turn_button, previous_turn_button
+
+# Display the pieces and treeview data
+def display_moves(main_window, map_image, canvas, commands, commanders):
+    canvas.pack(fill = tk.BOTH)
+    map_image = ImageTk.PhotoImage(map_image)
+    canvas.create_image(0,0, anchor = tk.NW, image = map_image)
+    display_box = tk.Label(main_window, text = "TGDP Display Box")
+    display_box.pack()
+    scrollbar = tk.Scrollbar(main_window)
+    scrollbar.pack(side = 'right', fill = 'y')
+    #canvas.image = map_image
+    canvas = draw_pieces(canvas, commands)
+    treeview = create_treeview(main_window, commanders, commands)
+    return main_window, treeview, canvas
+
+
+
+
+# Save the map images with moves as png files
+def save_images(game_objects, game_and_turn_string):
+    images_directory = "/home/Documents/The_Great_Diplomacy_Program/TGDP_Website/Static"
+    main_window, map_image, canvas, next_turn_button, previous_turn_button = set_up_gui()
+    for turn in game_objects:
+        commands, commanders, nodes, units = get_objects(game_objects, turn)
+        #main_window, map_image, canvas, next_turn_button, previous_turn_button = set_up_gui()
+        main_window, treeview, canvas = display_moves(main_window, map_image, canvas, commands, commanders)
+        #canvas.update()
+        file_name = "GUI/" + game_and_turn_string + ".png"
+        
+        #map_width = map_image.width
+        #map_height = map_image.height
+        #ImageGrab.grab().crop((0,0, map_width, map_height)).save(file_name)
+        
+        #print("canvas", type(canvas))
+        #print("main window", type(main_window))
+    
+
+
+        #main_window.mainloop()
+        #canvas.update()
+        #canvas.postscript(file = game_and_turn_string, colormode = "color")
+
+        
+        #map_width = map_image.width
+        #map_height = map_image.height
+        #file_name = game_and_turn_string + ".png"
+
+        img = ImageGrab.grab().crop((0, 0, map_width, map_height)).save(file_name)
+        img = ImageGrab.grab().crop((0, 0, map_width, map_height))
+        file_path = os.path.join(images_directory, game_and_turn_string)
+        #img.save(file_path, "PNG")
+        canvas = Image.open(canvas)
+        #img.save("/home/Documents/The_Great_Diplomacy_Program/TGDP_Website/Static".format(game_and_turn_string), "PNG")
+        canvas.save("GUI/{}".format(file_name))
+        
+"""
+
 import sys
 sys.path.append("../The_Great_Diplomacy_Program/Nodes")
 from Functions_Node import get_nodes_data_dictionary
@@ -102,7 +180,7 @@ def display_moves(main_window, map_image, canvas, commands, commanders):
     canvas.image = map_image
     canvas = draw_pieces(canvas, commands)
     treeview = create_treeview(main_window, commanders, commands)
-    return main_window, treeview
+    return main_window, treeview, canvas
 
 # Display a static map with a button feature to retrieve coordinates for nodes
 def display_static_map(main_window, map_image, canvas):
@@ -178,28 +256,105 @@ def assign_neighbor_coordinates():
     get_territories_with_neighbors_coordinates(nodes_data_main, coordinates_file, territory_neighbor_coordinates)
 
 # Save the map images with moves as png files
-def save_images(game_objects, game_and_turn_string):
+def save_images(game_objects, game_number_string, start_game_year):
+    count = 0
+    main_window, map_image, canvas, next_turn_button, previous_turn_button = set_up_gui()
     for turn in game_objects:
+        #print("game year", start_game_year)
+        game_year = int(start_game_year)
+        game_year = game_year + count/2
+        game_year = int(game_year)
+        game_season = count % 2
+        match game_season:
+            case 0:
+                game_season = "Spring"
+            case 1:
+                game_season = "Fall"
+        game_season = game_season.lower()
+        game_and_turn_string = "game" + str(game_number_string) + "_" + str(game_year) + "_" + game_season
+        #print("TURN", turn)
         commands, commanders, nodes, units = get_objects(game_objects, turn)
-        main_window, map_image, canvas, next_turn_button, previous_turn_button = set_up_gui()
-        main_window, treeview = display_moves(main_window, map_image, canvas, commands, commanders)
+        #main_window, map_image, canvas, next_turn_button, previous_turn_button = set_up_gui()
+        main_window, treeview, canvas = display_moves(main_window, map_image, canvas, commands, commanders)
         map_width = map_image.width
         map_height = map_image.height
-        print("map width and height map_dimension", map_width, map_height)
-        ImageGrab.grab(xdisplay = "0").crop((0, 0, map_width, map_height)).save(game_and_turn_string)
+        print(game_and_turn_string)
+        print(" ")
+        file_name_ps = "GUI/" + game_and_turn_string + ".ps"
+        file_name_png = game_and_turn_string + ".png"
+        #print("map width and height map_dimension", map_width, map_height)
+        #ImageGrab.grab().crop((0, 0, map_width, map_height)).save(file_name)
+        #canvas.delete()
+
+        canvas.postscript(file = file_name_ps, colormode = "color")
+        canvas_image = Image.open(file_name_ps)
+        canvas_image.save(file_name_png)
+        count += 1
+        #main_window.save(file_name_png)
+
+"""
+def save_images(game_objects, game_and_turn_string):
+    images_directory = "/home/Documents/The_Great_Diplomacy_Program/TGDP_Website/Static"
+    main_window, map_image, canvas, next_turn_button, previous_turn_button = set_up_gui()
+    for turn in game_objects:
+        commands, commanders, nodes, units = get_objects(game_objects, turn)
+        #main_window, map_image, canvas, next_turn_button, previous_turn_button = set_up_gui()
+        main_window, treeview, canvas = display_moves(main_window, map_image, canvas, commands, commanders)
+        #canvas.update()
+        file_name = "GUI/" + game_and_turn_string + ".png"
+        
+        #map_width = map_image.width
+        #map_height = map_image.height
+        #ImageGrab.grab().crop((0,0, map_width, map_height)).save(file_name)
+        
+        #print("canvas", type(canvas))
+        #print("main window", type(main_window))
+    
+
+
+        #main_window.mainloop()
+        #canvas.update()
+        #canvas.postscript(file = game_and_turn_string, colormode = "color")
+
+        
+        #map_width = map_image.width
+        #map_height = map_image.height
+        #file_name = game_and_turn_string + ".png"
+
+        img = ImageGrab.grab().crop((0, 0, map_width, map_height)).save(file_name)
+        img = ImageGrab.grab().crop((0, 0, map_width, map_height))
+        file_path = os.path.join(images_directory, game_and_turn_string)
+        #img.save(file_path, "PNG")
+        canvas = Image.open(canvas)
+        #img.save("/home/Documents/The_Great_Diplomacy_Program/TGDP_Website/Static".format(game_and_turn_string), "PNG")
+        canvas.save("GUI/{}".format(file_name))
+"""
+
+
+
+
+
 
 # Run function
-def run_gui(game_objects, game_and_turn_string, save_images_boolean, turn = None):
+def run_gui(game_objects, game_number_string, start_game_year, save_images_boolean, turn = None):
+    
     turns = []
     for turn in game_objects:
         turns.append(turn)
     first_turn = turns[0]
     if save_images_boolean:
-        save_images(game_objects, game_and_turn_string)
+        #print("hello")
+        save_images(game_objects, game_number_string, start_game_year)
     else:
         commands, commanders, nodes, units = get_objects(game_objects, first_turn)
         main_window, map_image, canvas, next_turn_button, previous_turn_button = set_up_gui()
-        main_window, treeview = display_moves(main_window, map_image, canvas, commands, commanders)
+        main_window, treeview, canvas = display_moves(main_window, map_image, canvas, commands, commanders)
         next_turn_button.bind("<Button-1>", lambda event: show_next_turn(main_window, event, canvas, game_objects, first_turn, turns, next_turn_button, previous_turn_button, commanders, treeview))
         previous_turn_button.bind("<Button-1>", lambda event: show_previous_turn(main_window, event, canvas, game_objects, first_turn, turns, previous_turn_button, next_turn_button, commanders, treeview))
         main_window.mainloop()
+
+"""
+
+add year and season to the map display?
+
+"""

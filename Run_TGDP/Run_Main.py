@@ -15,12 +15,12 @@ data_fleet_coastal = "data/Data_Ter_Fleet.csv"
 commands_data = "data/Txt_Hard_Data/Game2_1906_Fall.txt"
 data_fleet_special_coastal = "data/Data_Ter_Fleet_Special_Coasts.csv"
 
-def run_tgdp(input_data, game_number_string, game_year, save_images_boolean):
+def run_tgdp(input_data, game_number_string, start_game_year, save_images_boolean):
     count = 0
     turns_objects = {}
     for commands_data in input_data:
         objects = {}
-        game_year = int(game_year)
+        game_year = int(start_game_year)
         game_year = game_year + count/2
         game_year = int(game_year)
         game_season = count % 2
@@ -35,7 +35,7 @@ def run_tgdp(input_data, game_number_string, game_year, save_images_boolean):
         parsed_cmds, parsed_units = parse_commands_and_units(commands_data)
         commands, commanders, nodes, units = create_objects(data_nodes, data_coastal, data_fleet_coastal, data_fleet_special_coastal, commanders_data, parsed_units, parsed_cmds)
         nodes, units, processed_commands = run_processing(commands, commanders, nodes, units)
-        #print(game_and_turn)
+        #print(game_and_turn_string)
         for command_id in commands:
             """
             if commands[command_id].succeed == commands[command_id].predet_outcome:
@@ -54,7 +54,8 @@ def run_tgdp(input_data, game_number_string, game_year, save_images_boolean):
         objects["Nodes"] = nodes
         objects["Units"] = units
         turns_objects[game_and_turn_string] = objects
-    gui = run_gui(turns_objects, game_and_turn_string, save_images_boolean)
+        print("string", game_and_turn_string)
+    gui = run_gui(turns_objects, str(game_number_string), start_game_year, save_images_boolean)
 
 """
 
