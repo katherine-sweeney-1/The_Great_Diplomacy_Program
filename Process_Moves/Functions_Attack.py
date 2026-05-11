@@ -149,6 +149,7 @@ def check_attack_strengths(first_command, second_command):
         outcome = False
     return outcome
 
+# Check if there is any other attack on the same destination
 def check_if_other_attack_is_on_destination(command_id, command, other_attacking_command, destination_command = None):
     if other_attacking_command.destination == command.destination:
         # if the other command is attacking
@@ -180,6 +181,7 @@ def check_if_other_attack_is_on_destination(command_id, command, other_attacking
         outcome = True
     return outcome
 
+# Primary attack outcome function
 def get_attack_outcome(command_id, command, commands, count = None):
     if command.location != command.origin:
         outcome = command.success 
@@ -240,10 +242,10 @@ def get_attack_outcome(command_id, command, commands, count = None):
         command.success(outcome)
     return command.succeed
 
+# Hold outcome function
 def get_hold_outcome(command_id, command, commands):
     # check for other attacks that affect the hold
     other_attacks_on_destination_outcome = check_other_attacks(command_id, command, commands, False)
-    # if there are no other attacks then the hold is valid
     if other_attacks_on_destination_outcome:
         outcome = True
     # if there are other attacks check the strengths of the attack(s) and the hold
@@ -263,20 +265,21 @@ def get_hold_outcome(command_id, command, commands):
     command.success(outcome)
     return command.succeed
 
+# Check if two commands have same commander; a command cannot dislodge unit of same commander
 def check_commanders(command_id, command, commands, destination_command):
-    # if the two commands have the same human then the outcome is false
-    # a command cannot dislodge a unit of the same country
     if command.human == destination_command.human:
         outcome = False
     else:
         outcome = True
     return outcome
 
+# Retrieve destination node
 def get_destination(command, commands):
     destination_command_id = command.destination.is_occupied.id
     destination_command = commands[destination_command_id]
     return destination_command_id, destination_command
 
+# Outcome of convoy dislodgement 
 def get_convoy_dislodgement_outcome(command_id, command, commands):
     dictionary_without_command = commands.copy()
     dictionary_without_command.pop(command_id)
@@ -292,6 +295,7 @@ def get_convoy_dislodgement_outcome(command_id, command, commands):
             outcome = True
     return outcome
 
+# Run outcome functions for attacks and holds
 def get_success_attacks(commands):
     for command_id in commands:
         command = commands[command_id]
@@ -302,13 +306,13 @@ def get_success_attacks(commands):
                 get_hold_outcome(command_id, commands[command_id], commands)
             elif command.location == command.origin and command.origin != command.destination:
                 get_attack_outcome(command_id, commands[command_id], commands)
-            # if not an attack or hold then continue to next command
             else:
                 continue
         else:
             command.succeed = False
     return commands
 
+# Retrieve all attacks that attack the same destination or "train" attacks
 def get_relevant_attacks(command_id, destination_command_id, commands, relevant_attacking_commands, last_relevant_attack = None):
     command = commands[command_id]
     destination_command = commands[destination_command_id]
@@ -328,11 +332,11 @@ def get_relevant_attacks(command_id, destination_command_id, commands, relevant_
                 break
             else:
                 boolean_value = False
-    # get relevant attacks for the relevant attack (recursion)
     if boolean_value == True:
         relevant_attacking_commands = get_relevant_attacks(destination_command_id, relevant_other_command_id, commands, relevant_attacking_commands)
     return relevant_attacking_commands
 
+# Retrieve last attack in a "train" of attacks
 def retrieve_last_relevant_attack(relevant_attacking_commands):
     relevant_attack_destination_dict = {}
     # get dictionary of commands and their destinations

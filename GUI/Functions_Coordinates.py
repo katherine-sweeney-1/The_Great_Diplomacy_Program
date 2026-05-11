@@ -43,7 +43,8 @@ def write_coordinates_file(territory_file, coordinates_file):
                 print("click the next territory", next(file_input))
                 print(line[0:3], coordinates[count - 1], file = file_output)
             territory_file_count += 1
-            
+
+# Get the coordinates for each neighbor, for each node      
 def get_territories_with_neighbors_coordinates(nodes_data_main, territory_coordinates, territory_neighbor_coordinates):
     # each entry in the nodes dictionary
     territories_neighbors_with_coordinates = {}
@@ -56,7 +57,6 @@ def get_territories_with_neighbors_coordinates(nodes_data_main, territory_coordi
     for node_entry in nodes_data_main:
         neighbors = nodes_data_main[node_entry]["Neighbors"]
         neighbors = neighbors.split(" ")
-        # get the coordinates for each neighbor for each entry in the nodes dictionary
         neighbors_coordinates = {}
         for neighbor in neighbors:
             with open(territory_coordinates, "r") as file_input, open(territory_neighbor_coordinates, "a") as file_output:
@@ -73,8 +73,8 @@ def get_territories_with_neighbors_coordinates(nodes_data_main, territory_coordi
         with open(territory_neighbor_coordinates, "a") as file_output:
             print(node_entry, territories_neighbors_with_coordinates[node_entry], file = file_output)
     return territories_neighbors_with_coordinates
-    
 
+# Assign coordinates to node objects
 def assign_coordinates_to_nodes(nodes, coordinate_file, coastal_coordinate_file):
     for node_id in nodes:
         node = nodes[node_id]

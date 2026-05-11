@@ -1,0 +1,43 @@
+AU
+Kamran
+A Bud to Tri
+F Tri to Ven
+A Vie S Bud to Tri
+
+
+UK
+Will
+F Den to HEL
+F ENG to MAO
+F IRI S ENG to MAO
+A Lon H
+F NTH to ENG
+
+
+FR
+Mercy
+F Bel S Bre to ENG
+F Bre to ENG
+A Gas to Mar
+A Par to Gas
+A Pic S Bel
+
+
+IT
+Liam
+A Apu to Ven
+A Bur to Mun
+F Nap H
+F Tun H
+A Tyr S Gal to Vie
+
+
+RU
+Michael
+F BAL S Kie
+A Ber S Mun
+A Gal to Vie
+A Kie S Mun
+A Mun S Kie
+F Sev to Rum
+A Sil S Mun

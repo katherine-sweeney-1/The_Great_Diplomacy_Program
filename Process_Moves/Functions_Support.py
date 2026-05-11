@@ -4,6 +4,7 @@ sys.path.append(os.path.join("/home/katherine/Documents/The-Great-Diplomacy-Prog
 from Class_Sub_Node import Coastal_Node
 from Functions_Attack import get_convoy_dislodgement_outcome
 
+# Determine whether a support is valid
 def get_valid_support(commands, command):
     command_id = command.unit.id
     command_success = True
@@ -121,6 +122,7 @@ def check_cut_attempt_on_support(commands, command_id, cut_support_id):
                 continue
     return command_success
 
+# Whether support for an attack (on the support being analyzed) is cut
 def is_support_for_attacking_cut(commands, command_id, cut_support_id):
     command = commands[command_id]
     cut_support_command = commands[cut_support_id]
@@ -170,21 +172,20 @@ def is_support_for_attacking_cut(commands, command_id, cut_support_id):
             command_success = False
     return command_success
 
+# Add command strength from valid supports 
 def get_command_strength(commands, command, command_success):
-# if the support affects another command (ie if there is a unit on the origin), get the supported command
     if command_success and command.origin.is_occupied != False:
         # get supported command for coastal territory
+        # may be obsolete now
         if command.origin.is_occupied == 1:
             origin = command.origin
             for potential_supported_id in commands:
                 if commands[potential_supported_id] == origin:
                     supported_command_id = commands[potential_supported_id].origin.is_occupied.id
                     break
-        # get supported command for non-coastal territory
         else:
             supported_command_id = command.origin.is_occupied.id
         supported_command = commands[supported_command_id]
-        # assign strength to the supported command
         if supported_command_id in commands:
             if supported_command.location != command.location:
                 if command.origin and supported_command.origin and supported_command.destination == command.destination:
@@ -202,25 +203,23 @@ def get_command_strength(commands, command, command_success):
                 command_strength = 0
         else:
             command_strength = 0
-    # strength of zero if the supporting command does not affect another command
     else:
         command_strength = 0
     return commands
 
+# Primary function to determine success of supports 
 def get_success_supports(commands, id = None, recur_bool = None):
     for command_id in commands:
         command = commands[command_id]
         if commands[command_id].location == commands[command_id].origin:
             continue
         command = commands[command_id]
-        # if a unit is supporting
         if command.legal == 1:
             if command.location != command.origin and command.convoy == False:
                 command_success = get_valid_support(commands, command)
                 command.success(command_success)
         else:
             command.succeed = False
-    # get command strength from supports
     for command_id in commands:
         command = commands[command_id]
         if command.legal == 1 and command.location != command.origin and command.convoy == False:

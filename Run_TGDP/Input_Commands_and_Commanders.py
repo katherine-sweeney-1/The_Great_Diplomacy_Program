@@ -13,6 +13,8 @@ from Cmdrs_7 import cmdrs_7_1909, cmdrs_7_1909b, cmdrs_7_1910, cmdrs_7_1911, cmd
 from Cmdrs_8 import cmdrs_8_1901, cmdrs_8_1902, cmdrs_8_1903, cmdrs_8_1904, cmdrs_8_1904b, cmdrs_8_1905, cmdrs_8_1906, cmdrs_8_1906b, cmdrs_8_1907
 from Cmdrs_8 import cmdrs_8_1908, cmdrs_8_1909, cmdrs_8_1910, cmdrs_8_1911, cmdrs_8_1911b, cmdrs_8_1912, cmdrs_8_1913, cmdrs_8_1913b, cmdrs_8_1914
 from Cmdrs_8 import cmdrs_8_1914b, cmdrs_8_1915, cmdrs_8_1916, cmdrs_8_1917
+sys.path.append("../The_Great_Diplomacy_Program/data/Played_Games")
+from Sampled_Played_Commanders import sample_cmdrs_1_1903
 
 input_data_1 = {}
 input_data_1["data/Txt_Hard_Data/Game_1/Game1_1903_Spring.txt"] = cmdrs_1_1903
@@ -154,7 +156,6 @@ input_data_8["data/Txt_Hard_Data/Game_8/Game8_1907_Spring.txt"] = cmdrs_8_1907
 input_data_8["data/Txt_Hard_Data/Game_8/Game8_1907_Fall.txt"] = cmdrs_8_1907
 
 input_data_8b = {}
-
 input_data_8b["data/Txt_Hard_Data/Game_8/Game8_1908_Spring.txt"] = cmdrs_8_1908
 input_data_8b["data/Txt_Hard_Data/Game_8/Game8_1908_Fall.txt"] = cmdrs_8_1908
 input_data_8b["data/Txt_Hard_Data/Game_8/Game8_1909_Spring.txt"] = cmdrs_8_1909
@@ -173,6 +174,10 @@ input_data_8b["data/Txt_Hard_Data/Game_8/Game8_1915_Spring.txt"] = cmdrs_8_1915
 input_data_8b["data/Txt_Hard_Data/Game_8/Game8_1915_Fall.txt"] = cmdrs_8_1915
 input_data_8b["data/Txt_Hard_Data/Game_8/Game8_1916_Spring.txt"] = cmdrs_8_1916
 input_data_8b["data/Txt_Hard_Data/Game_8/Game8_1916_Fall.txt"] = cmdrs_8_1916
+
+input_data_sample = {}
+input_data_sample["data/Played_Games/Sample_Played_Moves/Sample_Game1_1903_Spring.txt"] = sample_cmdrs_1_1903
+input_data_sample["data/Played_Games/Sample_Played_Moves/Sample_Game1_1903_Fall.txt"] = sample_cmdrs_1_1903
 
 # input for square loop problem
 # debug later
