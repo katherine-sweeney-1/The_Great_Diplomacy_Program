@@ -288,6 +288,7 @@ def save_images(game_objects, game_number_string, start_game_year):
 
         canvas.postscript(file = file_name_ps, colormode = "color")
         canvas_image = Image.open(file_name_ps)
+        canvas_image.show()
         canvas_image.save(file_name_png)
         count += 1
         #main_window.save(file_name_png)
