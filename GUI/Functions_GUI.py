@@ -83,6 +83,7 @@ import tkinter as tk
 from tkinter import ttk
 from PIL import Image, ImageTk, ImageGrab
 import ghostscript
+from pathlib import Path
 from Functions_Drawing import draw_units, draw_attacks, draw_holds, draw_supports
 from Functions_Coordinates import get_coordinates, assign_coordinates_to_nodes, get_territories_with_neighbors_coordinates
 
@@ -283,12 +284,15 @@ def save_images(game_objects, game_number_string, start_game_year):
         print(game_and_turn_string)
         print(" ")
         file_name_ps = "GUI/" + game_and_turn_string + ".ps"
+
         file_name_pdf = game_and_turn_string + ".pdf"
+        path_to_file = ("/The_Great_Diplomacy_Program/TGDP_Website/Static")
         file_name_png = game_and_turn_string + ".png"
         #print("map width and height map_dimension", map_width, map_height)
         #ImageGrab.grab().crop((0, 0, map_width, map_height)).save(file_name)
         #canvas.delete()
         canvas.update()
+        #Path(path_to_file).parent.mkdir(parents = True, exist_ok = True)
         canvas.postscript(file = file_name_ps, colormode = "color")
         """
         img =ImageTk.getimage(canvas.image)
@@ -300,51 +304,39 @@ def save_images(game_objects, game_number_string, start_game_year):
             "postscript_to_pdf",
             "-dNOPAUSE", "-dBATCH", "-dSAFER",
             "-sDEVICE=pdfwrite",
-            "-sOutputFile={}".format(file_name_pdf),
+            "-dDEVICEWIDTHPOINTS = 720", "-dDEVICEHEIGHTPOINTS = 648",
+            "-dFIXEDMEDIA", "-DPDTFitPage",
+            "-sOutputFile=TGDP_Website/Static/{}".format(file_name_pdf),
             "-f", file_name_ps
         ]
+        """
+        arguments = [
+            "postscript_to_png",
+            "-dNOPAUSE", "-dBATCH",
+            "-sDEVICE = png16m",
+            "-r300",
+            "-sOutputFile=TGDP_Website/Static/{}".format(file_name_png),
+            "-f", file_name_ps
+        ]
+        """
         ghostscript.Ghostscript(*arguments)
-        
+    
+        canvas.delete("draw")
         count += 1
 
         #main_window.save(file_name_png)
 
 """
-def save_images(game_objects, game_and_turn_string):
-    images_directory = "/home/Documents/The_Great_Diplomacy_Program/TGDP_Website/Static"
-    main_window, map_image, canvas, next_turn_button, previous_turn_button = set_up_gui()
-    for turn in game_objects:
-        commands, commanders, nodes, units = get_objects(game_objects, turn)
-        #main_window, map_image, canvas, next_turn_button, previous_turn_button = set_up_gui()
-        main_window, treeview, canvas = display_moves(main_window, map_image, canvas, commands, commanders)
-        #canvas.update()
-        file_name = "GUI/" + game_and_turn_string + ".png"
-        
-        #map_width = map_image.width
-        #map_height = map_image.height
-        #ImageGrab.grab().crop((0,0, map_width, map_height)).save(file_name)
-        
-        #print("canvas", type(canvas))
-        #print("main window", type(main_window))
-    
+
+To Do
+
+    - Make the left part of the map show. Why is it not there?????
+
+    - Make directories for each game in static folder
+
+    - Delete postscript files
 
 
-        #main_window.mainloop()
-        #canvas.update()
-        #canvas.postscript(file = game_and_turn_string, colormode = "color")
-
-        
-        #map_width = map_image.width
-        #map_height = map_image.height
-        #file_name = game_and_turn_string + ".png"
-
-        img = ImageGrab.grab().crop((0, 0, map_width, map_height)).save(file_name)
-        img = ImageGrab.grab().crop((0, 0, map_width, map_height))
-        file_path = os.path.join(images_directory, game_and_turn_string)
-        #img.save(file_path, "PNG")
-        canvas = Image.open(canvas)
-        #img.save("/home/Documents/The_Great_Diplomacy_Program/TGDP_Website/Static".format(game_and_turn_string), "PNG")
-        canvas.save("GUI/{}".format(file_name))
 """
 
 
