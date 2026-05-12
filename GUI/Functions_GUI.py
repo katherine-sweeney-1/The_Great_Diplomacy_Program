@@ -82,6 +82,7 @@ from Functions_Node import get_nodes_data_dictionary
 import tkinter as tk
 from tkinter import ttk
 from PIL import Image, ImageTk, ImageGrab
+import ghostscript
 from Functions_Drawing import draw_units, draw_attacks, draw_holds, draw_supports
 from Functions_Coordinates import get_coordinates, assign_coordinates_to_nodes, get_territories_with_neighbors_coordinates
 
@@ -276,21 +277,36 @@ def save_images(game_objects, game_number_string, start_game_year):
         commands, commanders, nodes, units = get_objects(game_objects, turn)
         #main_window, map_image, canvas, next_turn_button, previous_turn_button = set_up_gui()
         main_window, treeview, canvas = display_moves(main_window, map_image, canvas, commands, commanders)
+        #main_window.mainloop()
         map_width = map_image.width
         map_height = map_image.height
         print(game_and_turn_string)
         print(" ")
         file_name_ps = "GUI/" + game_and_turn_string + ".ps"
+        file_name_pdf = game_and_turn_string + ".pdf"
         file_name_png = game_and_turn_string + ".png"
         #print("map width and height map_dimension", map_width, map_height)
         #ImageGrab.grab().crop((0, 0, map_width, map_height)).save(file_name)
         #canvas.delete()
-
+        canvas.update()
         canvas.postscript(file = file_name_ps, colormode = "color")
-        canvas_image = Image.open(file_name_ps)
-        canvas_image.save(file_name_png)
-        canvas_image.show()
+        """
+        img =ImageTk.getimage(canvas.image)
+        img.save(file_name_png)
+        img.show()
+        """
+        
+        arguments = [
+            "postscript_to_pdf",
+            "-dNOPAUSE", "-dBATCH", "-dSAFER",
+            "-sDEVICE=pdfwrite",
+            "-sOutputFile={}".format(file_name_pdf),
+            "-f", file_name_ps
+        ]
+        ghostscript.Ghostscript(*arguments)
+        
         count += 1
+
         #main_window.save(file_name_png)
 
 """
