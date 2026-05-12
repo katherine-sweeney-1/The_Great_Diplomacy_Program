@@ -277,7 +277,7 @@ def save_images(game_objects, game_number_string, start_game_year):
         commands, commanders, nodes, units = get_objects(game_objects, turn)
         #main_window, map_image, canvas, next_turn_button, previous_turn_button = set_up_gui()
         main_window, treeview, canvas = display_moves(main_window, map_image, canvas, commands, commanders)
-        main_window.mainloop()
+        #main_window.mainloop()
         map_width = map_image.width
         map_height = map_image.height
         print(game_and_turn_string)
@@ -289,11 +289,13 @@ def save_images(game_objects, game_number_string, start_game_year):
         #ImageGrab.grab().crop((0, 0, map_width, map_height)).save(file_name)
         #canvas.delete()
         canvas.update()
-        #canvas.postscript(file = file_name_ps, colormode = "color")
+        canvas.postscript(file = file_name_ps, colormode = "color")
+        """
         img =ImageTk.getimage(canvas.image)
         img.save(file_name_png)
         img.show()
         """
+        
         arguments = [
             "postscript_to_pdf",
             "-dNOPAUSE", "-dBATCH", "-dSAFER",
@@ -302,7 +304,7 @@ def save_images(game_objects, game_number_string, start_game_year):
             "-f", file_name_ps
         ]
         ghostscript.Ghostscript(*arguments)
-        """
+        
         count += 1
 
         #main_window.save(file_name_png)
