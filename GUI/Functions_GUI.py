@@ -222,6 +222,9 @@ def save_images(game_objects, game_number_string, start_game_year):
         img.save(file_name_png)
         img.show()
         """
+        directory_path = "TGDP_Website/Static/Game_" + game_number_string
+        Path("{}".format(directory_path)).mkdir(parents = True, exist_ok = True)
+
         
         arguments = [
             "postscript_to_pdf",
@@ -229,7 +232,7 @@ def save_images(game_objects, game_number_string, start_game_year):
             "-sDEVICE=pdfwrite",
             "-dDEVICEWIDTHPOINTS = 720", "-dDEVICEHEIGHTPOINTS = 648",
             "-dFIXEDMEDIA", "-DPDTFitPage",
-            "-sOutputFile=TGDP_Website/Static/{}".format(file_name_pdf),
+            "-sOutputFile={}/{}".format(directory_path, file_name_pdf),
             "-f", file_name_ps
         ]
         """
