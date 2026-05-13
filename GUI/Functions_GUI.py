@@ -97,7 +97,7 @@ def set_up_gui():
 def display_moves(main_window, map_image, canvas, commands, commanders):
     canvas.pack(fill = tk.BOTH)
     map_image = ImageTk.PhotoImage(map_image)
-    canvas.create_image(0,0, anchor = tk.NW, image = map_image)
+    canvas.create_image(0, 0, anchor = tk.NW, image = map_image)
     display_box = tk.Label(main_window, text = "TGDP Display Box")
     display_box.pack()
     scrollbar = tk.Scrollbar(main_window)
@@ -185,7 +185,9 @@ def save_images(game_objects, game_number_string, start_game_year):
     count = 0
     main_window, map_image, canvas, next_turn_button, previous_turn_button = set_up_gui()
     for turn in game_objects:
-        #print("game year", start_game_year)
+        map_image = Image.open("GUI/Europe_Map.png")
+        map_width = map_image.width
+        map_height = map_image.height
         game_year = int(start_game_year)
         game_year = game_year + count/2
         game_year = int(game_year)
@@ -197,26 +199,12 @@ def save_images(game_objects, game_number_string, start_game_year):
                 game_season = "Fall"
         game_season = game_season.lower()
         game_and_turn_string = "game" + str(game_number_string) + "_" + str(game_year) + "_" + game_season
-        #print("TURN", turn)
         commands, commanders, nodes, units = get_objects(game_objects, turn)
-        #main_window, map_image, canvas, next_turn_button, previous_turn_button = set_up_gui()
         main_window, treeview, canvas = display_moves(main_window, map_image, canvas, commands, commanders)
-        #main_window.mainloop()
-        map_width = map_image.width
-        map_height = map_image.height
-        print(game_and_turn_string)
-        print(" ")
         file_name_ps = "GUI/" + game_and_turn_string + ".ps"
-
         file_name_pdf = game_and_turn_string + ".pdf"
-        path_to_file = ("/The_Great_Diplomacy_Program/TGDP_Website/Static")
-        file_name_png = game_and_turn_string + ".png"
-        #print("map width and height map_dimension", map_width, map_height)
-        #ImageGrab.grab().crop((0, 0, map_width, map_height)).save(file_name)
-        #canvas.delete()
         canvas.update()
-        #Path(path_to_file).parent.mkdir(parents = True, exist_ok = True)
-        canvas.postscript(file = file_name_ps, colormode = "color")
+        canvas.postscript(file = file_name_ps, x=0, y=0, width = map_width, height = map_height, colormode = "color")
         """
         img =ImageTk.getimage(canvas.image)
         img.save(file_name_png)
@@ -224,13 +212,11 @@ def save_images(game_objects, game_number_string, start_game_year):
         """
         directory_path = "TGDP_Website/Static/Game_" + game_number_string
         Path("{}".format(directory_path)).mkdir(parents = True, exist_ok = True)
-
-        
         arguments = [
             "postscript_to_pdf",
             "-dNOPAUSE", "-dBATCH", "-dSAFER",
             "-sDEVICE=pdfwrite",
-            "-dDEVICEWIDTHPOINTS = 720", "-dDEVICEHEIGHTPOINTS = 648",
+            "-sPAPERSIZE=a3",
             "-dFIXEDMEDIA", "-DPDTFitPage",
             "-sOutputFile={}/{}".format(directory_path, file_name_pdf),
             "-f", file_name_ps
@@ -247,20 +233,15 @@ def save_images(game_objects, game_number_string, start_game_year):
         """
         ghostscript.Ghostscript(*arguments)
         postscript_file = Path(file_name_ps)
-        print(postscript_file)
         postscript_file.unlink()
         canvas.delete("draw")
         count += 1
-
-        #main_window.save(file_name_png)
 
 """
 
 To Do
 
     - Make the left part of the map show. Why is it not there?????
-
-    - Delete postscript files
 
 
 """
