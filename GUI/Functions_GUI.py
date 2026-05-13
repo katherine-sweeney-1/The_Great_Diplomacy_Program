@@ -246,7 +246,9 @@ def save_images(game_objects, game_number_string, start_game_year):
         ]
         """
         ghostscript.Ghostscript(*arguments)
-    
+        postscript_file = Path(file_name_ps)
+        print(postscript_file)
+        postscript_file.unlink()
         canvas.delete("draw")
         count += 1
 
@@ -257,8 +259,6 @@ def save_images(game_objects, game_number_string, start_game_year):
 To Do
 
     - Make the left part of the map show. Why is it not there?????
-
-    - Make directories for each game in static folder
 
     - Delete postscript files
 
