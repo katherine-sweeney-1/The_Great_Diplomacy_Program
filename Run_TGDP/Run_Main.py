@@ -54,7 +54,6 @@ def run_tgdp(input_data, game_number_string, start_game_year, save_images_boolea
         objects["Nodes"] = nodes
         objects["Units"] = units
         turns_objects[game_and_turn_string] = objects
-        print("string", game_and_turn_string)
     gui = run_gui(turns_objects, str(game_number_string), start_game_year, save_images_boolean)
 
 """
