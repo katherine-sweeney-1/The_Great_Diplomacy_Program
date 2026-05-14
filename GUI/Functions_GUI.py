@@ -7,6 +7,7 @@ from tkinter import ttk
 from PIL import Image, ImageTk, ImageGrab
 import ghostscript
 from pathlib import Path
+from pdftoppm import conver_to_path
 from Functions_Drawing import draw_units, draw_attacks, draw_holds, draw_supports
 from Functions_Coordinates import get_coordinates, assign_coordinates_to_nodes, get_territories_with_neighbors_coordinates
 
@@ -203,6 +204,7 @@ def save_images(game_objects, game_number_string, start_game_year):
         main_window, treeview, canvas = display_moves(main_window, map_image, canvas, commands, commanders)
         file_name_ps = "GUI/" + game_and_turn_string + ".ps"
         file_name_pdf = game_and_turn_string + ".pdf"
+        file_name_png = game_and_turn_string + ".png"
         canvas.update()
         canvas.postscript(file = file_name_ps, x=0, y=0, width = map_width, height = map_height, colormode = "color")
         """
@@ -232,6 +234,8 @@ def save_images(game_objects, game_number_string, start_game_year):
         ]
         """
         ghostscript.Ghostscript(*arguments)
+        convert_from_path(directory_path)
+        directory_path.save("TGDP_Website/Static/{}".format(file_name_png))
         postscript_file = Path(file_name_ps)
         postscript_file.unlink()
         canvas.delete("draw")
@@ -253,7 +257,6 @@ To Do
 
 # Run function
 def run_gui(game_objects, game_number_string, start_game_year, save_images_boolean, turn = None):
-    
     turns = []
     for turn in game_objects:
         turns.append(turn)

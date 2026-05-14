@@ -18,5 +18,37 @@ Arguments:
 
 """
 
+
+
+"""
+
+TO DO EVENTUALLY
+
+    - paint bucket to change map color to match starting positions 
+
+    - Color changes
+
+        -  successful attacks be green
+        
+        - successful supports be blue
+
+        - orange for invalid move 
+
+"""
+
+"""
+
+To Do
+
+    - Submit moves on website
+
+    - Submitting on website sends email to me
+
+    - Upload pictures to website manually (run locally)
+
+
+
+"""
+
 #run_tgdp(input_data_sample, "9", "1903", False)
 run_tgdp(input_data_8, "8", "1901", True)
