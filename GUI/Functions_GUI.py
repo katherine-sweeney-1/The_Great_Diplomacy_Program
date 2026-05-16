@@ -69,7 +69,12 @@ def add_treeview_data(treeview, commanders, commands):
             if command.location == command.origin and command.origin != command.destination:
                 action_type = "Attack"
             elif command.location == command.origin and command.origin == command.destination:
-                action_type = "Hold"
+                if command.original_support_origin != False and command.original_support_destination != False:
+                    action_type = "Support"
+                    command.origin = command.original_support_origin
+                    command.destination = command.original_support_destination
+                else:
+                    action_type = "Hold"
             elif command.location != command.origin and command.convoy == False:
                 action_type = "Support"
             elif command.convoy == True:
@@ -133,6 +138,13 @@ def display_static_map(main_window, map_image, canvas):
 
 # Draw the units and movements 
 def draw_pieces(canvas, commands):
+    for command_id in commands:
+        command = commands[command_id]
+        if command.original_support_origin != False and command.original_support_destination != False:
+            command.origin = command.original_support_origin
+            command.destination = command.original_support_destination
+        if command.original_coastal_location != False:
+            command.location = command.original_coastal_location
     canvas = draw_units(canvas, commands)
     canvas = draw_attacks(canvas, commands)
     canvas = draw_holds(canvas, commands)

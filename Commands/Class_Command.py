@@ -5,6 +5,9 @@ class Command ():
         self.legal = 1
         self.strength = 1
         self.check_other_attacks = False
+        self.original_support_origin = False
+        self.original_support_destination = False
+        self.original_coastal_location = False
 
     def assign_commander(self, cmding_owner, commanders):
         self.human = commanders[cmding_owner]
@@ -60,6 +63,10 @@ class Command ():
     def convoy_status (self, convoy_boolean):
         self.convoy = convoy_boolean
         return self.convoy
+    
+    def assign_original_coastal_location(self, original_coastal_location_node):
+        self.original_coastal_location = original_coastal_location_node
+        return self.original_coastal_location
     
     def assign_original_support_origin (self, original_support_origin_node):
         self.original_support_origin = original_support_origin_node
