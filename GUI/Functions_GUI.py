@@ -60,6 +60,12 @@ def add_treeview_data(treeview, commanders, commands):
         for unit_id in unit_members:
             unit = unit_members[unit_id]
             command = commands[unit_id]
+            """
+            
+            NEED TO EDIT THIS FOR SUPPORTS AND HOLDS
+            
+            
+            """
             if command.location == command.origin and command.origin != command.destination:
                 action_type = "Attack"
             elif command.location == command.origin and command.origin == command.destination:

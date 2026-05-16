@@ -61,6 +61,14 @@ class Command ():
         self.convoy = convoy_boolean
         return self.convoy
     
+    def assign_original_support_origin (self, original_support_origin_node):
+        self.original_support_origin = original_support_origin_node
+        return self.original_support_origin
+    
+    def assign_original_support_destination (self, original_support_destination_node):
+        self.original_support_destination = original_support_destination_node
+        return self.original_support_destination
+    
     def print_statement(self):
         print("command for unit {}, country {} has commander {}".format(self.unit.id, self.country, self.human.human))
         print("loc: {}, origin: {}, dest: {}".format(self.loc.name, self.origin.name, self.destination.name))

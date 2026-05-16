@@ -46,9 +46,28 @@ To Do
 
     - Upload pictures to website manually (run locally)
 
+    - Have map for winter builds/tears
+
+    - Show state of map without arrows for submitting moves 
+
+    - Different pages for current game and submitting moves
+
+        => Check with Mercy
+
+        => Have a map without arrows for submitting moves 
+
+
+    - ASK MERCY: submit moves on discord or just show maps on discord? Is there a way to automate move submission via discord?
+
 
 
 """
 
 #run_tgdp(input_data_sample, "9", "1903", False)
 run_tgdp(input_data_8, "8", "1901", False)
+
+"""
+
+MAP ISSUE - invalid supports show up as failed holds instead of failed supports
+
+"""

@@ -126,6 +126,12 @@ def filter_support(command, commands):
                 count +=1 
         if count == len(commands):
             command.legal = "invalid order - support is for a nonexistent command"
+            """
+            command.assign_original_support_origin(command.origin)
+            command.assign_original_support_destination(command.destination)
+            print("CHECKING", command.original_support_origin.name, command.original_support_destination.name)
+            print("   ")
+            """
         else:
             command.legal = command.legal
     return command
@@ -150,3 +156,18 @@ def filter_commands(commands, commanders):
             valid_commands[command_id] = command
         valid_commands[command_id] = command
     return valid_commands
+
+
+""""
+
+1. Add .original_origin property and .original_destination property 
+
+2. If those command.legal != 1 for support make .original_origin and .original_destination go from values
+    of 1 to the nodes of the origin and destination
+
+3. Edit the GUI for drawing holds and supports to show invalid supports 
+
+
+
+
+"""
