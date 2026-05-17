@@ -7,27 +7,24 @@ from Functions_Node import assign_occupied
 def get_outcome_nodes(commands, nodes, units):
     for command_id in commands:
         command = commands[command_id]
+        displacing_attack = False
         # get outcomes for successful commands
-        if command.succeed and command.location == command.origin and command.origin == command.destination:
+        if command.succeed and command.location == command.origin and command.origin != command.destination:
+            #print("UESSSS", command_id, command.location.name, command.destination.name)
             retreat = False
             outcome_node = command.destination
-            """
-            # outcome location for holds
-            if command.location == command.origin == command.destination:
-
-                outcome_node = command.destination
-            # outcome location for attacks
-            elif command.location == command.origin and command.origin != command.destination:
-                outcome_node = command.destination
-            # outcomes location for supports
-            else:
-                outcome_node = command.location
-            retreat = False
-            potential_attack = False
-            """
+            #print("YESSS 0", command_id, command.location.name, command.destination.name, outcome_node.name)
+        elif command.succeed and command.location == command.origin and command.origin == command.destination:
+            #print(1, command_id)
+            displacing_attack, outcome_node, retreat = check_displacement_attacks(command, command_id, commands)
+        elif command.succeed and command.location != command.origin:
+            #print(2, command_id)
+            displacing_attack, outcome_node, retreat = check_displacement_attacks(command, command_id, commands)
         # get outcomes for supports, holds, and unsuccessful attacks
         else:
+            #print(3, command_id)
             # determine if any commands displace the unsuccessful command
+            """
             for potential_attack_id in commands:
                 potential_attack = commands[potential_attack_id]
                 if potential_attack_id != command_id:
@@ -35,6 +32,7 @@ def get_outcome_nodes(commands, nodes, units):
                         if potential_attack.location == potential_attack.origin and potential_attack.origin != potential_attack.destination:
                             if potential_attack.strength > command.strength:
                                 outcome_node = command.location
+                                displacing_attack = outcome_node
                                 retreat = True
                                 break
                             else:
@@ -46,15 +44,47 @@ def get_outcome_nodes(commands, nodes, units):
                 else:
                     retreat = False
                     outcome_node = command.location
-                if retreat == False:
-                    potential_attack_ = False
+            """
+            displacing_attack, outcome_node, retreat = check_displacement_attacks(command, command_id, commands)
+
+        #print(command_id, units[command_id].location.name, outcome_node.name)
         units[command_id].assign_retreat_disband(retreat)
+        #print("check 1", units[command_id].location.name, outcome_node.name)
         units[command_id].assign_location(outcome_node, False, False)
+        print("check 2",units[command_id].location.name)
         command.assign_outcome_location(outcome_node)
-    return commands, potential_attack, units
+        print("test outcome node", command.location.name)
+        #print(" ")
+    return commands, displacing_attack, units
+
+
+def check_displacement_attacks(command, command_id, commands):
+    displacing_attack = False
+    # determine if any commands displace the unsuccessful command
+    for potential_attack_id in commands:
+        potential_attack = commands[potential_attack_id]
+        if potential_attack_id != command_id:
+            if potential_attack.destination.name == command.location.name:
+                if potential_attack.location == potential_attack.origin and potential_attack.origin != potential_attack.destination:
+                    if potential_attack.strength > command.strength:
+                        outcome_node = command.location
+                        displacing_attack = potential_attack
+                        retreat = True
+                        break
+                    else:
+                        retreat = False
+                else:
+                    retreat = False
+            else:
+                retreat = False
+        else:
+            retreat = False
+            outcome_node = command.location
+    return displacing_attack, outcome_node, retreat
+
 
 # get retreat nodes for processed commands
-def get_retreats(commands, displacing_attack, units):
+def get_retreats(commands, displacing_attack, nodes, units):
     for unit_id in units:
         if units[unit_id].retreat == True:
             neighbors = units[unit_id].location.neighbors
@@ -63,9 +93,8 @@ def get_retreats(commands, displacing_attack, units):
                 if neighbors[neighbor].is_occupied:
                     pass
                 else:
-                    if displacing_attack != False:
-                        print("CHECKING", unit_id, units[unit_id].location.name, displacing_attack.location.name)
                     if displacing_attack == False or neighbor != displacing_attack.location:
+                        print("YESSSS", unit_id, neighbors[neighbor].name, neighbors[neighbor].is_occupied)
                         if units[unit_id].type == "army" and neighbors[neighbor].node_type == "Land":
                             retreat_options.append(neighbor)
                         elif units[unit_id].type == "fleet" and neighbors[neighbor].node_type == "Sea":
@@ -77,19 +106,26 @@ def get_retreats(commands, displacing_attack, units):
 
 # process outcomes
 def process_outcomes(commands, nodes, units):
+    """
     processed_units = units
     processed_nodes = nodes
     processed_commands = commands
-    processed_commands, displacing_attack, processed_units = get_outcome_nodes(processed_commands, processed_nodes, processed_units)
     """
+    processed_commands, displacing_attack, processed_units = get_outcome_nodes(commands, nodes, units)
+    
     for unit_id in units:
         unit = units[unit_id]
         print("outcome location", unit_id, unit.location.name)
         print("command outcome location", commands[unit_id].outcome_location.name)
-    """
-    processed_nodes, processed_units = assign_occupied(processed_nodes, processed_units)
+    
+    
+    for unit_id in processed_units:
+        print("original unit", unit_id, units[unit_id].location.name)
+        print("new unit", unit_id, processed_units[unit_id].location.name)
+    
+    processed_nodes, processed_units = assign_occupied(nodes, processed_units)
     #print(nodes)
-    processed_units = get_retreats(processed_commands, displacing_attack, processed_units)
+    processed_units = get_retreats(processed_commands, displacing_attack, processed_nodes, processed_units)
     for unit_id in processed_units:
         if processed_units[unit_id].retreat:
             print(unit_id, processed_units[unit_id].retreat)
