@@ -8,10 +8,14 @@ def filter_owner(command, commanders):
     cmd_instructor = command.human.human
     if command.legal == 0:
         command.legal = "invalid order - unit does not exist"
+        command.assign_original_support_origin(command.origin)
+        command.assign_original_support_destination(command.destination)
     elif command.unit in commanders[cmd_instructor].unit_members.values():
         command.legal = command.legal
     else:
         command.legal = "invalid order - command for wrong country"
+        command.assign_original_support_origin(command.origin)
+        command.assign_original_support_destination(command.destination)
     return command
 
 # filter by neighboring destinations
@@ -22,6 +26,8 @@ def filter_neighbors(command):
                 command.legal = command.legal
             else:
                 command.legal = "invalid order - neighboring territory error with fleet coastal"
+                command.assign_original_support_origin(command.origin)
+                command.assign_original_support_destination(command.destination)
     if isinstance(command.origin, Coastal_Node):
         if command.destination in command.origin.neighbors.values():
             command.legal = command.legal
@@ -29,6 +35,9 @@ def filter_neighbors(command):
             command.legal = command.legal
         else:
             command.legal = "invalid order - neighboring territory error coastal"
+            command.assign_original_coastal_location(command.location)
+            command.assign_original_support_origin(command.origin)
+            command.assign_original_support_destination(command.destination)
     elif isinstance(command.location, Coastal_Node):
         if command.destination in command.location.neighbors.values():
             command.legal = command.legal
@@ -36,6 +45,9 @@ def filter_neighbors(command):
             command.legal = command.legal
         else:
             command.legal = "invalid order - neighboring territory error coastal"
+            command.assign_original_coastal_location(command.location)
+            command.assign_original_support_origin(command.origin)
+            command.assign_original_support_destination(command.destination)
     else:
         if command.location in command.destination.neighbors.values():
             if command.origin in command.destination.neighbors.values():
@@ -44,12 +56,16 @@ def filter_neighbors(command):
                 command.legal = command.legal
             else:
                 command.legal = "invalid order - non-neighbor territory"
+                command.assign_original_support_origin(command.origin)
+                command.assign_original_support_destination(command.destination)
         elif command.origin in command.destination.neighbors.values():
             command.legal = command.legal
         elif command.location == command.origin == command.destination:
             command.legal = command.legal 
         else:
             command.legal = "invalid order - non-neighbor territory"
+            command.assign_original_support_origin(command.origin)
+            command.assign_original_support_destination(command.destination)
     return command
 
 # get commands for coastal territories so .is_occupied returns the command and not 0 or 1
@@ -90,15 +106,21 @@ def filter_unit_type(command):
     if command.unit.type == "army":
         if command.destination.node_type == "Sea":
             command.legal = "invalid order - army attempts move directed at sea"
+            command.assign_original_support_origin(command.origin)
+            command.assign_original_support_destination(command.destination)
     else:
         if command.destination.node_type == "Land":
             command.legal = "unit type error - fleet attempts move directed at inland"
+            command.assign_original_support_origin(command.origin)
+            command.assign_original_support_destination(command.destination)
         elif command.destination.node_type == "Coast":
             if command.location in command.destination.fleet_neighbors.values():
                 command.legal = command.legal
             else:
                 if command.location != command.destination:
                     command.legal = "invalid order - coastal error non neighbor"
+                    command.assign_original_support_origin(command.origin)
+                    command.assign_original_support_destination(command.destination)
     return command
 
 # Filter validity of supports 
@@ -126,6 +148,8 @@ def filter_support(command, commands):
                 count +=1 
         if count == len(commands):
             command.legal = "invalid order - support is for a nonexistent command"
+            command.assign_original_support_origin(command.origin)
+            command.assign_original_support_destination(command.destination)
         else:
             command.legal = command.legal
     return command
@@ -150,3 +174,18 @@ def filter_commands(commands, commanders):
             valid_commands[command_id] = command
         valid_commands[command_id] = command
     return valid_commands
+
+
+""""
+
+1. Add .original_origin property and .original_destination property 
+
+2. If those command.legal != 1 for support make .original_origin and .original_destination go from values
+    of 1 to the nodes of the origin and destination
+
+3. Edit the GUI for drawing holds and supports to show invalid supports 
+
+
+
+
+"""

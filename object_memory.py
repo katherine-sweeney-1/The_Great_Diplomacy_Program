@@ -102,21 +102,21 @@ Invalid Move Affected Outcomes
 
     Game 8
 
-        1903 Fall: IT01
+        1903 Fall: IT01 => support is for non existent command
 
-        1905 Spring: IT02
+        1905 Spring: IT02 => support is for nonexistent command
 
         1905 Fall: UK07 => army has invalid convoy move path
 
-        1905 Fall: IT03
+        1905 Fall: IT03 => support is for non existent command
 
-        1905 Fall: IT04
+        1905 Fall: IT04 => support is for non existent command
 
-        1906 Spring: TU04
+        1906 Spring: TU04 => neighboring terrirtory error coastal
 
-        1906 Fall: TU04
+        1906 Fall: TU04 => neighboring territory error coastal
 
-        1907 Fall: FR10
+        1907 Fall: FR10 => support is for nonexistent command
 
         1908 Fall: TU01
 

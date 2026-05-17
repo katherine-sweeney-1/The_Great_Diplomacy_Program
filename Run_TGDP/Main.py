@@ -18,27 +18,13 @@ Arguments:
 
 """
 
-
-
-"""
-
-TO DO EVENTUALLY
-
-    - paint bucket to change map color to match starting positions 
-
-    - Color changes
-
-        -  successful attacks be green
-        
-        - successful supports be blue
-
-        - orange for invalid move 
-
-"""
-
 """
 
 To Do
+
+    - Fix outcome node retreat options
+
+    - paint bucket to change map color to match starting positions  
 
     - Submit moves on website
 
@@ -46,9 +32,40 @@ To Do
 
     - Upload pictures to website manually (run locally)
 
+    - Have map for winter builds/tears
 
+    - Show state of map without arrows for submitting moves 
+
+    - Different pages for current game and submitting moves
+
+        => Check with Mercy
+
+        => Have a map without arrows for submitting moves 
+
+
+    - Figure out builds/tears
+
+    - Figure out retreats
+
+    - ASK MERCY: submit moves on discord or just show maps on discord? Is there a way to automate move submission via discord?
+
+    - Fix galecia coordinate? Game 8 Boh support to galecia has arrow finishing in bohemia
+
+    - DONE: Color changes
+
+        -  successful attacks be green
+        
+        - successful supports be blue
+
+        - orange for invalid move
 
 """
 
 #run_tgdp(input_data_sample, "9", "1903", False)
 run_tgdp(input_data_8, "8", "1901", False)
+
+"""
+
+MAP ISSUE - invalid supports show up as failed holds instead of failed supports
+
+"""

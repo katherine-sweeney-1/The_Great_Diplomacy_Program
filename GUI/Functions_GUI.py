@@ -25,7 +25,6 @@ def get_objects(objects_dictionary, turn):
     commanders = objects_dictionary[turn]["Commanders"]
     nodes = objects_dictionary[turn]["Nodes"]
     units = objects_dictionary[turn]["Units"]
-    nodes = nodes[0]
     assign_coordinates_to_nodes(nodes, coordinates_file, coastal_coordinates_file)
     return commands, commanders, nodes, units
 
@@ -60,10 +59,21 @@ def add_treeview_data(treeview, commanders, commands):
         for unit_id in unit_members:
             unit = unit_members[unit_id]
             command = commands[unit_id]
+            """
+            
+            NEED TO EDIT THIS FOR SUPPORTS AND HOLDS
+            
+            
+            """
             if command.location == command.origin and command.origin != command.destination:
                 action_type = "Attack"
             elif command.location == command.origin and command.origin == command.destination:
-                action_type = "Hold"
+                if command.original_support_origin != False and command.original_support_destination != False:
+                    action_type = "Support"
+                    command.origin = command.original_support_origin
+                    command.destination = command.original_support_destination
+                else:
+                    action_type = "Hold"
             elif command.location != command.origin and command.convoy == False:
                 action_type = "Support"
             elif command.convoy == True:
@@ -127,6 +137,13 @@ def display_static_map(main_window, map_image, canvas):
 
 # Draw the units and movements 
 def draw_pieces(canvas, commands):
+    for command_id in commands:
+        command = commands[command_id]
+        if command.original_support_origin != False and command.original_support_destination != False:
+            command.origin = command.original_support_origin
+            command.destination = command.original_support_destination
+        if command.original_coastal_location != False:
+            command.location = command.original_coastal_location
     canvas = draw_units(canvas, commands)
     canvas = draw_attacks(canvas, commands)
     canvas = draw_holds(canvas, commands)
@@ -203,48 +220,14 @@ def save_images(game_objects, game_number_string, start_game_year):
         commands, commanders, nodes, units = get_objects(game_objects, turn)
         main_window, treeview, canvas = display_moves(main_window, map_image, canvas, commands, commanders)
         file_name_ps = "GUI/" + game_and_turn_string + ".ps"
-        #file_name_pdf = game_and_turn_string + ".pdf"
         file_name_png = game_and_turn_string + ".png"
         canvas.pack()
         canvas.update()
         canvas.postscript(file = file_name_ps, x=0, y=0, width = map_width, height = map_height, colormode = "color")
-        """
-        img =ImageTk.getimage(canvas.image)
-        img.save(file_name_png)
-        img.show()
-        """
         directory_path = "TGDP_Website/Static/Game_" + game_number_string
-        #print(directory_path)
         Path("{}".format(directory_path)).mkdir(parents = True, exist_ok = True)
-        """
-        arguments = [
-            "postscript_to_pdf",
-            "-dNOPAUSE", "-dBATCH", "-dSAFER",
-            "-dUseCropBox",
-            "-sDEVICE=pdfwrite",
-            "-sPAPERSIZE=a2",
-            "-dFIXEDMEDIA", "-DPDTFitPage",
-            "-sOutputFile={}/{}".format(directory_path, file_name_pdf),
-            "-f", file_name_ps
-        ]
-        """
-        """
-        arguments = [
-            "postscript_to_png",
-            "-dNOPAUSE", "-dBATCH", "-dSAFER",
-            "-sDEVICE = png16m",
-            "-r300"
-            "-sOutputFile={}/{}".format(directory_path, file_name_png),
-            "-f", file_name_ps
-        ]
-        """
-        
-        #ghostscript.Ghostscript(*arguments)
         ps_image = Image.open(file_name_ps)
-        #ps_image.show()
         ps_image = ps_image.resize((map_width, map_height), Image.LANCZOS)
-        #ps_image.show()
-        print("new map width and height", map_width, map_height)
         ps_image.save("{}/{}".format(directory_path, file_name_png))
         """
         png_image = Image.open("{}/{}".format(directory_path, file_name_png))

@@ -45,8 +45,9 @@ def run_tgdp(input_data, game_number_string, start_game_year, save_images_boolea
                 print("uh oh", command_id, commands[command_id].strength, commands[command_id].legal, commands[command_id].succeed)
             """
             command = commands[command_id]
-            print(command_id, command.legal, command.succeed)
-        #print(" ")
+            #print(command_id, command.location.name, command.unit.retreat)
+            #print(command_id, command.legal, command.succeed)
+        print(" ")
         db_table = yield_table(processed_commands, game_and_turn_string)
         count += 1
         objects["Commands"] = commands

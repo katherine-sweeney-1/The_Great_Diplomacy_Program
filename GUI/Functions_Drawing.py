@@ -3,9 +3,15 @@ import math
 # Fill color of arrows
 def get_fill_color(command):
     if command.succeed == True:
-        fill_color = "black"
+        if command.location == command.origin and command.origin != command.destination:
+            fill_color = "green"
+        else:
+            fill_color = "blue"
     else:
-        fill_color = "red"
+        if command.original_support_origin != False:
+            fill_color = "orange"
+        else:
+            fill_color = "red"
     return fill_color
 
 # Offset arrows so they don't begin and end exactly where the units are 
@@ -127,7 +133,7 @@ def draw_attacks(canvas, commands):
         if command.location == command.origin and command.origin != command.destination:
             first_coordinate = command.origin.coordinate
             second_coordinate = command.destination.coordinate
-            second_coordinate = get_offset_destination(first_coordinate, second_coordinate, 5)
+            second_coordinate = get_offset_destination(first_coordinate, second_coordinate, 2)
             coordinates = [first_coordinate, second_coordinate]
             origin_coordinate = first_coordinate
             destination_coordinate = second_coordinate
@@ -159,7 +165,7 @@ def draw_supports(canvas, commands):
             location_coordinate = command.location.coordinate
             origin_coordinate = command.origin.coordinate
             destination_coordinate = command.destination.coordinate
-            offset_destination_coordinate = get_offset_destination(origin_coordinate, destination_coordinate, 15)
+            offset_destination_coordinate = get_offset_destination(origin_coordinate, destination_coordinate, 8)
             offset_origin_coordinate = get_offset_destination(destination_coordinate, origin_coordinate, 5)
             fill_color = get_fill_color(command)
             canvas.create_line (location_coordinate, origin_coordinate, dash = (5, 2), fill = fill_color, width = 3, tags = ("draw"))
