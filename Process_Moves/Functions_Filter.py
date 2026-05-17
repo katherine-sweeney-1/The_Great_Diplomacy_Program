@@ -173,7 +173,6 @@ def filter_commands(commands, commanders):
         else:
             valid_commands[command_id] = command
         valid_commands[command_id] = command
-        print(command.unit.id, command.location.name, command.origin.name, command.destination.name)
     return valid_commands
 
 

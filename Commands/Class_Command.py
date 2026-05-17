@@ -48,9 +48,9 @@ class Command ():
         self.retreat = possible_retreat
         return self.retreat
     
-    def outcome_location(self, node):
-        self.outcome_loc = node
-        return self.outcome_loc
+    def assign_outcome_location(self, node):
+        self.outcome_location = node
+        return self.outcome_location
     
     def predetermined_outcome(self, predet_outcome):
         self.predet_outcome = predet_outcome

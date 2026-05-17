@@ -18,27 +18,13 @@ Arguments:
 
 """
 
-
-
-"""
-
-TO DO EVENTUALLY
-
-    - paint bucket to change map color to match starting positions 
-
-    - Color changes
-
-        -  successful attacks be green
-        
-        - successful supports be blue
-
-        - orange for invalid move 
-
-"""
-
 """
 
 To Do
+
+    - Fix outcome node retreat options
+
+    - paint bucket to change map color to match starting positions  
 
     - Submit moves on website
 
@@ -57,9 +43,21 @@ To Do
         => Have a map without arrows for submitting moves 
 
 
+    - Figure out builds/tears
+
+    - Figure out retreats
+
     - ASK MERCY: submit moves on discord or just show maps on discord? Is there a way to automate move submission via discord?
 
+    - Fix galecia coordinate? Game 8 Boh support to galecia has arrow finishing in bohemia
 
+    - DONE: Color changes
+
+        -  successful attacks be green
+        
+        - successful supports be blue
+
+        - orange for invalid move
 
 """
 

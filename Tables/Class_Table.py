@@ -61,7 +61,7 @@ class Table ():
             sql = """
                 INSERT INTO {} (UNIT_ID, Commander, Location, Origin, Destination, Outcome) VALUES ("{}", "{}", "{}", "{}", "{}", "{}")
                 ON DUPLICATE KEY UPDATE UNIT_ID = UNIT_ID;
-                """.format(game_and_turn, cmd.unit.id, cmd.human.human, cmd.location.name, cmd.origin.name, cmd.destination.name, cmd.outcome_loc.name)
+                """.format(game_and_turn, cmd.unit.id, cmd.human.human, cmd.location.name, cmd.origin.name, cmd.destination.name, cmd.outcome_location.name)
             self.db.query(sql)
         self.db.commit()
         self.db.close()
