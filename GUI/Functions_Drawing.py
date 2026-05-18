@@ -126,6 +126,11 @@ def draw_units(canvas, commands):
             canvas.create_polygon(coordinates, fill = fill_color, outline = "black", width = 1, tags = ("draw"))
     return canvas 
 
+"""
+
+might need to do original location 
+
+"""
 # Draw attack arrows 
 def draw_attacks(canvas, commands):
     for command_id in commands:
@@ -157,11 +162,16 @@ def draw_holds(canvas, commands):
             canvas.create_oval(coordinates, outline = fill_color, width = 2, tags = ("draw"))
     return canvas
 
+"""
+
+might need to use original support origin and original support destination and original location
+
+"""
 # Draw support dashed lines
 def draw_supports(canvas, commands):
     for command_id in commands:
         command = commands[command_id]
-        if command.location != command.origin: # and command.convoy == False:
+        if command.location != command.origin: 
             location_coordinate = command.location.coordinate
             origin_coordinate = command.origin.coordinate
             destination_coordinate = command.destination.coordinate

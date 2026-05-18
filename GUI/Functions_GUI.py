@@ -105,7 +105,7 @@ def set_up_gui():
     return main_window, map_image, canvas, next_turn_button, previous_turn_button
 
 # Display the pieces and treeview data
-def display_moves(main_window, map_image, canvas, commands, commanders):
+def display_moves(main_window, map_image, canvas, commands, commanders, winter_boolean):
     canvas.pack(fill = tk.BOTH)
     map_image = ImageTk.PhotoImage(map_image)
     canvas.create_image(0, 0, anchor = tk.NW, image = map_image)
@@ -114,7 +114,7 @@ def display_moves(main_window, map_image, canvas, commands, commanders):
     scrollbar = tk.Scrollbar(main_window)
     scrollbar.pack(side = 'right', fill = 'y')
     canvas.image = map_image
-    canvas = draw_pieces(canvas, commands)
+    canvas = draw_pieces(canvas, commands, winter_boolean)
     treeview = create_treeview(main_window, commanders, commands)
     return main_window, treeview, canvas
 
@@ -258,6 +258,7 @@ To Do
 
 # Run function
 def run_gui(game_objects, game_number_string, start_game_year, save_images_boolean, turn = None):
+    winter_boolean = False
     turns = []
     for turn in game_objects:
         turns.append(turn)
@@ -268,7 +269,7 @@ def run_gui(game_objects, game_number_string, start_game_year, save_images_boole
     else:
         commands, commanders, nodes, units = get_objects(game_objects, first_turn)
         main_window, map_image, canvas, next_turn_button, previous_turn_button = set_up_gui()
-        main_window, treeview, canvas = display_moves(main_window, map_image, canvas, commands, commanders)
+        main_window, treeview, canvas = display_moves(main_window, map_image, canvas, commands, commanders, winter_boolean)
         next_turn_button.bind("<Button-1>", lambda event: show_next_turn(main_window, event, canvas, game_objects, first_turn, turns, next_turn_button, previous_turn_button, commanders, treeview))
         previous_turn_button.bind("<Button-1>", lambda event: show_previous_turn(main_window, event, canvas, game_objects, first_turn, turns, previous_turn_button, next_turn_button, commanders, treeview))
         main_window.mainloop()

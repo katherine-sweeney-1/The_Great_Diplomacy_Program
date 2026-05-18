@@ -4,50 +4,29 @@ sys.path.append(os.path.join("/home/katherine/Documents/The-Great-Diplomacy-Prog
 from Functions_Node import assign_occupied
 
 # get outcome locations for processed commands
-def get_outcome_nodes(commands, nodes, processed_units):
+def get_outcome_nodes(commands, processed_units):
     for command_id in commands:
         command = commands[command_id]
         displacing_attack = False
-        # get outcomes for successful commands
         if command.location == command.origin and command.origin != command.destination and command.convoy == False:
             if command.succeed == True:
-            #print("UESSSS", command_id, command.location.name, command.destination.name)
                 retreat = False
                 outcome_node = command.destination
             else:
                 displacing_attack, outcome_node, retreat = check_displacement_attacks(command, command_id, commands)
-            #print("YESSS 0", command_id, command.location.name, command.destination.name, outcome_node.name)
         elif command.location == command.origin and command.origin == command.destination:
-            #print(1, command_id)
             displacing_attack, outcome_node, retreat = check_displacement_attacks(command, command_id, commands)
         elif command.location != command.origin:
-            #print(2, command_id)
             displacing_attack, outcome_node, retreat = check_displacement_attacks(command, command_id, commands)
-        # get outcomes for supports, holds, and unsuccessful attacks
         else:
             displacing_attack, outcome_node, retreat = check_displacement_attacks(command, command_id, commands)
-
-        #print(command_id, units[command_id].location.name, outcome_node.name)
-        #processed_units[command_id].assign_retreat_disband(retreat)
-        #print("check 1", units[command_id].location.name, outcome_node.name)
-        #print("check 1", processed_units[command_id].location.name)
-        
         processed_units[command_id].assign_location(outcome_node, False, False)
-        
-        #print("check 2", processed_units[command_id].location.name, outcome_node.name)
         command.assign_outcome_location(outcome_node)
-        #print("test outcome node", command.location.name)
-        #print(" ")
-        #if displacing_attack != False:
-         #   print("displacing attack", command_id, displacing_attack)
         command.assign_displacing_attack(displacing_attack)
-        #if command.displacing_attack != False:
-         #   print("dipslacing attack 2", command.displacing_attack.unit.id)
         command.assign_retreat_disband(retreat)
-        print(command.retreat)
     return commands, processed_units
 
-
+# check if unit is displaced by an attack
 def check_displacement_attacks(command, command_id, commands):
     displacing_attack = False
     # determine if any commands displace the unsuccessful command
@@ -72,19 +51,12 @@ def check_displacement_attacks(command, command_id, commands):
             outcome_node = command.location
     return displacing_attack, outcome_node, retreat
 
-
 # get retreat nodes for processed commands
-def get_retreats(processed_commands, processed_nodes, processed_units):
+def get_retreats(processed_commands, processed_units):
     for unit_id in processed_units:
         unit = processed_units[unit_id]
         command = processed_commands[unit_id]
         if command.retreat == True:
-            """
-            command.unit.outcome_location.neighbors
-            retreat_options = []
-            
-            for neighbor_id in neighbors:
-            """
             neighbors = unit.location.neighbors
             retreat_options = []
             for neighbor_id in neighbors:
@@ -108,21 +80,14 @@ def process_outcomes(commands, nodes, units):
     processed_units = units.copy()
     processed_nodes = nodes.copy()
     processed_commands = commands.copy()
-
     for unit_id in units:
         unit = units[unit_id]
         unit.assign_original_location(unit.location)
-    processed_commands, processed_units = get_outcome_nodes(processed_commands, processed_nodes, processed_units)
-    
+    processed_commands, processed_units = get_outcome_nodes(processed_commands, processed_units)
     processed_nodes, processed_units = assign_occupied(nodes, processed_units)
-
-    processed_units = get_retreats(commands, processed_nodes, processed_units)
-
+    processed_units = get_retreats(commands, processed_units)
     for unit_id in processed_units:
         if commands[unit_id].retreat:
-            print("check", unit_id, commands[unit_id].location.name, commands[unit_id].retreat)
-
-            #print(retreat_choice)
             if commands[unit_id].retreat != False and len(commands[unit_id].retreat_nodes) > 0:
                 retreat_choice = commands[unit_id].retreat_nodes[0]
                 retreat_node = processed_nodes[retreat_choice]
@@ -130,10 +95,3 @@ def process_outcomes(commands, nodes, units):
             else:
                 retreat_choice = False
     return processed_nodes, nodes, processed_units, units
-
-
-"""
-
-Issue => game 8 spring 1902 shows GE02 (location Holland) can retreat to only Ruh when it can only retreat to Kie 
-
-"""
