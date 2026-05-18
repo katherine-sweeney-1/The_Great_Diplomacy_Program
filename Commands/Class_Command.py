@@ -76,6 +76,10 @@ class Command ():
         self.original_support_destination = original_support_destination_node
         return self.original_support_destination
     
+    def assign_displacing_attack(self, displacing_command):
+        self.displacing_attack = displacing_command
+        return self.displacing_attack
+    
     def print_statement(self):
         print("command for unit {}, country {} has commander {}".format(self.unit.id, self.country, self.human.human))
         print("loc: {}, origin: {}, dest: {}".format(self.loc.name, self.origin.name, self.destination.name))

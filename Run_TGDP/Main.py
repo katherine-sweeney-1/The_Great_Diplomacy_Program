@@ -22,15 +22,12 @@ Arguments:
 
 To Do
 
-    - Fix outcome node retreat options
 
     - paint bucket to change map color to match starting positions  
 
     - Submit moves on website
 
     - Submitting on website sends email to me
-
-    - Upload pictures to website manually (run locally)
 
     - Have map for winter builds/tears
 
@@ -41,11 +38,6 @@ To Do
         => Check with Mercy
 
         => Have a map without arrows for submitting moves 
-
-
-    - Figure out builds/tears
-
-    - Figure out retreats
 
     - ASK MERCY: submit moves on discord or just show maps on discord? Is there a way to automate move submission via discord?
 
@@ -58,6 +50,10 @@ To Do
         - successful supports be blue
 
         - orange for invalid move
+    
+    - DONE: Retreat Options for non-coastal fleet situations (i.e. the majority of the situations)
+
+    - DONE: fix Galecia coordinate => changed setting for Drawings_GUI
 
 """
 

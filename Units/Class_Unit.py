@@ -21,6 +21,13 @@ class Unit ():
         self.retreat = bool
         return self.retreat
 
+    def assign_original_location(self, node):
+        self.original_location = node
+        return self.original_location
+    
+    def assign_displacing_attack(self, displacing_command):
+        self.displacing_attack = displacing_command
+        return self.displacing_attack
     def print_statements (self):
         print(" ")
         print("Unit ID", self.id)
