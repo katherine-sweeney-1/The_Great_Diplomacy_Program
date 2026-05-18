@@ -76,6 +76,14 @@ class Command ():
         self.original_support_destination = original_support_destination_node
         return self.original_support_destination
     
+    def assign_retreat_disband(self, retreat_boolean):
+        self.retreat = retreat_boolean
+        return self.retreat
+    
+    def assign_retreat_nodes(self, retreat_options):
+        self.retreat_nodes = retreat_options
+        return self.retreat_nodes
+    
     def assign_displacing_attack(self, displacing_command):
         self.displacing_attack = displacing_command
         return self.displacing_attack

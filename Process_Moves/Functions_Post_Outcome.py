@@ -25,33 +25,10 @@ def get_outcome_nodes(commands, nodes, processed_units):
             displacing_attack, outcome_node, retreat = check_displacement_attacks(command, command_id, commands)
         # get outcomes for supports, holds, and unsuccessful attacks
         else:
-            #print(3, command_id)
-            # determine if any commands displace the unsuccessful command
-            """
-            for potential_attack_id in commands:
-                potential_attack = commands[potential_attack_id]
-                if potential_attack_id != command_id:
-                    if potential_attack.destination.name == command.location.name:
-                        if potential_attack.location == potential_attack.origin and potential_attack.origin != potential_attack.destination:
-                            if potential_attack.strength > command.strength:
-                                outcome_node = command.location
-                                displacing_attack = outcome_node
-                                retreat = True
-                                break
-                            else:
-                                retreat = False
-                        else:
-                            retreat = False
-                    else:
-                        retreat = False
-                else:
-                    retreat = False
-                    outcome_node = command.location
-            """
             displacing_attack, outcome_node, retreat = check_displacement_attacks(command, command_id, commands)
 
         #print(command_id, units[command_id].location.name, outcome_node.name)
-        processed_units[command_id].assign_retreat_disband(retreat)
+        #processed_units[command_id].assign_retreat_disband(retreat)
         #print("check 1", units[command_id].location.name, outcome_node.name)
         #print("check 1", processed_units[command_id].location.name)
         
@@ -66,6 +43,8 @@ def get_outcome_nodes(commands, nodes, processed_units):
         command.assign_displacing_attack(displacing_attack)
         #if command.displacing_attack != False:
          #   print("dipslacing attack 2", command.displacing_attack.unit.id)
+        command.assign_retreat_disband(retreat)
+        print(command.retreat)
     return commands, processed_units
 
 
@@ -99,7 +78,7 @@ def get_retreats(processed_commands, processed_nodes, processed_units):
     for unit_id in processed_units:
         unit = processed_units[unit_id]
         command = processed_commands[unit_id]
-        if unit.retreat == True:
+        if command.retreat == True:
             """
             command.unit.outcome_location.neighbors
             retreat_options = []
@@ -121,7 +100,7 @@ def get_retreats(processed_commands, processed_nodes, processed_units):
                             retreat_options.append(neighbor_id)
                         elif neighbor.node_type == "Coast":
                             retreat_options.append(neighbor_id)
-            unit.assign_retreat_disband(retreat_options)
+            command.assign_retreat_nodes(retreat_options)
     return processed_units
 
 # process outcomes
@@ -140,14 +119,16 @@ def process_outcomes(commands, nodes, units):
     processed_units = get_retreats(commands, processed_nodes, processed_units)
 
     for unit_id in processed_units:
-        if processed_units[unit_id].retreat:
-            print("check", unit_id, processed_units[unit_id].location.name, processed_units[unit_id].retreat)
-            if len(retreat_choice) > 0:
-                retreat_choice = processed_units[unit_id].retreat[0]
+        if commands[unit_id].retreat:
+            print("check", unit_id, commands[unit_id].location.name, commands[unit_id].retreat)
+
+            #print(retreat_choice)
+            if commands[unit_id].retreat != False and len(commands[unit_id].retreat_nodes) > 0:
+                retreat_choice = commands[unit_id].retreat_nodes[0]
                 retreat_node = processed_nodes[retreat_choice]
+                processed_units[unit_id].assign_location(retreat_node, False, False)
             else:
                 retreat_choice = False
-            processed_units[unit_id].assign_location(retreat_node, False, False)
     return processed_nodes, nodes, processed_units, units
 
 

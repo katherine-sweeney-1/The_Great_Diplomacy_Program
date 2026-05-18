@@ -136,7 +136,7 @@ def display_static_map(main_window, map_image, canvas):
     return main_window
 
 # Draw the units and movements 
-def draw_pieces(canvas, commands):
+def draw_pieces(canvas, commands, winter_boolean):
     for command_id in commands:
         command = commands[command_id]
         if command.original_support_origin != False and command.original_support_destination != False:
@@ -152,12 +152,14 @@ def draw_pieces(canvas, commands):
 
 # Add treeview data and implement next turn and previous turn buttons
 def display_different_turn(main_window, canvas, game_objects, turns, next_turn_button, previous_turn_button, different_turn, commanders, treeview):
+    winter_boolean = False
     commands, commanders, nodes, units = get_objects(game_objects, different_turn)
     canvas.delete("draw")
-    canvas = draw_pieces(canvas, commands)
-    for item in treeview.get_children():
-        treeview.delete(item)
-    add_treeview_data(treeview, commanders, commands)
+    if winter_boolean == False:
+        canvas = draw_pieces(canvas, commands, winter_boolean)
+        for item in treeview.get_children():
+            treeview.delete(item)
+        add_treeview_data(treeview, commanders, commands)
     next_turn_button.bind("<Button-1>", lambda event: show_next_turn(event, main_window, canvas, game_objects, different_turn, turns, next_turn_button, previous_turn_button, commanders, treeview))
     previous_turn_button.bind("<Button-1>", lambda event: show_previous_turn(event, main_window, canvas, game_objects, different_turn, turns, previous_turn_button, next_turn_button, commanders, treeview))
 

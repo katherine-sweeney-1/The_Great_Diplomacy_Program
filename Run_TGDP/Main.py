@@ -23,6 +23,8 @@ Arguments:
 To Do
 
 
+    - Show units that need to retreat or disband? 
+
     - paint bucket to change map color to match starting positions  
 
     - Submit moves on website
@@ -55,13 +57,9 @@ To Do
 
     - DONE: fix Galecia coordinate => changed setting for Drawings_GUI
 
+    - DONE: invalid supports show up as failed supports
+
 """
 
 #run_tgdp(input_data_sample, "9", "1903", False)
 run_tgdp(input_data_8, "8", "1901", False)
-
-"""
-
-MAP ISSUE - invalid supports show up as failed holds instead of failed supports
-
-"""
