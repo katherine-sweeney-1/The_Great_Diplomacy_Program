@@ -30,13 +30,15 @@ def run_tgdp(input_data, game_number_string, start_game_year, save_images_boolea
             case 1:
                 game_season = "Fall"
         game_season = game_season.lower()
-        game_and_turn_string = "game" + str(game_number_string) + "_" + str(game_year) + "_" + game_season
+        game_and_turn_string = "Game" + str(game_number_string) + "_" + str(game_year) + "_" + game_season
         commanders_data = input_data[commands_data]
         parsed_cmds, parsed_units = parse_commands_and_units(commands_data)
         commands, commanders, nodes, units = create_objects(data_nodes, data_coastal, data_fleet_coastal, data_fleet_special_coastal, commanders_data, parsed_units, parsed_cmds)
         nodes, units, processed_commands = run_processing(commands, commanders, nodes, units)
+        # retrieve nodes and units for winter season
         print(game_and_turn_string)
         for command_id in commands:
+            #print(commands[command_id].unit.id, commands[command_id].location.name, commands[command_id].unit.location.name, commands[command_id].unit.original_location.name)
             """
             if commands[command_id].succeed == commands[command_id].predet_outcome:
                 print(command_id, "Correct outcome", commands[command_id].succeed, commands[command_id].legal)
@@ -55,7 +57,22 @@ def run_tgdp(input_data, game_number_string, start_game_year, save_images_boolea
         objects["Nodes"] = nodes
         objects["Units"] = units
         turns_objects[game_and_turn_string] = objects
+        if game_season == "Fall":
+            game_season = "Winter"
+            for command_id in commands:
+                command = commands[command_id]
+                command.location = units[command_id].location
+                print(command.location.name)
+            objects["Commands"] = commands
+            objects["Commands"] = commands
+            objects["Commanders"] = commanders
+            objects["Nodes"] = nodes
+            objects["Units"] = units
+            game_and_turn_string = "Game" + str(game_number_string) + "_" + str(game_year) + "_" + game_season
     gui = run_gui(turns_objects, str(game_number_string), start_game_year, save_images_boolean)
+    for command_id in commands:
+        command = commands[command_id]
+        command.location = units[command_id].location
 
 """
 

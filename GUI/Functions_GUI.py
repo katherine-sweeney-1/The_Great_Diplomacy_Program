@@ -99,13 +99,12 @@ def set_up_gui():
     map_image = Image.open("GUI/Europe_Map.png")
     map_width = map_image.width
     map_height = map_image.height
-    map_image.thumbnail((map_width, map_height), Image.Resampling.LANCZOS) 
-    print("set up width and height", map_width, map_height)
+    map_image.thumbnail((map_width, map_height), Image.Resampling.LANCZOS)
     canvas = tk.Canvas(main_window, width = map_width, height = map_height, cursor = "cross")
     return main_window, map_image, canvas, next_turn_button, previous_turn_button
 
 # Display the pieces and treeview data
-def display_moves(main_window, map_image, canvas, commands, commanders):
+def display_moves(main_window, map_image, canvas, commands, commanders, winter_boolean):
     canvas.pack(fill = tk.BOTH)
     map_image = ImageTk.PhotoImage(map_image)
     canvas.create_image(0, 0, anchor = tk.NW, image = map_image)
@@ -114,7 +113,7 @@ def display_moves(main_window, map_image, canvas, commands, commanders):
     scrollbar = tk.Scrollbar(main_window)
     scrollbar.pack(side = 'right', fill = 'y')
     canvas.image = map_image
-    canvas = draw_pieces(canvas, commands)
+    canvas = draw_pieces(canvas, commands, winter_boolean)
     treeview = create_treeview(main_window, commanders, commands)
     return main_window, treeview, canvas
 
@@ -136,7 +135,7 @@ def display_static_map(main_window, map_image, canvas):
     return main_window
 
 # Draw the units and movements 
-def draw_pieces(canvas, commands):
+def draw_pieces(canvas, commands, winter_boolean):
     for command_id in commands:
         command = commands[command_id]
         if command.original_support_origin != False and command.original_support_destination != False:
@@ -152,12 +151,14 @@ def draw_pieces(canvas, commands):
 
 # Add treeview data and implement next turn and previous turn buttons
 def display_different_turn(main_window, canvas, game_objects, turns, next_turn_button, previous_turn_button, different_turn, commanders, treeview):
+    winter_boolean = False
     commands, commanders, nodes, units = get_objects(game_objects, different_turn)
     canvas.delete("draw")
-    canvas = draw_pieces(canvas, commands)
-    for item in treeview.get_children():
-        treeview.delete(item)
-    add_treeview_data(treeview, commanders, commands)
+    if winter_boolean == False:
+        canvas = draw_pieces(canvas, commands, winter_boolean)
+        for item in treeview.get_children():
+            treeview.delete(item)
+        add_treeview_data(treeview, commanders, commands)
     next_turn_button.bind("<Button-1>", lambda event: show_next_turn(event, main_window, canvas, game_objects, different_turn, turns, next_turn_button, previous_turn_button, commanders, treeview))
     previous_turn_button.bind("<Button-1>", lambda event: show_previous_turn(event, main_window, canvas, game_objects, different_turn, turns, previous_turn_button, next_turn_button, commanders, treeview))
 
@@ -256,6 +257,7 @@ To Do
 
 # Run function
 def run_gui(game_objects, game_number_string, start_game_year, save_images_boolean, turn = None):
+    winter_boolean = False
     turns = []
     for turn in game_objects:
         turns.append(turn)
@@ -266,7 +268,7 @@ def run_gui(game_objects, game_number_string, start_game_year, save_images_boole
     else:
         commands, commanders, nodes, units = get_objects(game_objects, first_turn)
         main_window, map_image, canvas, next_turn_button, previous_turn_button = set_up_gui()
-        main_window, treeview, canvas = display_moves(main_window, map_image, canvas, commands, commanders)
+        main_window, treeview, canvas = display_moves(main_window, map_image, canvas, commands, commanders, winter_boolean)
         next_turn_button.bind("<Button-1>", lambda event: show_next_turn(main_window, event, canvas, game_objects, first_turn, turns, next_turn_button, previous_turn_button, commanders, treeview))
         previous_turn_button.bind("<Button-1>", lambda event: show_previous_turn(main_window, event, canvas, game_objects, first_turn, turns, previous_turn_button, next_turn_button, commanders, treeview))
         main_window.mainloop()
