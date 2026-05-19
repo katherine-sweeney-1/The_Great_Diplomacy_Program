@@ -65,7 +65,6 @@ def get_retreats(processed_commands, processed_units):
                     pass
                 else:
                     if command.displacing_attack == False or neighbor != command.displacing_attack.location:
-                        #print("YESSSS", unit_id, neighbor.name, neighbor.is_occupied)
                         if unit.type == "army" and neighbor.node_type == "Land":
                             retreat_options.append(neighbor_id)
                         elif unit.type == "fleet" and neighbor.node_type == "Sea":

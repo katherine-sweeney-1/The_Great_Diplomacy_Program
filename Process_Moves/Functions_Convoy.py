@@ -127,7 +127,6 @@ def filter_convoys(commands):
         command = commands[command_id]
         if command.legal != 1:
             command = filter_convoyed_army(command, commands)
-            #print("convoyed army", command.unit.id, command.legal)
     for command_id in commands:
         command = commands[command_id]
         if command.legal != 1:
@@ -136,13 +135,11 @@ def filter_convoys(commands):
         command = commands[command_id]
         if command.legal == 1 and command.convoy == True:
             command = filter_valid_convoy_paths(command, commands)
-            #print("convoy paths", command.unit.id, command.legal)
     for command_id in commands:
         command = commands[command_id]
         if command.legal != 1:
             command.origin = command.location
             command.destination = command.location
-            print("checking", command.unit.id, command.legal)
     return commands
 
     

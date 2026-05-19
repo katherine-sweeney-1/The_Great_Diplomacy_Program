@@ -99,8 +99,7 @@ def set_up_gui():
     map_image = Image.open("GUI/Europe_Map.png")
     map_width = map_image.width
     map_height = map_image.height
-    map_image.thumbnail((map_width, map_height), Image.Resampling.LANCZOS) 
-    print("set up width and height", map_width, map_height)
+    map_image.thumbnail((map_width, map_height), Image.Resampling.LANCZOS)
     canvas = tk.Canvas(main_window, width = map_width, height = map_height, cursor = "cross")
     return main_window, map_image, canvas, next_turn_button, previous_turn_button
 
