@@ -82,6 +82,7 @@ def process_outcomes(commands, nodes, units):
     for unit_id in units:
         unit = units[unit_id]
         unit.assign_original_location(unit.location)
+        #commands[unit_id].assign_original_location(unit.location)
     processed_commands, processed_units = get_outcome_nodes(processed_commands, processed_units)
     processed_nodes, processed_units = assign_occupied(nodes, processed_units)
     processed_units = get_retreats(commands, processed_units)

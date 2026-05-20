@@ -63,7 +63,7 @@ class Command ():
     def convoy_status (self, convoy_boolean):
         self.convoy = convoy_boolean
         return self.convoy
-    
+ 
     def assign_original_coastal_location(self, original_coastal_location_node):
         self.original_coastal_location = original_coastal_location_node
         return self.original_coastal_location
