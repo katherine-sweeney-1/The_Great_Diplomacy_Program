@@ -41,7 +41,7 @@ def create_territory_listbox(main_window, territory_file, scrollbar):
     return listbox
 
 # Create treeview to display information about each move
-def create_treeview(main_window, commanders, commands, ):
+def create_treeview(main_window, commanders, commands):
     columns = ("Commander", "Unit ID", "Unit Type", "Action", "Location", "Origin", "Destination")
     treeview = tk.ttk.Treeview(main_window, columns = columns, height = 25, show = "headings")
     treeview = add_treeview_data(treeview, commanders, commands)
@@ -59,12 +59,6 @@ def add_treeview_data(treeview, commanders, commands):
         for unit_id in unit_members:
             unit = unit_members[unit_id]
             command = commands[unit_id]
-            """
-            
-            NEED TO EDIT THIS FOR SUPPORTS AND HOLDS
-            
-            
-            """
             if command.location == command.origin and command.origin != command.destination:
                 action_type = "Attack"
             elif command.location == command.origin and command.origin == command.destination:
@@ -148,6 +142,8 @@ def draw_pieces(canvas, commands, current_turn_index):
             command.destination = command.original_support_destination
         if command.original_coastal_location != False:
             command.location = command.original_coastal_location
+    for command_id in commands:
+        print(commands[command_id].location.name, commands[command_id].origin.name, commands[command_id].destination.name)
     canvas = draw_units(canvas, commands)
     if winter_boolean == False:
         canvas = draw_attacks(canvas, commands)
@@ -171,7 +167,6 @@ def display_different_turn(main_window, canvas, game_objects, turns, next_turn_b
 def show_next_turn(event, main_window, canvas, game_objects, current_turn, turns, next_turn_button, previous_turn_button, commanders, treeview):
     if event:
         current_turn_index = turns.index(current_turn)
-        print("current index in show next turn function", current_turn_index)
         if current_turn_index != len(turns) - 1:
             #print(current_turn_index)
             next_turn_index = current_turn_index + 1
@@ -186,13 +181,11 @@ def show_next_turn(event, main_window, canvas, game_objects, current_turn, turns
 def show_previous_turn(event, main_window, canvas, game_objects, current_turn, turns, previous_turn_button, next_turn_button, commanders, treeview):
     if event:
         current_turn_index = turns.index(current_turn)
-        print("current index in show previous turn function", current_turn_index)
         if current_turn_index != 0:
             previous_turn_index = current_turn_index - 1
         else:
             previous_turn_index = current_turn_index
         previous_turn = turns[previous_turn_index]
-        print("previous turn index", previous_turn_index)
         print(" ")
         display_different_turn(main_window, canvas, game_objects, turns, next_turn_button, previous_turn_button, previous_turn, commanders, current_turn_index, treeview)
 
@@ -244,25 +237,10 @@ def save_images(game_objects, game_number_string, start_game_year):
         ps_image = Image.open(file_name_ps)
         ps_image = ps_image.resize((map_width, map_height), Image.LANCZOS)
         ps_image.save("{}/{}".format(directory_path, file_name_png))
-        """
-        png_image = Image.open("{}/{}".format(directory_path, file_name_png))
-        png_image = png_image.resize((map_width*2, map_height*2), Image.LANCZOS)
-        png_image.show()
-        png_image.save("{}/replaced_{}".format(directory_path, file_name_png))
-        """
         postscript_file = Path(file_name_ps)
         postscript_file.unlink()
         canvas.delete("draw")
         count += 1
-
-"""
-
-To Do
-
-    - Make the left part of the map show. Why is it not there?????
-
-
-"""
 
 # Run function
 def run_gui(game_objects, game_number_string, start_game_year, save_images_boolean, turn = None):
@@ -274,6 +252,9 @@ def run_gui(game_objects, game_number_string, start_game_year, save_images_boole
         save_images(game_objects, game_number_string, start_game_year)
     else:
         commands, commanders, nodes, units = get_objects(game_objects, first_turn)
+        for command_id in commands:
+            command = commands[command_id]
+            #print(command_id, command.location.name, command.origin.name, command.destination.name)
         main_window, map_image, canvas, next_turn_button, previous_turn_button = set_up_gui()
         main_window, treeview, canvas = display_moves(main_window, map_image, canvas, commands, commanders, 0)
         next_turn_button.bind("<Button-1>", lambda event: show_next_turn(main_window, event, canvas, game_objects, first_turn, turns, next_turn_button, previous_turn_button, commanders, treeview))
@@ -288,7 +269,7 @@ add year and season to the map display?
 
 """
 
-use current turn to determine if it's winter
+draws next turn units with current turn arrows
 
 
 """
