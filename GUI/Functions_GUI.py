@@ -130,11 +130,12 @@ def display_static_map(main_window, map_image, canvas):
 
 # Draw the units and movements 
 def draw_pieces(canvas, commands, current_turn_index):
+    
     if current_turn_index % 3 == 1:
         winter_boolean = True
     else:
         winter_boolean = False
-    #print(current_turn_index, winter_boolean)
+    print("checking", winter_boolean)
     for command_id in commands:
         command = commands[command_id]
         if command.original_support_origin != False and command.original_support_destination != False:
@@ -142,8 +143,6 @@ def draw_pieces(canvas, commands, current_turn_index):
             command.destination = command.original_support_destination
         if command.original_coastal_location != False:
             command.location = command.original_coastal_location
-    #for command_id in commands:
-        #print(commands[command_id].location.name, commands[command_id].origin.name, commands[command_id].destination.name)
     canvas = draw_units(canvas, commands)
     if winter_boolean == False:
         canvas = draw_attacks(canvas, commands)
@@ -154,8 +153,18 @@ def draw_pieces(canvas, commands, current_turn_index):
 # Add treeview data and implement next turn and previous turn buttons
 def display_different_turn(main_window, canvas, game_objects, turns, next_turn_button, previous_turn_button, different_turn, commanders, current_turn_index, treeview):
     commands, commanders, nodes, units = get_objects(game_objects, different_turn)
+    if current_turn_index % 3 == 1:
+        winter_boolean = True
+    else:
+        winter_boolean = False
+    for command_id in commands:
+        command = commands[command_id]
+        print(command_id)
+        if winter_boolean == True:
+            command.location = command.winter_location
+            command.origin = command.winter_location
+            command.destination = command.winter_location
     canvas.delete("draw")
-    #if winter_boolean == False:
     canvas = draw_pieces(canvas, commands, current_turn_index)
     for item in treeview.get_children():
         treeview.delete(item)
@@ -168,13 +177,10 @@ def show_next_turn(event, main_window, canvas, game_objects, current_turn, turns
     if event:
         current_turn_index = turns.index(current_turn)
         if current_turn_index != len(turns) - 1:
-            #print(current_turn_index)
             next_turn_index = current_turn_index + 1
         else:
             next_turn_index = current_turn_index
         next_turn = turns[next_turn_index]
-        #print("next turn index", next_turn_index)
-        #print(" ")
         display_different_turn(main_window, canvas, game_objects, turns, next_turn_button, previous_turn_button, next_turn, commanders, current_turn_index, treeview)
 
 # Previous turn button
@@ -186,7 +192,6 @@ def show_previous_turn(event, main_window, canvas, game_objects, current_turn, t
         else:
             previous_turn_index = current_turn_index
         previous_turn = turns[previous_turn_index]
-        #print(" ")
         display_different_turn(main_window, canvas, game_objects, turns, next_turn_button, previous_turn_button, previous_turn, commanders, current_turn_index, treeview)
 
 # Retrieve the coordinates of nodes by clicking on map 
@@ -226,7 +231,7 @@ def save_images(game_objects, game_number_string, start_game_year):
         game_season = game_season.lower()
         game_and_turn_string = "game" + str(game_number_string) + "_" + str(game_year) + "_" + game_season
         commands, commanders, nodes, units = get_objects(game_objects, turn)
-        main_window, treeview, canvas = display_moves(main_window, map_image, canvas, commands, game_objects, commanders)
+        main_window, treeview, canvas = display_moves(main_window, map_image, canvas, commands, game_objects, commanders, count)
         file_name_ps = "GUI/" + game_and_turn_string + ".ps"
         file_name_png = game_and_turn_string + ".png"
         canvas.pack()
@@ -248,15 +253,18 @@ def run_gui(game_objects, game_number_string, start_game_year, save_images_boole
     for turn in game_objects:
         turns.append(turn)
     first_turn = turns[0]
+    current_turn_index = turns.index(first_turn)
+    if current_turn_index % 3 == 1:
+        winter_boolean = True
+    else:
+        winter_boolean = False
+    print(game_number_string, start_game_year, winter_boolean)
     if save_images_boolean:
         save_images(game_objects, game_number_string, start_game_year)
     else:
         commands, commanders, nodes, units = get_objects(game_objects, first_turn)
-        for command_id in commands:
-            command = commands[command_id]
-            #print(command_id, command.location.name, command.origin.name, command.destination.name)
         main_window, map_image, canvas, next_turn_button, previous_turn_button = set_up_gui()
-        main_window, treeview, canvas = display_moves(main_window, map_image, canvas, commands, commanders, 0)
+        main_window, treeview, canvas = display_moves(main_window, map_image, canvas, commands, commanders, current_turn_index)
         next_turn_button.bind("<Button-1>", lambda event: show_next_turn(main_window, event, canvas, game_objects, first_turn, turns, next_turn_button, previous_turn_button, commanders, treeview))
         previous_turn_button.bind("<Button-1>", lambda event: show_previous_turn(main_window, event, canvas, game_objects, first_turn, turns, previous_turn_button, next_turn_button, commanders, treeview))
         main_window.mainloop()
