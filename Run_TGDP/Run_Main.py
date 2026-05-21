@@ -42,14 +42,10 @@ def run_tgdp(input_data, game_number_string, start_game_year, save_images_boolea
         objects["Units"] = units
         turns_objects[game_and_turn_string] = objects
         if game_season == "Fall":
-            print("fall", game_year)
             turns_objects = get_winter_objects(processed_commands, commanders, nodes, units, game_number_string, game_year, turns_objects)
         count += 1
     for game_and_turn_string in turns_objects:
         commands = turns_objects[game_and_turn_string]["Commands"]
-        for command_id in commands:
-            command = commands[command_id]
-            print(command_id, command.location.name, command.origin.name, command.destination.name)
     gui = run_gui(turns_objects, str(game_number_string), start_game_year, save_images_boolean)
     for command_id in processed_commands:
         processed_command = processed_commands[command_id]
@@ -64,6 +60,10 @@ Game 8b starts at year 1908
 """
 
 def get_winter_objects(commands, commanders, nodes, units, game_number_string, game_year, turns_objects):
+    for game_and_turn_string in turns_objects:
+        commands = turns_objects[game_and_turn_string]["Commands"]
+        for command_id in commands:
+            command = commands[command_id]
     next_game_season = "Winter"
     winter_game_and_turn_string = "Game" + str(game_number_string) + "_" + str(game_year) + "_" + next_game_season
     for command_id in commands:

@@ -130,12 +130,10 @@ def display_static_map(main_window, map_image, canvas):
 
 # Draw the units and movements 
 def draw_pieces(canvas, commands, current_turn_index):
-    
-    if current_turn_index % 3 == 1:
+    if current_turn_index % 3 == 2:
         winter_boolean = True
     else:
         winter_boolean = False
-    print("checking", winter_boolean)
     for command_id in commands:
         command = commands[command_id]
         if command.original_support_origin != False and command.original_support_destination != False:
@@ -153,18 +151,8 @@ def draw_pieces(canvas, commands, current_turn_index):
 # Add treeview data and implement next turn and previous turn buttons
 def display_different_turn(main_window, canvas, game_objects, turns, next_turn_button, previous_turn_button, different_turn, commanders, current_turn_index, treeview):
     commands, commanders, nodes, units = get_objects(game_objects, different_turn)
-    if current_turn_index % 3 == 1:
-        winter_boolean = True
-    else:
-        winter_boolean = False
-    for command_id in commands:
-        command = commands[command_id]
-        print(command_id)
-        if winter_boolean == True:
-            command.location = command.winter_location
-            command.origin = command.winter_location
-            command.destination = command.winter_location
     canvas.delete("draw")
+    current_turn_index = turns.index(different_turn)
     canvas = draw_pieces(canvas, commands, current_turn_index)
     for item in treeview.get_children():
         treeview.delete(item)
@@ -254,11 +242,6 @@ def run_gui(game_objects, game_number_string, start_game_year, save_images_boole
         turns.append(turn)
     first_turn = turns[0]
     current_turn_index = turns.index(first_turn)
-    if current_turn_index % 3 == 1:
-        winter_boolean = True
-    else:
-        winter_boolean = False
-    print(game_number_string, start_game_year, winter_boolean)
     if save_images_boolean:
         save_images(game_objects, game_number_string, start_game_year)
     else:
