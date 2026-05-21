@@ -43,7 +43,7 @@ To Do
 
     - ASK MERCY: submit moves on discord or just show maps on discord? Is there a way to automate move submission via discord?
 
-    - Fix galecia coordinate? Game 8 Boh support to galecia has arrow finishing in bohemia
+    - 
 
     - DONE: Color changes
 

@@ -86,11 +86,20 @@ def process_outcomes(commands, nodes, units):
     processed_nodes, processed_units = assign_occupied(nodes, processed_units)
     processed_units = get_retreats(commands, processed_units)
     for unit_id in processed_units:
-        if commands[unit_id].retreat:
-            if commands[unit_id].retreat != False and len(commands[unit_id].retreat_nodes) > 0:
-                retreat_choice = commands[unit_id].retreat_nodes[0]
+        command = commands[unit_id]
+        processed_unit = processed_units[unit_id]
+        if command.retreat:
+            if command.retreat == True and len(command.retreat_nodes) > 0:
+                retreat_choice = command.retreat_nodes[0]
                 retreat_node = processed_nodes[retreat_choice]
-                processed_units[unit_id].assign_location(retreat_node, False, False)
+                processed_unit.assign_location(retreat_node, False, False)
             else:
                 retreat_choice = False
-    return processed_nodes, nodes, processed_units, units
+    processed_units_with_disbands = processed_units.copy()
+    for unit_id in processed_units:
+        command = commands[unit_id]
+        if command.retreat == True:
+            if retreat_choice == False:
+                processed_commands.pop(unit_id)
+                processed_units_with_disbands.pop(unit_id)
+    return commands, processed_commands, nodes, processed_nodes, units, processed_units_with_disbands

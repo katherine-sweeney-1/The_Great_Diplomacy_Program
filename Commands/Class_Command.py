@@ -63,7 +63,7 @@ class Command ():
     def convoy_status (self, convoy_boolean):
         self.convoy = convoy_boolean
         return self.convoy
-    
+ 
     def assign_original_coastal_location(self, original_coastal_location_node):
         self.original_coastal_location = original_coastal_location_node
         return self.original_coastal_location
@@ -87,6 +87,10 @@ class Command ():
     def assign_displacing_attack(self, displacing_command):
         self.displacing_attack = displacing_command
         return self.displacing_attack
+    
+    def assign_winter_location (self, winter_location_node):
+        self.winter_location = winter_location_node
+        return self.winter_location
     
     def print_statement(self):
         print("command for unit {}, country {} has commander {}".format(self.unit.id, self.country, self.human.human))

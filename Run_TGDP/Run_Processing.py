@@ -11,7 +11,7 @@ def run_processing(commands, commanders, nodes, units):
     commands = filter_convoys(commands)
     commands = get_success_supports(commands)
     commands = get_success_attacks(commands)
-    processed_nodes, nodes, processed_units, units = process_outcomes(commands, nodes, units)
-    return nodes, units, commands
+    commands, processed_commands, nodes, processed_nodes, units, processed_units = process_outcomes(commands, nodes, units)
+    return commands, processed_commands, processed_nodes, processed_units
 
 
