@@ -211,15 +211,15 @@ def save_images(game_objects, game_number_string, start_game_year):
         game_season = count % 3
         match game_season:
             case 0:
-                game_season = "Spring"
+                game_season = "spring"
             case 1:
-                game_season = "Fall"
+                game_season = "fall"
             case 2:
-                game_season = "Winter"
+                game_season = "winter"
         game_season = game_season.lower()
         game_and_turn_string = "game" + str(game_number_string) + "_" + str(game_year) + "_" + game_season
         commands, commanders, nodes, units = get_objects(game_objects, turn)
-        main_window, treeview, canvas = display_moves(main_window, map_image, canvas, commands, game_objects, commanders, count)
+        main_window, treeview, canvas = display_moves(main_window, map_image, canvas, commands, commanders, count)
         file_name_ps = "GUI/" + game_and_turn_string + ".ps"
         file_name_png = game_and_turn_string + ".png"
         canvas.pack()
@@ -234,7 +234,9 @@ def save_images(game_objects, game_number_string, start_game_year):
         postscript_file.unlink()
         canvas.delete("draw")
         count += 1
-
+        if count == len(game_objects):
+            print("done")
+            main_window.quit()
 # Run function
 def run_gui(game_objects, game_number_string, start_game_year, save_images_boolean, turn = None):
     turns = []
@@ -245,6 +247,7 @@ def run_gui(game_objects, game_number_string, start_game_year, save_images_boole
     if save_images_boolean:
         save_images(game_objects, game_number_string, start_game_year)
     else:
+        print("yes")
         commands, commanders, nodes, units = get_objects(game_objects, first_turn)
         main_window, map_image, canvas, next_turn_button, previous_turn_button = set_up_gui()
         main_window, treeview, canvas = display_moves(main_window, map_image, canvas, commands, commanders, current_turn_index)

@@ -22,7 +22,6 @@ Arguments:
 
 To Do
 
-
     - Show units that need to retreat or disband? 
 
     - paint bucket to change map color to match starting positions  
@@ -31,19 +30,13 @@ To Do
 
     - Submitting on website sends email to me
 
-    - Have map for winter builds/tears
-
-    - Show state of map without arrows for submitting moves 
+    - Show state of map without arrows for submitting moves
 
     - Different pages for current game and submitting moves
 
         => Check with Mercy
 
         => Have a map without arrows for submitting moves 
-
-    - ASK MERCY: submit moves on discord or just show maps on discord? Is there a way to automate move submission via discord?
-
-    - 
 
     - DONE: Color changes
 
@@ -58,6 +51,8 @@ To Do
     - DONE: fix Galecia coordinate => changed setting for Drawings_GUI
 
     - DONE: invalid supports show up as failed supports
+
+    - DONE: Have map for winter builds/tears
 
 """
 
