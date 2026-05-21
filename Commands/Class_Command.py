@@ -88,6 +88,10 @@ class Command ():
         self.displacing_attack = displacing_command
         return self.displacing_attack
     
+    def assign_winter_location (self, winter_location_node):
+        self.winter_location = winter_location_node
+        return self.winter_location
+    
     def print_statement(self):
         print("command for unit {}, country {} has commander {}".format(self.unit.id, self.country, self.human.human))
         print("loc: {}, origin: {}, dest: {}".format(self.loc.name, self.origin.name, self.destination.name))

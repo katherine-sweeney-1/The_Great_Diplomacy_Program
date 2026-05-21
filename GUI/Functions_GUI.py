@@ -134,7 +134,7 @@ def draw_pieces(canvas, commands, current_turn_index):
         winter_boolean = True
     else:
         winter_boolean = False
-    print(current_turn_index, winter_boolean)
+    #print(current_turn_index, winter_boolean)
     for command_id in commands:
         command = commands[command_id]
         if command.original_support_origin != False and command.original_support_destination != False:
@@ -142,8 +142,8 @@ def draw_pieces(canvas, commands, current_turn_index):
             command.destination = command.original_support_destination
         if command.original_coastal_location != False:
             command.location = command.original_coastal_location
-    for command_id in commands:
-        print(commands[command_id].location.name, commands[command_id].origin.name, commands[command_id].destination.name)
+    #for command_id in commands:
+        #print(commands[command_id].location.name, commands[command_id].origin.name, commands[command_id].destination.name)
     canvas = draw_units(canvas, commands)
     if winter_boolean == False:
         canvas = draw_attacks(canvas, commands)
@@ -173,8 +173,8 @@ def show_next_turn(event, main_window, canvas, game_objects, current_turn, turns
         else:
             next_turn_index = current_turn_index
         next_turn = turns[next_turn_index]
-        print("next turn index", next_turn_index)
-        print(" ")
+        #print("next turn index", next_turn_index)
+        #print(" ")
         display_different_turn(main_window, canvas, game_objects, turns, next_turn_button, previous_turn_button, next_turn, commanders, current_turn_index, treeview)
 
 # Previous turn button
@@ -186,7 +186,7 @@ def show_previous_turn(event, main_window, canvas, game_objects, current_turn, t
         else:
             previous_turn_index = current_turn_index
         previous_turn = turns[previous_turn_index]
-        print(" ")
+        #print(" ")
         display_different_turn(main_window, canvas, game_objects, turns, next_turn_button, previous_turn_button, previous_turn, commanders, current_turn_index, treeview)
 
 # Retrieve the coordinates of nodes by clicking on map 
