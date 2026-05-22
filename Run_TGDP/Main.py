@@ -22,7 +22,9 @@ Arguments:
 
 To Do
 
-    - Show units that need to retreat or disband? 
+    - Show units that retreat on map
+
+    - Show units that diband on map
 
     - paint bucket to change map color to match starting positions  
 
@@ -37,6 +39,8 @@ To Do
         => Check with Mercy
 
         => Have a map without arrows for submitting moves 
+
+    - Eventually: make objects continuous with input? Need to look how backstabbr does this
 
     - DONE: Color changes
 

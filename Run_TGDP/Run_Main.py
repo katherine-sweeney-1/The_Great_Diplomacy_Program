@@ -42,7 +42,7 @@ def run_tgdp(input_data, game_number_string, start_game_year, save_images_boolea
         objects["Units"] = units
         turns_objects[game_and_turn_string] = objects
         if game_season == "Fall":
-            turns_objects = get_winter_objects(processed_commands, commanders, nodes, units, game_number_string, game_year, turns_objects)
+            turns_objects = get_winter_objects(commands, commanders, nodes, units, game_number_string, game_year, turns_objects)
         count += 1
     for game_and_turn_string in turns_objects:
         commands = turns_objects[game_and_turn_string]["Commands"]

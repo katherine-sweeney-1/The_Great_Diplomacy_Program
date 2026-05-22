@@ -132,7 +132,7 @@ might need to do original location
 
 """
 # Draw attack arrows 
-def draw_attacks(canvas, commands):
+def draw_attacks(canvas, commands, line_width):
     for command_id in commands:
         command = commands[command_id]
         if command.location == command.origin and command.origin != command.destination:
@@ -144,13 +144,13 @@ def draw_attacks(canvas, commands):
             destination_coordinate = second_coordinate
             upper_coordinates, lower_coordinates= get_arrow_coordinates(origin_coordinate, destination_coordinate)
             fill_color = get_fill_color(command)
-            canvas.create_line(coordinates, fill = fill_color, width = 2, tags = ("draw"))
-            canvas.create_line(upper_coordinates, fill = fill_color, width = 2, tags = ("draw"))
-            canvas.create_line(lower_coordinates, fill = fill_color, width = 2, tags = ("draw"))  
+            canvas.create_line(coordinates, fill = fill_color, width = line_width, tags = ("draw"))
+            canvas.create_line(upper_coordinates, fill = fill_color, width = line_width, tags = ("draw"))
+            canvas.create_line(lower_coordinates, fill = fill_color, width =  line_width, tags = ("draw"))  
     return canvas
 
 # Draw hold circles
-def draw_holds(canvas, commands):
+def draw_holds(canvas, commands, line_width):
     for command_id in commands:
         command = commands[command_id]
         if command.location == command.origin == command.destination:
@@ -159,7 +159,7 @@ def draw_holds(canvas, commands):
             se_coordinates = (center[0] + 9, center[1] + 9)
             coordinates = [nw_coordinates, se_coordinates]
             fill_color = get_fill_color(command)
-            canvas.create_oval(coordinates, outline = fill_color, width = 2, tags = ("draw"))
+            canvas.create_oval(coordinates, outline = fill_color, width = line_width, tags = ("draw"))
     return canvas
 
 """
@@ -168,7 +168,7 @@ might need to use original support origin and original support destination and o
 
 """
 # Draw support dashed lines
-def draw_supports(canvas, commands):
+def draw_supports(canvas, commands, line_width):
     for command_id in commands:
         command = commands[command_id]
         if command.location != command.origin: 
@@ -178,14 +178,50 @@ def draw_supports(canvas, commands):
             offset_destination_coordinate = get_offset_destination(origin_coordinate, destination_coordinate, 8)
             offset_origin_coordinate = get_offset_destination(destination_coordinate, origin_coordinate, 5)
             fill_color = get_fill_color(command)
-            canvas.create_line (location_coordinate, origin_coordinate, dash = (5, 2), fill = fill_color, width = 3, tags = ("draw"))
+            canvas.create_line (location_coordinate, origin_coordinate, dash = (5, 2), fill = fill_color, width = line_width, tags = ("draw"))
             # supports for attacks
             if command.origin != command.destination:
                 upper_coordinates, lower_coordinates = get_arrow_coordinates(offset_origin_coordinate, offset_destination_coordinate)
-                canvas.create_line(offset_origin_coordinate, offset_destination_coordinate, dash = (5, 2), fill = fill_color, width = 2, tags = ("draw"))
-                canvas.create_line(upper_coordinates, fill = fill_color, width = 2, tags = ("draw"))
-                canvas.create_line(lower_coordinates, fill = fill_color, width = 2, tags = ("draw"))
+                canvas.create_line(offset_origin_coordinate, offset_destination_coordinate, dash = (5, 2), fill = fill_color, width = 1, tags = ("draw"))
+                canvas.create_line(upper_coordinates, fill = fill_color, width = line_width, tags = ("draw"))
+                canvas.create_line(lower_coordinates, fill = fill_color, width = line_width, tags = ("draw"))
             # supports for holds
             else:
-                canvas.create_oval(origin_coordinate[0] - 5, origin_coordinate[1] - 5, origin_coordinate[0] + 5, origin_coordinate[1]+ 5, width = 2, tags = ("draw"))
+                canvas.create_oval(origin_coordinate[0] - 5, origin_coordinate[1] - 5, origin_coordinate[0] + 5, origin_coordinate[1]+ 5, width = line_width, tags = ("draw"))
+    return canvas
+
+def draw_retreats(canvas, commands, line_width, units):
+    for command_id in commands:
+        command = commands[command_id]
+        if command.succeed == False and command.retreat == True and command_id in units.keys():
+            print("yes", command_id)
+            location_coordinate = command.location.coordinate
+            retreat_coordinate = units[command_id].location.coordinate
+            offset_retreat_coordinate = get_offset_destination(location_coordinate, retreat_coordinate, 2)
+            coordinates = [location_coordinate, offset_retreat_coordinate]
+            upper_coordinates, lower_coordinates = get_arrow_coordinates (location_coordinate, offset_retreat_coordinate)
+            canvas.create_line(coordinates, fill = "yellow", width = line_width, tags = ("draw"))
+            canvas.create_line(upper_coordinates, fill = "yellow", width = line_width, tags = ("draw"))
+            canvas.create_line(lower_coordinates, fill = "yellow", width =  line_width, tags = ("draw"))
+    return canvas
+
+# Draw the units and movements 
+def draw_map_components(canvas, commands, current_turn_index, line_width, units):
+    if current_turn_index % 3 == 2:
+        winter_boolean = True
+    else:
+        winter_boolean = False
+    for command_id in commands:
+        command = commands[command_id]
+        if command.original_support_origin != False and command.original_support_destination != False:
+            command.origin = command.original_support_origin
+            command.destination = command.original_support_destination
+        if command.original_coastal_location != False:
+            command.location = command.original_coastal_location
+    canvas = draw_units(canvas, commands)
+    if winter_boolean == False:
+        canvas = draw_attacks(canvas, commands, line_width)
+        canvas = draw_holds(canvas, commands, line_width)
+        canvas = draw_supports(canvas, commands, line_width)
+        canvas = draw_retreats(canvas, commands, line_width, units)
     return canvas
