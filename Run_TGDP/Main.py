@@ -22,8 +22,6 @@ Arguments:
 
 To Do
 
-    - Show units that retreat on map
-
     - Show units that diband on map
 
     - paint bucket to change map color to match starting positions  
@@ -57,6 +55,8 @@ To Do
     - DONE: invalid supports show up as failed supports
 
     - DONE: Have map for winter builds/tears
+
+    - DONE: show retreats on map
 
 """
 
