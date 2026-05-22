@@ -222,7 +222,7 @@ def draw_disbands(canvas, commands, line_width, units):
     return canvas
 
 # Draw the units and movements 
-def draw_map_components(canvas, commands, current_turn_index, line_width, units):
+def draw_map_components(canvas, commands, current_turn_index, line_width, units, last_turn = None):
     if current_turn_index % 3 == 2:
         winter_boolean = True
     else:
@@ -235,7 +235,7 @@ def draw_map_components(canvas, commands, current_turn_index, line_width, units)
         if command.original_coastal_location != False:
             command.location = command.original_coastal_location
     canvas = draw_units(canvas, commands)
-    if winter_boolean == False:
+    if winter_boolean == False or last_turn == True:
         canvas = draw_attacks(canvas, commands, line_width)
         canvas = draw_holds(canvas, commands, line_width)
         canvas = draw_supports(canvas, commands, line_width)

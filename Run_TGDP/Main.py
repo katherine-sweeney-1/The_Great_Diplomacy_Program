@@ -4,6 +4,9 @@ import flask
 import sys
 sys.path.append("../The_Great_Diplomacy_Program/TGDP_Website")
 
+#run_tgdp(input_data_sample, "9", "1903", False)
+run_tgdp(input_data_6, "6", "1901", False)
+
 """
 
 Arguments:
@@ -22,8 +25,6 @@ Arguments:
 
 To Do
 
-    - Show units that diband on map
-
     - paint bucket to change map color to match starting positions  
 
     - Submit moves on website
@@ -31,6 +32,8 @@ To Do
     - Submitting on website sends email to me
 
     - Show state of map without arrows for submitting moves
+
+    - Show SQL table for moves on website
 
     - Different pages for current game and submitting moves
 
@@ -42,23 +45,22 @@ To Do
 
     - DONE: Color changes
 
-        -  successful attacks be green
+        - Successful attacks be green
         
-        - successful supports be blue
+        - Successful supports be blue
 
-        - orange for invalid move
+        - Orange for invalid move
     
     - DONE: Retreat Options for non-coastal fleet situations (i.e. the majority of the situations)
 
-    - DONE: fix Galecia coordinate => changed setting for Drawings_GUI
+    - DONE: Fix Galecia coordinate => changed setting for Drawings_GUI
 
-    - DONE: invalid supports show up as failed supports
+    - DONE: Invalid supports show up as failed supports
 
     - DONE: Have map for winter builds/tears
 
-    - DONE: show retreats on map
+    - DONE: Show retreats on map
+
+    - DONEL Show disbands
 
 """
-
-#run_tgdp(input_data_sample, "9", "1903", False)
-run_tgdp(input_data_8, "8", "1901", False)

@@ -98,7 +98,7 @@ def set_up_gui():
     return main_window, map_image, canvas, next_turn_button, previous_turn_button
 
 # Display the pieces and treeview data
-def display_moves(main_window, map_image, canvas, commands, commanders, current_turn_index, line_width, units):
+def display_moves(main_window, map_image, canvas, commands, commanders, current_turn_index, line_width, units, last_turn = None):
     canvas.pack(fill = tk.BOTH)
     map_image = ImageTk.PhotoImage(map_image)
     canvas.create_image(0, 0, anchor = tk.NW, image = map_image)
@@ -107,7 +107,7 @@ def display_moves(main_window, map_image, canvas, commands, commanders, current_
     scrollbar = tk.Scrollbar(main_window)
     scrollbar.pack(side = 'right', fill = 'y')
     canvas.image = map_image
-    canvas = draw_map_components(canvas, commands, current_turn_index, line_width, units)
+    canvas = draw_map_components(canvas, commands, current_turn_index, line_width, units, last_turn = None)
     treeview = create_treeview(main_window, commanders, commands)
     return main_window, treeview, canvas
 
@@ -127,28 +127,7 @@ def display_static_map(main_window, map_image, canvas):
     coords = main_window.bind("<Button-1>", get_coordinates)
     canvas.image = map_image
     return main_window
-"""
-# Draw the units and movements 
-def draw_pieces(canvas, commands, current_turn_index, line_width):
-    if current_turn_index % 3 == 2:
-        winter_boolean = True
-    else:
-        winter_boolean = False
-    for command_id in commands:
-        command = commands[command_id]
-        if command.original_support_origin != False and command.original_support_destination != False:
-            command.origin = command.original_support_origin
-            command.destination = command.original_support_destination
-        if command.original_coastal_location != False:
-            command.location = command.original_coastal_location
-    canvas = draw_units(canvas, commands)
-    if winter_boolean == False:
-        canvas = draw_attacks(canvas, commands, line_width)
-        canvas = draw_holds(canvas, commands, line_width)
-        canvas = draw_supports(canvas, commands, line_width)
-        canvas = draw_rereats(canvas, commands, line_width)
-    return canvas
-"""
+
 # Add treeview data and implement next turn and previous turn buttons
 def display_different_turn(main_window, canvas, game_objects, turns, next_turn_button, previous_turn_button, different_turn, commanders, current_turn_index, treeview, line_width, units):
     commands, commanders, nodes, units = get_objects(game_objects, different_turn)
@@ -198,14 +177,36 @@ def assign_neighbor_coordinates():
     nodes_data_main = get_nodes_data_dictionary(data_nodes)
     get_territories_with_neighbors_coordinates(nodes_data_main, coordinates_file, territory_neighbor_coordinates)
 
+def convert_map_to_png(main_window, canvas, commands, commanders, game_and_turn_string, game_number_string, map_image, count, line_width, units, last_turn_boolean):
+    map_width = map_image.width
+    map_height = map_image.height
+    main_window, treeview, canvas = display_moves(main_window, map_image, canvas, commands, commanders, count, line_width, units, last_turn = last_turn_boolean)
+    file_name_ps = "GUI/" + game_and_turn_string + ".ps"
+    file_name_png = game_and_turn_string + ".png"
+    canvas.pack()
+    canvas.update()
+    canvas.postscript(file = file_name_ps, x=0, y=0, width = map_width, height = map_height, colormode = "color")
+    directory_path = "TGDP_Website/Static/Game_" + game_number_string
+    Path("{}".format(directory_path)).mkdir(parents = True, exist_ok = True)
+    ps_image = Image.open(file_name_ps)
+    ps_image.show()
+    ps_image = ps_image.resize((map_width, map_height), Image.LANCZOS)
+    print(ps_image.info.get("dpi"))
+    ps_image.show()
+    ps_image.save("{}/{}".format(directory_path, file_name_png), dpi = (300, 300))
+    postscript_file = Path(file_name_ps)
+    postscript_file.unlink()
+    canvas.delete("draw")
+
 # Save the map images with moves as png files
-def save_images(game_objects, game_number_string, start_game_year):
+def save_images(game_objects, game_number_string, start_game_year, line_width):
     count = 0
     main_window, map_image, canvas, next_turn_button, previous_turn_button = set_up_gui()
     for turn in game_objects:
+        last_turn_boolean = False
         map_image = Image.open("GUI/Europe_Map.png")
-        map_width = map_image.width
-        map_height = map_image.height
+        #map_width = map_image.width
+        #map_height = map_image.height
         game_year = int(start_game_year)
         game_year = game_year + count/3
         game_year = int(game_year)
@@ -220,25 +221,11 @@ def save_images(game_objects, game_number_string, start_game_year):
         game_season = game_season.lower()
         game_and_turn_string = "game" + str(game_number_string) + "_" + str(game_year) + "_" + game_season
         commands, commanders, nodes, units = get_objects(game_objects, turn)
-        main_window, treeview, canvas = display_moves(main_window, map_image, canvas, commands, commanders, count)
-        file_name_ps = "GUI/" + game_and_turn_string + ".ps"
-        file_name_png = game_and_turn_string + ".png"
-        canvas.pack()
-        canvas.update()
-        canvas.postscript(file = file_name_ps, x=0, y=0, width = map_width, height = map_height, colormode = "color")
-        directory_path = "TGDP_Website/Static/Game_" + game_number_string
-        Path("{}".format(directory_path)).mkdir(parents = True, exist_ok = True)
-        ps_image = Image.open(file_name_ps)
-        ps_image.show()
-        ps_image = ps_image.resize((map_width, map_height), Image.LANCZOS)
-        print(ps_image.info.get("dpi"))
-        ps_image.show()
-        ps_image.save("{}/{}".format(directory_path, file_name_png), dpi = (300, 300))
-        postscript_file = Path(file_name_ps)
-        postscript_file.unlink()
-        canvas.delete("draw")
+        convert_map_to_png(main_window, canvas, commands, commanders, game_and_turn_string, game_number_string, map_image, count, line_width, units, last_turn_boolean)
         count += 1
         if count == len(game_objects):
+            convert_map_to_png(main_window, canvas, commands, commanders, game_and_turn_string, game_number_string, map_image, count, line_width, units, last_turn_boolean)
+            last_turn_boolean = True
             print("done")
             main_window.quit()
 # Run function
@@ -250,7 +237,7 @@ def run_gui(game_objects, game_number_string, start_game_year, save_images_boole
     first_turn = turns[0]
     current_turn_index = turns.index(first_turn)
     if save_images_boolean:
-        save_images(game_objects, game_number_string, start_game_year)
+        save_images(game_objects, game_number_string, start_game_year, line_width)
     else:
         #print("yes")
         commands, commanders, nodes, units = get_objects(game_objects, first_turn)
