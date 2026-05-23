@@ -42,14 +42,14 @@ def create_territory_listbox(main_window, territory_file, scrollbar):
 
 # Create treeview to display information about each move
 def create_treeview(main_window, commanders, commands):
-    columns = ("Commander", "Unit ID", "Unit Type", "Action", "Location", "Origin", "Destination")
+    columns = ("Commander", "Unit ID", "Unit Type", "Action", "Location", "Origin", "Destination", "Command Status")
     treeview = tk.ttk.Treeview(main_window, columns = columns, height = 25, show = "headings")
     treeview = add_treeview_data(treeview, commanders, commands)
     return treeview
 
 # Add the data to the treeview
 def add_treeview_data(treeview, commanders, commands):
-    columns = ("Commander", "Unit ID", "Unit Type", "Action", "Location", "Origin", "Destination")
+    columns = ("Commander", "Unit ID", "Unit Type", "Action", "Location", "Origin", "Destination", "Command Status")
     for column_entry in columns:
         treeview.heading(column_entry, text = column_entry)
         treeview.column(column_entry, width = 100)
@@ -72,7 +72,7 @@ def add_treeview_data(treeview, commanders, commands):
                 action_type = "Support"
             elif command.convoy == True:
                 action_type = "Convoy"
-            entry_values = (commander_id, unit_id, unit.type, action_type, command.location.name, command.origin.name, command.destination.name)
+            entry_values = (commander_id, unit_id, unit.type, action_type, command.location.name, command.origin.name, command.destination.name, command.succeed)
             treeview.insert("", "end", values = entry_values)
     treeview.pack()
     return treeview

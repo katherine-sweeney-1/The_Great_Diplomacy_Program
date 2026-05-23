@@ -88,10 +88,13 @@ def retrieve_hex_color(r, g, b):
     return "#{:02x}{:02x}{:02x}".format(r, g, b)
 
 # Draw units on map
-def draw_units(canvas, commands):
+def draw_units(canvas, commands, winter_boolean):
     for command_id in commands:
         command = commands[command_id]
-        center = command.location.coordinate
+        if winter_boolean == True:
+            center = command.winter_location.coordinate
+        else:
+            center = command.location.coordinate
         if command_id[0:2] == "AU":
             fill_color = (200, 50, 50)
             fill_color = retrieve_hex_color(200, 50, 50)
@@ -193,6 +196,8 @@ def draw_supports(canvas, commands, line_width):
 def draw_retreats(canvas, commands, line_width, units):
     for command_id in commands:
         command = commands[command_id]
+        #if command.succeed == False and command.retreat == True:
+            #print(command_id, command.succeed, command.retreat)
         if command.succeed == False and command.retreat == True and command_id in units.keys():
             location_coordinate = command.location.coordinate
             retreat_coordinate = units[command_id].location.coordinate
@@ -234,7 +239,7 @@ def draw_map_components(canvas, commands, current_turn_index, line_width, units,
             command.destination = command.original_support_destination
         if command.original_coastal_location != False:
             command.location = command.original_coastal_location
-    canvas = draw_units(canvas, commands)
+    canvas = draw_units(canvas, commands, winter_boolean)
     if winter_boolean == False or last_turn == True:
         canvas = draw_attacks(canvas, commands, line_width)
         canvas = draw_holds(canvas, commands, line_width)
@@ -242,3 +247,8 @@ def draw_map_components(canvas, commands, current_turn_index, line_width, units,
         canvas = draw_retreats(canvas, commands, line_width, units)
         canvas = draw_disbands(canvas, commands, line_width, units)
     return canvas
+
+"""
+probably fix last turn issue probably in line 238
+
+"""

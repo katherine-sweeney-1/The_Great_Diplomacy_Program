@@ -25,13 +25,17 @@ Arguments:
 
 To Do
 
+    - Add command.succeed to treeview
+
+    - Fix winter turns: they need to be the destinations of fall turn successful attacks
+
     - paint bucket to change map color to match starting positions  
 
     - Submit moves on website
 
     - Submitting on website sends email to me
 
-    - Show state of map without arrows for submitting moves
+    - Show state of map without arrows for submitting moves at last turn
 
     - Show SQL table for moves on website
 

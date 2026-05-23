@@ -24,6 +24,7 @@ def get_outcome_nodes(commands, processed_units):
         command.assign_outcome_location(outcome_node)
         command.assign_displacing_attack(displacing_attack)
         command.assign_retreat_disband(retreat)
+        print("check", command_id, command.retreat)
     return commands, processed_units
 
 # check if unit is displaced by an attack
@@ -35,10 +36,11 @@ def check_displacement_attacks(command, command_id, commands):
         if potential_attack_id != command_id:
             if potential_attack.destination.name == command.location.name:
                 if potential_attack.location == potential_attack.origin and potential_attack.origin != potential_attack.destination:
-                    if potential_attack.strength > command.strength and potential_attack.succeed == True:
+                    if potential_attack.succeed == True:
                         outcome_node = command.location
                         displacing_attack = potential_attack
                         retreat = True
+                    #if potential_attack.strength > command.strength and potential_attack.succeed == True:        retreat = True
                         break
                     else:
                         retreat = False
@@ -61,12 +63,10 @@ def get_retreats(processed_commands, processed_nodes, processed_units):
             retreat_options = []
             for neighbor_id in neighbors:
                 neighbor = processed_nodes[neighbor_id]
-                #print("neighbors", unit_id, neighbor_id, neighbor.is_occupied)
                 if neighbor.is_occupied:
                     continue
                 else:
                     if command.displacing_attack == False or neighbor != command.displacing_attack.location:
-                        #print("yes")
                         if unit.type == "army" and neighbor.node_type == "Land":
                             retreat_options.append(neighbor_id)
                         elif unit.type == "fleet" and neighbor.node_type == "Sea":
@@ -74,10 +74,6 @@ def get_retreats(processed_commands, processed_nodes, processed_units):
                         elif neighbor.node_type == "Coast":
                             retreat_options.append(neighbor_id)
             command.assign_retreat_nodes(retreat_options)
-            #print(unit_id)
-            #for node_id in command.retreat_nodes:
-                #print(unit_id, node_id)
-
     return processed_units
 
 # process outcomes
@@ -99,20 +95,13 @@ def process_outcomes(commands, nodes, units):
                 retreat_choice = command.retreat_nodes[0]
                 retreat_node = processed_nodes[retreat_choice]
                 processed_unit.assign_location(retreat_node, False, False)
-                print(command.unit.id, retreat_choice, retreat_node.name, "yes")
-            else:
-                retreat_choice = False
-            print(retreat_choice)
     processed_units_with_disbands = processed_units.copy()
     for unit_id in processed_units:
         command = commands[unit_id]
         if command.retreat == True:
-            print(retreat_choice)
             if len(command.retreat_nodes) == 0:
-                #print(unit_id, command.location.name)
                 processed_commands.pop(unit_id)
                 processed_units_with_disbands.pop(unit_id)
-            else:
-                print("retreat", unit_id, command.retreat)
-                print(" ")
+            print(unit_id, command.retreat)
+    print(" ")
     return commands, processed_commands, nodes, processed_nodes, units, processed_units_with_disbands
