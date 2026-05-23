@@ -24,6 +24,7 @@ def get_outcome_nodes(commands, processed_units):
         command.assign_outcome_location(outcome_node)
         command.assign_displacing_attack(displacing_attack)
         command.assign_retreat_disband(retreat)
+        print("check", command_id, command.retreat)
     return commands, processed_units
 
 # check if unit is displaced by an attack
@@ -35,10 +36,11 @@ def check_displacement_attacks(command, command_id, commands):
         if potential_attack_id != command_id:
             if potential_attack.destination.name == command.location.name:
                 if potential_attack.location == potential_attack.origin and potential_attack.origin != potential_attack.destination:
-                    if potential_attack.strength > command.strength and potential_attack.succeed == True:
+                    if potential_attack.succeed == True:
                         outcome_node = command.location
                         displacing_attack = potential_attack
                         retreat = True
+                    #if potential_attack.strength > command.strength and potential_attack.succeed == True:        retreat = True
                         break
                     else:
                         retreat = False
@@ -52,7 +54,7 @@ def check_displacement_attacks(command, command_id, commands):
     return displacing_attack, outcome_node, retreat
 
 # get retreat nodes for processed commands
-def get_retreats(processed_commands, processed_units):
+def get_retreats(processed_commands, processed_nodes, processed_units):
     for unit_id in processed_units:
         unit = processed_units[unit_id]
         command = processed_commands[unit_id]
@@ -60,9 +62,9 @@ def get_retreats(processed_commands, processed_units):
             neighbors = unit.location.neighbors
             retreat_options = []
             for neighbor_id in neighbors:
-                neighbor = neighbors[neighbor_id]
+                neighbor = processed_nodes[neighbor_id]
                 if neighbor.is_occupied:
-                    pass
+                    continue
                 else:
                     if command.displacing_attack == False or neighbor != command.displacing_attack.location:
                         if unit.type == "army" and neighbor.node_type == "Land":
@@ -84,7 +86,7 @@ def process_outcomes(commands, nodes, units):
         unit.assign_original_location(unit.location)
     processed_commands, processed_units = get_outcome_nodes(processed_commands, processed_units)
     processed_nodes, processed_units = assign_occupied(nodes, processed_units)
-    processed_units = get_retreats(commands, processed_units)
+    processed_units = get_retreats(commands, processed_nodes, processed_units)
     for unit_id in processed_units:
         command = commands[unit_id]
         processed_unit = processed_units[unit_id]
@@ -93,13 +95,13 @@ def process_outcomes(commands, nodes, units):
                 retreat_choice = command.retreat_nodes[0]
                 retreat_node = processed_nodes[retreat_choice]
                 processed_unit.assign_location(retreat_node, False, False)
-            else:
-                retreat_choice = False
     processed_units_with_disbands = processed_units.copy()
     for unit_id in processed_units:
         command = commands[unit_id]
         if command.retreat == True:
-            if retreat_choice == False:
+            if len(command.retreat_nodes) == 0:
                 processed_commands.pop(unit_id)
                 processed_units_with_disbands.pop(unit_id)
+            print(unit_id, command.retreat)
+    print(" ")
     return commands, processed_commands, nodes, processed_nodes, units, processed_units_with_disbands
