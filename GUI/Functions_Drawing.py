@@ -92,7 +92,10 @@ def draw_units(canvas, commands, winter_boolean):
     for command_id in commands:
         command = commands[command_id]
         if winter_boolean == True:
-            center = command.winter_location.coordinate
+            if command.winter_location != False:
+                center = command.winter_location.coordinate
+            else:
+                continue
         else:
             center = command.location.coordinate
         if command_id[0:2] == "AU":

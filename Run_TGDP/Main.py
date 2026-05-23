@@ -25,8 +25,6 @@ Arguments:
 
 To Do
 
-    - Add command.succeed to treeview
-
     - Fix winter turns: they need to be the destinations of fall turn successful attacks
 
     - paint bucket to change map color to match starting positions  
@@ -65,6 +63,8 @@ To Do
 
     - DONE: Show retreats on map
 
-    - DONEL Show disbands
+    - DONE: Show disbands
+
+    - DONE: Add command.succeed to treeview
 
 """
