@@ -41,14 +41,14 @@ def create_territory_listbox(main_window, territory_file, scrollbar):
     return listbox
 
 # Create treeview to display information about each move
-def create_treeview(main_window, commanders, commands):
+def create_treeview(main_window, commanders, commands, current_turn_index):
     columns = ("Commander", "Unit ID", "Unit Type", "Action", "Location", "Origin", "Destination", "Command Status")
     treeview = tk.ttk.Treeview(main_window, columns = columns, height = 25, show = "headings")
-    treeview = add_treeview_data(treeview, commanders, commands)
+    treeview = add_treeview_data(treeview, commanders, commands, current_turn_index)
     return treeview
 
 # Add the data to the treeview
-def add_treeview_data(treeview, commanders, commands):
+def add_treeview_data(treeview, commanders, commands, current_turn_index):
     columns = ("Commander", "Unit ID", "Unit Type", "Action", "Location", "Origin", "Destination", "Command Status")
     for column_entry in columns:
         treeview.heading(column_entry, text = column_entry)
@@ -72,7 +72,13 @@ def add_treeview_data(treeview, commanders, commands):
                 action_type = "Support"
             elif command.convoy == True:
                 action_type = "Convoy"
-            entry_values = (commander_id, unit_id, unit.type, action_type, command.location.name, command.origin.name, command.destination.name, command.succeed)
+            if current_turn_index % 3 == 2:
+                if command.winter_location != False:
+                    entry_values = (commander_id, unit_id, unit.type, "N/A", command.winter_location.name, command.winter_location.name, command.winter_location.name, "N/A")
+                else:
+                    continue
+            else:
+                entry_values = (commander_id, unit_id, unit.type, action_type, command.location.name, command.origin.name, command.destination.name, command.succeed)
             treeview.insert("", "end", values = entry_values)
     treeview.pack()
     return treeview
@@ -108,7 +114,7 @@ def display_moves(main_window, map_image, canvas, commands, commanders, current_
     scrollbar.pack(side = 'right', fill = 'y')
     canvas.image = map_image
     canvas = draw_map_components(canvas, commands, current_turn_index, line_width, units, last_turn = None)
-    treeview = create_treeview(main_window, commanders, commands)
+    treeview = create_treeview(main_window, commanders, commands, current_turn_index)
     return main_window, treeview, canvas
 
 # Display a static map with a button feature to retrieve coordinates for nodes
@@ -131,12 +137,16 @@ def display_static_map(main_window, map_image, canvas):
 # Add treeview data and implement next turn and previous turn buttons
 def display_different_turn(main_window, canvas, game_objects, turns, next_turn_button, previous_turn_button, different_turn, commanders, current_turn_index, treeview, line_width, units):
     commands, commanders, nodes, units = get_objects(game_objects, different_turn)
+    if current_turn_index % 3 == 1:
+        winter_boolean = True
+    else:
+        winter_boolean = False
     canvas.delete("draw")
     current_turn_index = turns.index(different_turn)
     canvas = draw_map_components(canvas, commands, current_turn_index, line_width, units)
     for item in treeview.get_children():
         treeview.delete(item)
-    add_treeview_data(treeview, commanders, commands)
+    add_treeview_data(treeview, commanders, commands, current_turn_index)
     next_turn_button.bind("<Button-1>", lambda event: show_next_turn(event, main_window, canvas, game_objects, different_turn, turns, next_turn_button, previous_turn_button, commanders, treeview, line_width, units))
     previous_turn_button.bind("<Button-1>", lambda event: show_previous_turn(event, main_window, canvas, game_objects, different_turn, turns, previous_turn_button, next_turn_button, commanders, treeview, line_width, units))
 
@@ -191,7 +201,7 @@ def convert_map_to_png(main_window, canvas, commands, commanders, game_and_turn_
     ps_image = Image.open(file_name_ps)
     ps_image.show()
     ps_image = ps_image.resize((map_width, map_height), Image.LANCZOS)
-    print(ps_image.info.get("dpi"))
+    #print(ps_image.info.get("dpi"))
     ps_image.show()
     ps_image.save("{}/{}".format(directory_path, file_name_png), dpi = (300, 300))
     postscript_file = Path(file_name_ps)
@@ -226,7 +236,6 @@ def save_images(game_objects, game_number_string, start_game_year, line_width):
         if count == len(game_objects):
             convert_map_to_png(main_window, canvas, commands, commanders, game_and_turn_string, game_number_string, map_image, count, line_width, units, last_turn_boolean)
             last_turn_boolean = True
-            print("done")
             main_window.quit()
 # Run function
 def run_gui(game_objects, game_number_string, start_game_year, save_images_boolean):
@@ -239,7 +248,6 @@ def run_gui(game_objects, game_number_string, start_game_year, save_images_boole
     if save_images_boolean:
         save_images(game_objects, game_number_string, start_game_year, line_width)
     else:
-        #print("yes")
         commands, commanders, nodes, units = get_objects(game_objects, first_turn)
         main_window, map_image, canvas, next_turn_button, previous_turn_button = set_up_gui()
         main_window, treeview, canvas = display_moves(main_window, map_image, canvas, commands, commanders, current_turn_index, line_width, units)

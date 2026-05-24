@@ -92,7 +92,10 @@ def draw_units(canvas, commands, winter_boolean):
     for command_id in commands:
         command = commands[command_id]
         if winter_boolean == True:
-            center = command.winter_location.coordinate
+            if command.winter_location != False:
+                center = command.winter_location.coordinate
+            else:
+                continue
         else:
             center = command.location.coordinate
         if command_id[0:2] == "AU":
@@ -196,8 +199,6 @@ def draw_supports(canvas, commands, line_width):
 def draw_retreats(canvas, commands, line_width, units):
     for command_id in commands:
         command = commands[command_id]
-        #if command.succeed == False and command.retreat == True:
-            #print(command_id, command.succeed, command.retreat)
         if command.succeed == False and command.retreat == True and command_id in units.keys():
             location_coordinate = command.location.coordinate
             retreat_coordinate = units[command_id].location.coordinate
@@ -215,7 +216,6 @@ def draw_disbands(canvas, commands, line_width, units):
     for command_id in commands:
         command = commands[command_id]
         if command.succeed == False and command_id not in units.keys():
-            print("checking", command_id)
             northwest_coordinate = [command.location.coordinate[0] - disband_line_length, command.location.coordinate[1] + disband_line_length]
             southwest_coordinate = [command.location.coordinate[0] - disband_line_length, command.location.coordinate[1] - disband_line_length]
             northeast_coordinate = [command.location.coordinate[0] + disband_line_length, command.location.coordinate[1] + disband_line_length]
@@ -240,7 +240,7 @@ def draw_map_components(canvas, commands, current_turn_index, line_width, units,
         if command.original_coastal_location != False:
             command.location = command.original_coastal_location
     canvas = draw_units(canvas, commands, winter_boolean)
-    if winter_boolean == False or last_turn == True:
+    if winter_boolean == False or last_turn == False:
         canvas = draw_attacks(canvas, commands, line_width)
         canvas = draw_holds(canvas, commands, line_width)
         canvas = draw_supports(canvas, commands, line_width)

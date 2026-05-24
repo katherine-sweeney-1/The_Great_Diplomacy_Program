@@ -5,7 +5,7 @@ import sys
 sys.path.append("../The_Great_Diplomacy_Program/TGDP_Website")
 
 #run_tgdp(input_data_sample, "9", "1903", False)
-run_tgdp(input_data_6, "6", "1901", False)
+run_tgdp(input_data_6, "6", "1901", True)
 
 """
 
@@ -25,17 +25,19 @@ Arguments:
 
 To Do
 
-    - Add command.succeed to treeview
+    - Show state of map without arrows for submitting moves at last turn
+
+    - Update treeview to show coastal fleets (game 6 fall/winter 1903)
+
+    - Update map to show coastal fleets on coastal nodes (game 6 fall/winter 1903)
 
     - Fix winter turns: they need to be the destinations of fall turn successful attacks
 
-    - paint bucket to change map color to match starting positions  
+    - Paint bucket to change map color to match starting positions  
 
     - Submit moves on website
 
     - Submitting on website sends email to me
-
-    - Show state of map without arrows for submitting moves at last turn
 
     - Show SQL table for moves on website
 
@@ -65,6 +67,10 @@ To Do
 
     - DONE: Show retreats on map
 
-    - DONEL Show disbands
+    - DONE: Show disbands
+
+    - DONE: Add command.succeed to treeview
+
+    - DONE: Adjust data for winter turns in treeview
 
 """

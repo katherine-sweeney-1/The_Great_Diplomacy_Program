@@ -30,11 +30,17 @@ def run_tgdp(input_data, game_number_string, start_game_year, save_images_boolea
             case 1:
                 game_season = "Fall"
         game_and_turn_string = "Game" + str(game_number_string) + "_" + str(game_year) + "_" + game_season
-        print(game_and_turn_string)
+        #print(game_and_turn_string)
         commanders_data = input_data[commands_data]
         parsed_cmds, parsed_units = parse_commands_and_units(commands_data)
         commands, commanders, nodes, units = create_objects(data_nodes, data_coastal, data_fleet_coastal, data_fleet_special_coastal, commanders_data, parsed_units, parsed_cmds)
         commands, processed_commands, nodes, units = run_processing(commands, commanders, nodes, units)
+        """
+        for command_id in commands:
+            command = commands[command_id]
+            print(command.location.name, command.origin.name, command.destination.name)
+        print(" ")
+        """
         # retrieve nodes and units for winter season
         db_table = yield_table(processed_commands, game_and_turn_string)
         objects["Commands"] = commands
@@ -43,7 +49,7 @@ def run_tgdp(input_data, game_number_string, start_game_year, save_images_boolea
         objects["Units"] = units
         turns_objects[game_and_turn_string] = objects
         if game_season == "Fall":
-            turns_objects = get_winter_objects(commands, commanders, nodes, units, game_number_string, game_year, turns_objects)
+            turns_objects = get_winter_objects(processed_commands, commanders, nodes, units, game_number_string, game_year, turns_objects)
         count += 1
     for game_and_turn_string in turns_objects:
         commands = turns_objects[game_and_turn_string]["Commands"]
@@ -61,6 +67,7 @@ Game 8b starts at year 1908
 """
 
 def get_winter_objects(commands, commanders, nodes, units, game_number_string, game_year, turns_objects):
+    disbanded_commands = {}
     for game_and_turn_string in turns_objects:
         commands = turns_objects[game_and_turn_string]["Commands"]
         for command_id in commands:
@@ -72,17 +79,20 @@ def get_winter_objects(commands, commanders, nodes, units, game_number_string, g
         command = commands[command_id]
         if command.succeed:
             if command.location == command.origin and command.origin != command.destination:
-                winter_location = command.destination
+                command.assign_winter_location(command.destination)
             else:
-                winter_location = command.location
+                command.assign_winter_location(command.location)
         else:
-            winter_location = command.location
-        command.assign_winter_location(winter_location)
-        winter_objects["Commands"] = commands
-        winter_objects["Commands"] = commands
-        winter_objects["Commanders"] = commanders
-        winter_objects["Nodes"] = nodes
-        winter_objects["Units"] = units
-        winter_game_and_turn_string = "Game" + str(game_number_string) + "_" + str(game_year) + "_" + next_game_season
-        turns_objects[winter_game_and_turn_string] = winter_objects
+            if command_id in units.keys():
+                command.assign_winter_location(units[command_id].location)
+            else:    
+                command.assign_winter_location(False)
+    winter_objects["Commands"] = commands
+    winter_objects["Commands"] = commands
+    winter_objects["Commanders"] = commanders
+    winter_objects["Nodes"] = nodes
+    winter_objects["Units"] = units
+    winter_game_and_turn_string = "Game" + str(game_number_string) + "_" + str(game_year) + "_" + next_game_season
+    turns_objects[winter_game_and_turn_string] = winter_objects
     return turns_objects
+

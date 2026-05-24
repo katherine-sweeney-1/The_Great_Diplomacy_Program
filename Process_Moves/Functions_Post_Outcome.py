@@ -24,7 +24,6 @@ def get_outcome_nodes(commands, processed_units):
         command.assign_outcome_location(outcome_node)
         command.assign_displacing_attack(displacing_attack)
         command.assign_retreat_disband(retreat)
-        print("check", command_id, command.retreat)
     return commands, processed_units
 
 # check if unit is displaced by an attack
@@ -102,6 +101,4 @@ def process_outcomes(commands, nodes, units):
             if len(command.retreat_nodes) == 0:
                 processed_commands.pop(unit_id)
                 processed_units_with_disbands.pop(unit_id)
-            print(unit_id, command.retreat)
-    print(" ")
     return commands, processed_commands, nodes, processed_nodes, units, processed_units_with_disbands
