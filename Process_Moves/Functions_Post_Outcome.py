@@ -101,5 +101,4 @@ def process_outcomes(commands, nodes, units):
             if len(command.retreat_nodes) == 0:
                 processed_commands.pop(unit_id)
                 processed_units_with_disbands.pop(unit_id)
-    print(" ")
     return commands, processed_commands, nodes, processed_nodes, units, processed_units_with_disbands
