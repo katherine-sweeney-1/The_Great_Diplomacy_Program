@@ -46,11 +46,51 @@ def users():
 
 
 
+"""
+
+run python file first
+then run html file
+
+"""
+
+
+@app.route("/example_save_output", methods = ["GET", "POST"])
+def users_save_output():
+    print("owners endpoint reached - save output test")
+    if request.method == "GET":
+        with open("TGDP_Website/example_json_data.json", "r") as file_input:
+            data = json.load(file_input)
+            data.append({
+                "owner": "Nicola",
+                "pets": ["Mango"]
+            })
+            return flask.jsonify(data)
+    if request.method == "POST":
+        received_data = request.get_json()
+        print(f"received data: {received_data}")
+        message = received_data["data"]
+        return_data = {
+            "status": "success",
+            "message": f"received: {message}"
+        }
+        """
+        with open("TGDP_Website/Example_Submissions.json", "r") as file_input:
+            print(f"received data - save output test: {received_data}")
+            #data = json.load(file_input)
+            #data.append(received_data)
+            data = json.load(file_input)
+        data.update(received_data)
+        """
+        with open("TGDP_Website/Example_Submissions.json", "a") as file_input:
+            #json.dump(data, file_input, indent = 4)
+            file_input.write(json.dumps(received_data) + "\n")
+            #return flask.jsonify(file_input)
+        return flask.Response(response = json.dumps(return_data), status = 201)
+
+
 # runs if I use http://127.0.0.1:5000/hello
 if __name__ == "__main__":
     app.run("localhost", 5000, debug = True)
-
-
 
 """
 

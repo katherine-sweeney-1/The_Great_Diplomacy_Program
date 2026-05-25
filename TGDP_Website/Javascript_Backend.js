@@ -10,7 +10,7 @@ function iterate_images (image_path_list){
 const express = require("express"); // import express module
 const app = express(); //initializes a new express application
 app.use(express.json()); // used to parse json boddies
-app.listen(5000, () => console.log("Server running on port 3000")) //starts server on port 3000
+app.listen(5500, () => console.log("Server running on port 5000")) //starts server on port 3000
 
 //Get Endpoint
 app.get("/api/items", (req, res) => { //define get route, get request is made to api/items and callback function is executed
