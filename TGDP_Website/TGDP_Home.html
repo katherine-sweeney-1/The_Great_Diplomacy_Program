@@ -91,6 +91,11 @@
         <button onclick = "sendData()">Send data</button>
     </div>
     <div>
+        <label for = "data-input"> Data to send - save test</label>
+        <input type = "text" id = "data-input">
+        <button onclick = "sendDataSaveOutput()">Send data save test</button>
+    </div>
+    <div>
         <div id = "sent-data-container"></div>
     </div>
 
@@ -148,6 +153,22 @@
         xhr.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
         // send request over the network
         xhr.send(JSON.stringify({"data": dataToSend}));
+    }
+
+    function sendDataSaveOutput(){
+        dataToSendSave = document.getElementById('data-input').value;
+        if (!dataToSendSave) {
+            console.log("Data is empty.");
+            return;
+        }
+        console.log("sending data: " + dataToSendSave);
+        xhr = getXmlHttpRequestObject();
+        xhr.onreadystatechange = sendDataCallback;
+        // asynchronous requests
+        xhr.open("POST", "http://127.0.0.1:5000/example_save_output", true);
+        xhr.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+        // send request over the network
+        xhr.send(JSON.stringify({"data": dataToSendSave}));
     }
 
     function getUsers() {
