@@ -25,7 +25,7 @@ def show_diplomacy_game(diplomacy_game_number):
 
 @app.route("/example", methods = ["GET", "POST"])
 def users():
-    print("owners endpoint reached")
+    print("checking example")
     if request.method == "GET":
         with open("TGDP_Website/example_json_data.json", "r") as file_input:
             data = json.load(file_input)
@@ -37,7 +37,7 @@ def users():
     if request.method == "POST":
         received_data = request.get_json()
         print(f"received data: {received_data}")
-        message = received_data["data"]
+        message = received_data["data 1"]
         return_data = {
             "status": "success",
             "message": f"received: {message}"
@@ -56,23 +56,15 @@ then run html file
 
 @app.route("/example_save_output", methods = ["GET", "POST"])
 def users_save_output():
-    print("owners endpoint reached - save output test")
+    print("checking example save output")
     if request.method == "POST":
         received_data = request.get_json()
-        print(f"received data: {received_data}")
-        message = received_data["data"]
+        print(f"received data - save output: {received_data}")
+        message = received_data["data 2"]
         return_data = {
             "status": "success",
             "message": f"received: {message}"
         }
-        """
-        with open("TGDP_Website/Example_Submissions.json", "r") as file_input:
-            print(f"received data - save output test: {received_data}")
-            #data = json.load(file_input)
-            #data.append(received_data)
-            data = json.load(file_input)
-        data.update(received_data)
-        """
         with open("TGDP_Website/Example_Submissions.json", "a") as file_input:
             #json.dump(data, file_input, indent = 4)
             file_input.write(json.dumps(received_data) + "\n")

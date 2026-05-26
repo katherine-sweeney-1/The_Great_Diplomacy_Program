@@ -91,12 +91,13 @@
         <button onclick = "sendData()">Send data</button>
     </div>
 
-
+    
     <div>
-        <label for = "data-input"> Data to send - save test</label>
-        <input type = "text" id = "data-input">
+        <label for = "data-input-2"> Data to send - save test</label>
+        <input type = "text" id = "data-input-2">
         <button onclick = "sendDataSaveOutput()">Send data save test</button>
     </div>
+    
     <div>
         <div id = "sent-data-container"></div>
     </div>
@@ -168,29 +169,31 @@
             return;
         }
         console.log("sending data: " + dataToSend);
-        xhr = getXmlHttpRequestObject();
+        //xhr = getXmlHttpRequestObject();
+        var xhr = new XMLHttpRequest();
         xhr.onreadystatechange = sendDataCallback;
         // asynchronous requests
         xhr.open("POST", "http://127.0.0.1:5000/example", true);
         xhr.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
         // send request over the network
-        xhr.send(JSON.stringify({"data": dataToSend}));
+        xhr.send(JSON.stringify({"data 1": dataToSend}));
     }
 
     function sendDataSaveOutput(){
-        dataToSendSave = document.getElementById('data-input').value;
+        dataToSendSave = document.getElementById('data-input-2').value;
         if (!dataToSendSave) {
             console.log("Data is empty.");
             return;
         }
         console.log("sending data: " + dataToSendSave);
-        xhr = getXmlHttpRequestObjectSave();
+        //xhr = getXmlHttpRequestObjectSave();
+        var xhr = new XMLHttpRequest();
         xhr.onreadystatechange = sendDataCallbackSave;
         // asynchronous requests
         xhr.open("POST", "http://127.0.0.1:5000/example_save_output", true);
         xhr.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
         // send request over the network
-        xhr.send(JSON.stringify({"data": dataToSendSave}));
+        xhr.send(JSON.stringify({"data 2": dataToSendSave}));
     }
 
     function getUsers() {
