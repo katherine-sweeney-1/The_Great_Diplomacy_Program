@@ -150,18 +150,6 @@
         }
     }
 
-    function sendDataCallbackSave(){
-        //check response is ready or not
-        // changed from xhr.status == 200 to xhr.status == 201
-        if (xhr.readyState == 4 && xhr.status == 201){
-            console.log("user data received!");
-            getDate();
-            dataDiv = document.getElementById('result-container');
-            // set current data text
-            dataDiv.innerHTML = xhr.responseText;
-        }
-    }
-
     function sendData(){
         dataToSend = document.getElementById('data-input').value;
         if (!dataToSend) {
@@ -169,8 +157,7 @@
             return;
         }
         console.log("sending data: " + dataToSend);
-        //xhr = getXmlHttpRequestObject();
-        var xhr = new XMLHttpRequest();
+        xhr = getXmlHttpRequestObject();
         xhr.onreadystatechange = sendDataCallback;
         // asynchronous requests
         xhr.open("POST", "http://127.0.0.1:5000/example", true);
@@ -186,9 +173,8 @@
             return;
         }
         console.log("sending data: " + dataToSendSave);
-        //xhr = getXmlHttpRequestObjectSave();
-        var xhr = new XMLHttpRequest();
-        xhr.onreadystatechange = sendDataCallbackSave;
+        xhr = getXmlHttpRequestObject();
+        xhr.onreadystatechange = sendDataCallback;
         // asynchronous requests
         xhr.open("POST", "http://127.0.0.1:5000/example_save_output", true);
         xhr.setRequestHeader("Content-Type", "application/json;charset=UTF-8");

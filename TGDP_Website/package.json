@@ -1,15 +1,18 @@
 {
   "name": "tgdp_website",
   "version": "1.0.0",
-  "description": "",
-  "main": "Javascript_Backend.js",
+  "description": "A website to display diplomacy games and submit moves",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node helloworld.js"
   },
-  "keywords": [],
-  "author": "",
+  "keywords": ["diplomacy"],
+  "author": "Katherine",
   "license": "ISC",
-  "type": "commonjs",
+  "main": "app.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/katherine-sweeney-1/The_Great_Diplomacy_Program.git"
+  },
   "dependencies": {
     "express": "^5.2.1",
     "server": "^0.0.3"
