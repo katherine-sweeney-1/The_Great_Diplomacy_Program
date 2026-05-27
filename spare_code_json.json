@@ -1,0 +1,22 @@
+{
+  "name": "tgdp_website",
+  "version": "1.0.0",
+  "description": "",
+  "main": "Javascript_Backend.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": ""
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/katherine-sweeney-1/The_Great_Diplomacy_Program.git"
+  },
+  "type": "commonjs",
+  "dependencies": {
+    "express": "^5.2.1",
+    "server": "^0.0.3"
+  }
+}
