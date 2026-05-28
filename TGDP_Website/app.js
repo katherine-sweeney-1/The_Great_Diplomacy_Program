@@ -2,7 +2,7 @@ const express = require("express")
 //const request = require("request");
 
 app = express();
-const PORT = 3000;
+const PORT = 5501;
 /*
 app.get("/", function(req, res){
     request("http://127.0.0.1:5500/example_save_output", function(error, response, body){
@@ -16,7 +16,7 @@ app.get("/", function(req, res){
 app.listen(PORT, function(){
     console.log("listening on port 5501");
 });
-/*
+
 app.get("/", (req, res) => {
     res.send("GET request to the homepage")
 });
@@ -24,7 +24,7 @@ app.get("/", (req, res) => {
 app.post("/", (req, res) => {
     res.send("POST request to the homepage")
 });
-*/
+
 app.get("/about", (req, res) => {
     res.send("About page")
 });
@@ -35,12 +35,13 @@ app.all('*', (req, res) =>{
 */
 
 app.listen(PORT, () => {
-    console.log("example listening at localhost:${PORT}")
+    console.log("example listening at localhost: ${PORT}")
 })
 
 app.post("/TGDP_Home.html", (req, res) => {
     const data_dict = {}
     console.log("checking example save output")
+    /*
     const data_button = document.getElementById("data-input-2").value
     data_button.addEventListener("click", async_ => {
         try {
@@ -62,6 +63,7 @@ app.post("/TGDP_Home.html", (req, res) => {
         console.log("compeleted", response);
         }
     })
+        */
 })
     
 /*  
