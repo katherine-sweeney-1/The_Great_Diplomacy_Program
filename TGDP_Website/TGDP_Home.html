@@ -94,10 +94,13 @@
     
     <div>
         <form action = "" method = "get">
-            <label for = "data-input-2"> Data to send - save test</label>
-            <input type = "text" id = "data-input-2">
-            <button type = "submit" formmethod = "post"> Submit using post</button>
-            <!--<button onclick = "sendDataSaveOutput()" formmethod = "post">Send data save test</button>-->
+        <label for = "data-input-2"> Data to send - save test</label>
+        <input type = "text" id = "data-input-2">
+        <button type = "submit" formmethod = "post" > Submit Moves</button>
+        <!--<button type = "submit"></button>
+        <button type = "submit" formmethod = "post"> Submit using post</button>
+        <button onclick = "sendDataSaveOutput()">Send data save test</button>-->
+            
         </form>
     </div>
     
@@ -142,6 +145,7 @@
     }
 
     function sendDataCallback(){
+        console.log("checking if it runs")
         //check response is ready or not
         // changed from xhr.status == 200 to xhr.status == 201
         if (xhr.readyState == 4 && xhr.status == 201){
@@ -187,9 +191,17 @@
         xhr.send(JSON.stringify({"data 2": dataToSendSave}));
     }
 */
+const dataToSendSave = document.getElementById("data-input-2").value;
+console.log("did it")
+colsole.log(dataToSendSave)
     function sendDataSaveOutput(){
         console.log("checking")
-        dataToSendSave = document.getElementById("data-input-2").value;
+        const dataToSendSave = document.getElementById("data-input-2").value;
+        
+        dataToSendSave.addEventListener ("click", async_ => {
+            const dataToSendSave = document.getElementById("data-input-2").value;
+            console.log("did it")
+        })
         const body = JSON.stringify({
             userID: 1,
             title: dataToSendSave,
@@ -202,7 +214,7 @@
         console.log("sending data: " + dataToSendSave);
         xhr = getXmlHttpRequestObject();
         xhr.onreadystatechange = sendDataCallback;
-        xhr.open("POST", "http://127.0.0.1:3000/app.js", true);
+        xhr.open("POST", "http://127.0.0.1:5501/app.js", true);
         xhr.setRequestHeader("Content-Type", "application/json; charset=UTF-8");
         xhr.send(body);
         }

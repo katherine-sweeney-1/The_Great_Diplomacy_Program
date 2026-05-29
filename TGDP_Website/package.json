@@ -3,7 +3,8 @@
   "version": "1.0.0",
   "description": "A website to display diplomacy games and submit moves",
   "scripts": {
-    "start": "app.js"
+    "start": "node app.js",
+    "build": "node app.js"
   },
   "keywords": ["diplomacy"],
   "author": "Katherine",
