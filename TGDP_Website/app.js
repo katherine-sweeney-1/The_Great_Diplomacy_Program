@@ -1,6 +1,6 @@
-const cors = Nodejs.Require("cors");
-const express = Nodejs.Require("express");
-const request = Nodejs.Require("request");
+const cors = require("cors");
+const express = require("express");
+const request = require("request");
 
 const 
 app = express();
