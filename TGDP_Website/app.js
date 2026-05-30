@@ -1,6 +1,6 @@
 const cors = require("cors");
 const express = require("express");
-const request = require("request");
+//const request = require("request");
 
 const 
 app = express();
@@ -27,10 +27,11 @@ app.get("/about", (req, res) => {
     res.send("About page")
 });
 
+/*
 app.all('*', (req, res) =>{
     res.status(404).send("404 - Page not found response")
 });
-
+*/
 
 /*
 # runs if I use http://127.0.0.1:5000/hello
