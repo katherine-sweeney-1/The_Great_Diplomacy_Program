@@ -6,7 +6,9 @@
     "start": "node app.js",
     "build": "node app.js"
   },
-  "keywords": ["diplomacy"],
+  "keywords": [
+    "diplomacy"
+  ],
   "author": "Katherine",
   "license": "ISC",
   "main": "app.js",
@@ -15,6 +17,7 @@
     "url": "https://github.com/katherine-sweeney-1/The_Great_Diplomacy_Program.git"
   },
   "dependencies": {
+    "cors": "^2.8.6",
     "express": "^5.2.1",
     "server": "^0.0.3"
   }
