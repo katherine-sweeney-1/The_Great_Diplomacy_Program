@@ -1,5 +1,4 @@
 [build]
     base = "TGDP_Website"
     command = "npm run build"
-    publish = "TGDP_Website/package.json"
-    
+    publish = "TGDP_Website/TGDP_Home.html"
