@@ -1,4 +1,4 @@
 [build]
     base = "TGDP_Website"
     command = "npm run build"
-    publish = "HTML_Sites"
+    publish = "Publish"
