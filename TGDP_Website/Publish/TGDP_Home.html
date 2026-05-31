@@ -96,7 +96,7 @@
         <form action = "" method = "get">
         <label for = "data-input-2"> Data to send - save test</label>
         <input type = "text" id = "data-input-2">
-        <button onclick = "sendDataSaveOuput()">SSend data-input-2</button>
+        <button onclick = "sendDataSaveOuput()">Send data-input-2</button>
         <!--<button type = "submit" formmethod = "post" > Submit Moves</button>
         <button type = "submit"></button>
         <button type = "submit" formmethod = "post"> Submit using post</button>
@@ -181,6 +181,7 @@
         xhr.send(JSON.stringify({"data 1": dataToSend}));
     }
 
+    /*
     function sendDataSaveOutput(){
         dataToSendSave = document.getElementById('data-input-2').value;
         if (!dataToSendSave) {
@@ -196,6 +197,7 @@
         // send request over the network
         xhr.send(JSON.stringify({"data 2": dataToSendSave}));
     }
+*/
 
 const dataToSendSave = document.getElementById("data-input-2").value;
 console.log("did it")
