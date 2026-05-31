@@ -96,7 +96,7 @@
         <form action = "" method = "get">
         <label for = "data-input-2"> Data to send - save test</label>
         <input type = "text" id = "data-input-2">
-        <button onclick = "sendDataSaveOuput()">Send data-input-2</button>
+        <button onclick = "sendDataSaveOuput('data-input-2')">Send data-input-2</button>
         <!--<button type = "submit" formmethod = "post" > Submit Moves</button>
         <button type = "submit"></button>
         <button type = "submit" formmethod = "post"> Submit using post</button>
@@ -202,9 +202,9 @@
 const dataToSendSave = document.getElementById("data-input-2").value;
 console.log("did it")
 console.log(dataToSendSave)
-    function sendDataSaveOutput(){
+    function sendDataSaveOutput(dataToSendSave){
         console.log("checking")
-        const dataToSendSave = document.getElementById("data-input-2").value;
+        //const dataToSendSave = document.getElementById("data-input-2").value;
         
         dataToSendSave.addEventListener ("click", async_ => {
             const dataToSendSave = document.getElementById("data-input-2").value;
