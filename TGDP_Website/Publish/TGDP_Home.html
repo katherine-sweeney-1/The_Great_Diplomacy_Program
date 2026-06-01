@@ -96,8 +96,9 @@
         <form action = "" method = "get">
         <label for = "data-input-2"> Data to send - save test</label>
         <input type = "text" id = "data-input-2">
-        <button onclick = sendDataSaveOutput()>Send data</button>
-        <!--<button onclick = "listen('data-input-2')"> Send data-input-2</button>-->
+        <button onclick = retrieve_data()>Send data</button>
+        <!--<button id = "data-input-2">Click me</button>
+        <button onclick = "listen('data-input-2')"> Send data-input-2</button>-->
         <!--<button onclick = "sendDataSaveOuput()">Send data-input-2</button>
         <button type = "submit" formmethod = "post" > Submit Moves</button>
         <button type = "submit"></button>
@@ -204,18 +205,44 @@
 */
 
 //const dataButton = document.getElementById("data-input-2")
-//const dataToSendSave = document.getElementById("data-input-2").value;
-console.log("did it");
-    function sendDataSaveOutput(){
-        const dataButton = document.getElementById("data-input-2")
+/*
+const data_button = document.getElementById("data-input-2");
+
+function retrieve_data () {
+    console.log("am i working?");
+    data = document.getElementById("data-input-2").value;
+    console.log(data)
+}
+
+data_button.addEventListener("click", retrieve_data())
+
+const dataToSendSave = document.getElementById("data-input-2").onclick = function(){
+    data = document.getElementById("data-input-2").value;
+    console.log("did it work?")
+    console.log(data)
+}
+*/
+
+function retrieve_data () {
+    console.log("am i working?");
+    data = document.getElementById("data-input-2").value;
+    console.log(data)
+    sendDataSaveOutput(data)
+};
+
+   console.log("did it");
+    function sendDataSaveOutput(data){
+        //const data_button = document.getElementById("data-input-2").value
         console.log("checking");
+        //console.log(data)
         //const dataToSendSave = document.getElementById("data-input-2").value;
-        dataButton.addEventListener("click", function(){
+        /*document.getElementById("data-input-2").addEventListener("click", () => {
             console.log("checking 1.25")
-            const dataToSendSave = document.getElementById("data-input-2").value;
+            const data = document.getElementById("data-input-2").value;
             console.log("checking 1.5")
-            console.log(dataToSendSave)
+            console.log(data)
         });
+        */
         console.log(data) /*{
             console.log("checking 1.25")
             const dataToSendSave = document.getElementById("data-input-2").value;
