@@ -257,21 +257,19 @@ function retrieve_data () {
             console.log("did it")
         });
         */
-        console.log("datatosendsave")
-        console.log(dataToSendSave)
         const body = JSON.stringify({
             userID: 1,
-            title: dataToSendSave,
+            title: data,
             completed: false
         })
-        if (!dataToSendSave) {
+        if (!data) {
             console.log("Data is empty.");
             return;
         }
-        console.log("sending data: " + dataToSendSave);
+        console.log("sending data: " + data);
         xhr = getXmlHttpRequestObject();
         xhr.onreadystatechange = sendDataCallback;
-        xhr.open("POST", "http://127.0.0.1:5501/app.js", true);
+        xhr.open("POST", "http://127.0.0.1:443/app.js", true);
         xhr.setRequestHeader("Content-Type", "application/json; charset=UTF-8");
         xhr.send(body);
 
