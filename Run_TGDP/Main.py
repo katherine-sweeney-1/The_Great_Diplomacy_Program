@@ -21,9 +21,13 @@ Arguments:
 
 """
 
+
+
 """
 
 To Do
+
+    - Edit file path to save images
 
     - Show state of map without arrows for submitting moves at last turn
 
@@ -72,5 +76,7 @@ To Do
     - DONE: Add command.succeed to treeview
 
     - DONE: Adjust data for winter turns in treeview
+
+    - DONE: deploy website to netlify
 
 """
