@@ -96,8 +96,11 @@
         <form action = "" method = "get">
         <label for = "data-input-2"> Data to send - save test</label>
         <input type = "text" id = "data-input-2">
-        <button onclick = "sendDataSaveOuput('data-input-2')">Send data-input-2</button>
-        <!--<button type = "submit" formmethod = "post" > Submit Moves</button>
+        <button onclick = retrieve_data()>Send data</button>
+        <!--<button id = "data-input-2">Click me</button>
+        <button onclick = "listen('data-input-2')"> Send data-input-2</button>-->
+        <!--<button onclick = "sendDataSaveOuput()">Send data-input-2</button>
+        <button type = "submit" formmethod = "post" > Submit Moves</button>
         <button type = "submit"></button>
         <button type = "submit" formmethod = "post"> Submit using post</button>
         <button onclick = "sendDataSaveOutput()">Send data save test</button>-->
@@ -119,6 +122,8 @@
     <img src = 'TGDP_Website/Publish/Static/Europe_Map_For_Website.png' class = "image" />
     <img src = '/TGDP_Website/Publish/Static/Europe_Map_For_Website.png' class = "image" />-->
 <script>
+
+    //document.getElementById("data-input-2").onclick = sendDataSaveOutput("data-input-2".value)
 
     // XMLHttpRequest => xhr
     var xhr = null;
@@ -163,10 +168,10 @@
         } else {
             console.log("Error: ${xhr.status}");
         }
-    }
+    };
 
-    function sendData(){
-        dataToSend = document.getElementById('data-input').value;
+    function sendData(dataToSend){
+        //dataToSend = document.getElementById('data-input').value;
         if (!dataToSend) {
             console.log("Data is empty.");
             return;
@@ -179,7 +184,7 @@
         xhr.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
         // send request over the network
         xhr.send(JSON.stringify({"data 1": dataToSend}));
-    }
+    };
 
     /*
     function sendDataSaveOutput(){
@@ -199,17 +204,61 @@
     }
 */
 
-//const dataToSendSave = document.getElementById("data-input-2").value;
-console.log("did it")
-//console.log(dataToSendSave)
-    function sendDataSaveOutput(dataToSendSave){
-        console.log("checking")
+//const dataButton = document.getElementById("data-input-2")
+/*
+const data_button = document.getElementById("data-input-2");
+
+function retrieve_data () {
+    console.log("am i working?");
+    data = document.getElementById("data-input-2").value;
+    console.log(data)
+}
+
+data_button.addEventListener("click", retrieve_data())
+
+const dataToSendSave = document.getElementById("data-input-2").onclick = function(){
+    data = document.getElementById("data-input-2").value;
+    console.log("did it work?")
+    console.log(data)
+}
+*/
+
+function retrieve_data () {
+    console.log("am i working?");
+    data = document.getElementById("data-input-2").value;
+    console.log(data)
+    sendDataSaveOutput(data)
+};
+
+   console.log("did it");
+    function sendDataSaveOutput(data){
+        //const data_button = document.getElementById("data-input-2").value
+        console.log("checking");
+        //console.log(data)
         //const dataToSendSave = document.getElementById("data-input-2").value;
-        
-        dataToSendSave.addEventListener ("click", async_ => {
+        /*document.getElementById("data-input-2").addEventListener("click", () => {
+            console.log("checking 1.25")
+            const data = document.getElementById("data-input-2").value;
+            console.log("checking 1.5")
+            console.log(data)
+        });
+        */
+        console.log(data) /*{
+            console.log("checking 1.25")
+            const dataToSendSave = document.getElementById("data-input-2").value;
+            console.log("checking 1.5")
+            console.log(dataToSendSave)
+        });
+        console.log("checking 1")
+        /*console.log(dataToSendSave)
+        element.addEventListener ("click", async_ => {
+            console.log("test")
             const dataToSendSave = document.getElementById("data-input-2").value;
             console.log("did it")
-        })
+        });
+        */
+        console.log("datatosendsave")
+        console.log(dataToSendSave)
         const body = JSON.stringify({
             userID: 1,
             title: dataToSendSave,
@@ -225,7 +274,8 @@ console.log("did it")
         xhr.open("POST", "http://127.0.0.1:5501/app.js", true);
         xhr.setRequestHeader("Content-Type", "application/json; charset=UTF-8");
         xhr.send(body);
-        }
+
+        };
 
 
 /*
