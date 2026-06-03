@@ -25,7 +25,7 @@ Arguments:
 
 """
 
-To Do
+To Do - Local Machine
 
     - Edit file path to save images
 
@@ -39,17 +39,9 @@ To Do
 
     - Paint bucket to change map color to match starting positions  
 
-    - Submit moves on website
+    - Create SQL table of commands and command info for GUI/Website
 
-    - Submitting on website sends email to me
-
-    - Show SQL table for moves on website
-
-    - Different pages for current game and submitting moves
-
-        => Check with Mercy
-
-        => Have a map without arrows for submitting moves 
+    - Have latest turn display no arrows
 
     - Eventually: make objects continuous with input? Need to look how backstabbr does this
 
@@ -78,5 +70,25 @@ To Do
     - DONE: Adjust data for winter turns in treeview
 
     - DONE: deploy website to netlify
+
+"""
+
+"""
+
+To Do - Website
+
+    - Enable post requests
+
+    - Show SQL table for moves on website
+
+    - Submit moves on website
+
+    - Submission on website sends email to me?
+
+    - Firewall?
+
+    - Show SQL table for moves on website
+
+    - Display latest turn on website
 
 """
