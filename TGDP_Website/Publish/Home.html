@@ -195,7 +195,7 @@
 
 async function send_data(data) {
     console.log("testing send data function")
-    const response = await fetch("https://70.106.230.180:5502/Functions/Javascript_Backend.js", {
+    const response = await fetch("letsplaydiplomacy.com/.netlify/Functions/Javascript_Backend.js", {
             method: "POST",
             headers: {
             "Content-Type": "application/json" 
@@ -240,7 +240,7 @@ function retrieve_data () {
         xhr.onreadystatechange = sendDataCallback;
         console.log("test" + data);
         console.log(body)
-        xhr.open("POST", "https://70.106.230.180:5502/Functions/Javascript_Backend.js", true);
+        xhr.open("POST", "letsplaydiplomacy.com/.netlify/Functions/Javascript_Backend.js", true);
         send_data(body);
         /*const response = await fetch("https://127.0.0.1:443/Functions/Javascript_Backend.js", {
             method: "POST",
