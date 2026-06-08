@@ -1,12 +1,23 @@
+const cors = require("cors");
+const express = require("express");
+const https = require ("https");
+
+app.use(cors());
+app.use(express.json());
 
 app.listen(PORT, function(){
     console.log("listening on port 5501");
 });
 
-app.post("/TGDP_Home.html", (req, res) => {
+console.log("is the server working");
+
+app.post("/Home.html", (req, res) => {
+    console.log("javascript backend test 1")
+    https.get("https://letsplaydiplomacy.com/home")
+    console.log("javascript backend test 2")
     const data_dict = {}
+    const home_url = "https://letsplaydiplomacy.com/home"
     console.log("checking example save output")
-    
     const data_button = document.getElementById("data-input-2").value
     data_button.addEventListener("click", async_ => {
         try {

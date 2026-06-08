@@ -84,19 +84,19 @@
  
     <div><span> Last update: </span><span id = "time-container"></span></div>
     
-    
+    <!--
     <div>
         <label for = "data-input"> Data to send:</label>
         <input type = "text" id = "data-input">
         <button onclick = "sendData()">Send data</button> 
     </div>
-
+    -->
     
     <div>
         <form action = "" method = "get">
         <label for = "data-input-2"> Data to send - save test</label>
         <input type = "text" id = "data-input-2">
-        <button onclick = retrieve_data()>Send data</button>
+        <button onclick = retrieve_data()>Send the data</button>
         <!--<button id = "data-input-2">Click me</button>
         <button onclick = "listen('data-input-2')"> Send data-input-2</button>-->
         <!--<button onclick = "sendDataSaveOuput()">Send data-input-2</button>
@@ -195,22 +195,24 @@
 
 async function send_data(data) {
     console.log("testing send data function")
-    const response = await fetch("http://127.0.0.1:443/Functions/Javascript_Backend.js", {
+    const response = await fetch("https://70.106.230.180:5502/Functions/Javascript_Backend.js", {
             method: "POST",
             headers: {
             "Content-Type": "application/json" 
             },
             body: JSON.stringify(data)
         })
-        if (response.ok){
-            const information = await response.json();
-            console.log("added successfully")
-            console.log(information)
-        } else {
-            throw new Error ("request failed")
-            console.log(response.status)
-        }
+    console.log("response.ok: ", response.ok)
+    if (response.ok){
+        const information = await response.json();
+        console.log("added successfully")
+        console.log(information)
+    } else {
+        throw new Error ("request failed")
+        console.log(response.status)
     }
+};
+
 function retrieve_data () {
     console.log("am i working?");
     data = document.getElementById("data-input-2").value;
@@ -238,7 +240,7 @@ function retrieve_data () {
         xhr.onreadystatechange = sendDataCallback;
         console.log("test" + data);
         console.log(body)
-        xhr.open("POST", "https://127.0.0.1:443/Functions/Javascript_Backend.js", true);
+        xhr.open("POST", "https://70.106.230.180:5502/Functions/Javascript_Backend.js", true);
         send_data(body);
         /*const response = await fetch("https://127.0.0.1:443/Functions/Javascript_Backend.js", {
             method: "POST",
