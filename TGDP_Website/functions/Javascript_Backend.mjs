@@ -11,6 +11,10 @@ app.listen(PORT, function(){
 
 console.log("is the server working");
 
+export default async(req, context) => {
+    return new Response ("hellow world")
+}
+
 app.post("/Home.html", (req, res) => {
     console.log("javascript backend test 1")
     https.get("https://letsplaydiplomacy.com/home")
