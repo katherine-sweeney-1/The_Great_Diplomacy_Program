@@ -193,46 +193,9 @@
         xhr.send(JSON.stringify({"data 1": dataToSend}));
     };
 
-    /*
-    function sendDataSaveOutput(){
-        dataToSendSave = document.getElementById('data-input-2').value;
-        if (!dataToSendSave) {
-            console.log("Data is empty.");
-            return;
-        }
-        console.log("sending data: " + dataToSendSave);
-        xhr = getXmlHttpRequestObject();
-        xhr.onreadystatechange = sendDataCallback;
-        // asynchronous requests
-        xhr.open("POST", "http://127.0.0.1:5000/example_save_output", true);
-        xhr.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
-        // send request over the network
-        xhr.send(JSON.stringify({"data 2": dataToSendSave}));
-    }
-*/
-
-//const dataButton = document.getElementById("data-input-2")
-/*
-const data_button = document.getElementById("data-input-2");
-
-function retrieve_data () {
-    console.log("am i working?");
-    data = document.getElementById("data-input-2").value;
-    console.log(data)
-}
-
-data_button.addEventListener("click", retrieve_data())
-
-const dataToSendSave = document.getElementById("data-input-2").onclick = function(){
-    data = document.getElementById("data-input-2").value;
-    console.log("did it work?")
-    console.log(data)
-}
-*/
-
 async function send_data(data) {
     console.log("testing send data function")
-    const response = await fetch("http://127.0.0.1:443/Javascript_Backend.js", {
+    const response = await fetch("http://127.0.0.1:443/Functions/Javascript_Backend.js", {
             method: "POST",
             headers: {
             "Content-Type": "application/json" 
@@ -255,33 +218,11 @@ function retrieve_data () {
     sendDataSaveOutput(data)
 };
 
-   console.log("did it");
+    console.log("did it");
     function sendDataSaveOutput(data){
         //const data_button = document.getElementById("data-input-2").value
         console.log("checking");
-        //console.log(data)
-        //const dataToSendSave = document.getElementById("data-input-2").value;
-        /*document.getElementById("data-input-2").addEventListener("click", () => {
-            console.log("checking 1.25")
-            const data = document.getElementById("data-input-2").value;
-            console.log("checking 1.5")
-            console.log(data)
-        });
-        */
-        console.log(data) /*{
-            console.log("checking 1.25")
-            const dataToSendSave = document.getElementById("data-input-2").value;
-            console.log("checking 1.5")
-            console.log(dataToSendSave)
-        });
-        console.log("checking 1")
-        /*console.log(dataToSendSave)
-        element.addEventListener ("click", async_ => {
-            console.log("test")
-            const dataToSendSave = document.getElementById("data-input-2").value;
-            console.log("did it")
-        });
-        */
+        console.log(data) 
         const body = JSON.stringify({
             userID: 1,
             title: data,
@@ -292,11 +233,13 @@ function retrieve_data () {
             return;
         }
         console.log("sending data: " + data);
+        //xhr.open("POST", "https://127.0.0.1:443/Functions/Javascript_Backend.js", true)
         xhr = getXmlHttpRequestObject();
-        //xhr.onreadystatechange = sendDataCallback;
-        console.log("test");
-        //xhr.open("POST", "https://127.0.0.1:443/Functions/Javascript_Backend.js", true);
-        send_data(data);
+        xhr.onreadystatechange = sendDataCallback;
+        console.log("test" + data);
+        console.log(body)
+        xhr.open("POST", "https://127.0.0.1:443/Functions/Javascript_Backend.js", true);
+        send_data(body);
         /*const response = await fetch("https://127.0.0.1:443/Functions/Javascript_Backend.js", {
             method: "POST",
             headers: {
