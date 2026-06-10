@@ -240,7 +240,7 @@ function retrieve_data () {
         xhr.onreadystatechange = sendDataCallback;
         console.log("test" + data);
         console.log(body)
-        xhr.open("POST", ".netlify/functions/Javascript_Backend.mjs", true);
+        xhr.open("POST", "/.netlify/functions/Javascript_Backend.mjs", true);
         send_data(body);
         /*const response = await fetch("https://127.0.0.1:443/Functions/Javascript_Backend.js", {
             method: "POST",
