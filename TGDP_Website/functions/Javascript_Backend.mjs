@@ -27,7 +27,7 @@ export const handler = async () => {
 }
 
 
-app.post("/Home.html", (req, res) => {
+app.post("/Home", (req, res) => {
     console.log("javascript backend test 1")
     https.get("https://letsplaydiplomacy.com/home")
     console.log("javascript backend test 2")
