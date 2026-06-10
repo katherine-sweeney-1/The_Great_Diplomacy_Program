@@ -1,6 +1,7 @@
 const cors = require("cors");
 const express = require("express");
 const https = require ("https");
+const PORT = 5502
 
 app.use(cors());
 app.use(express.json());
@@ -11,9 +12,20 @@ app.listen(PORT, function(){
 
 console.log("is the server working");
 
-export default async(req, context) => {
-    return new Response ("hellow world")
+export const handler = async () => {
+    console.log("checking")
+    responseText.innerText = response
+    responseText.innerText = JSON.stringify(response)
+    console.log(xhr.response);
+    console.log(console.log.responseText);
+  return {
+    statusCode: 200,
+    body: JSON.stringify({
+      message: "Hello World!",
+    }),
+  }
 }
+
 
 app.post("/Home.html", (req, res) => {
     console.log("javascript backend test 1")
