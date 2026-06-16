@@ -78,3 +78,17 @@ app.post("/home", (req, res) => {
         }
     })
 })
+
+async function getPostRequest(){
+    const url = "https://letsplaydiplomacy.com/home"
+    try {
+        let response = await fetch(url);
+        if (!response.ok){
+            throw new Error ("response status ${response.status}")
+        }
+        const result = await response.json();
+        console.log(result);
+    } catch (error) {
+        console.error(error.message);
+    }
+}
