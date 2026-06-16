@@ -7,14 +7,14 @@ app.use(cors());
 app.use(express.json());
 
 var corsOptions = {
-    origin: "https:/letsplaydiplomacy.com/home"
+    origin: "https:/letsplaydiplomacy.com"
 }
-app.get("/Home", function(req, res, next){
+app.get("/home", cors(corsOptions), function(req, res, next){
     res.json(({msg: "hello world!!!"}));
 });
 
 app.listen(PORT, function(){
-    console.log("listening on port 5501");
+    console.log("listening on port 443");
 });
 
 console.log("is the server working");
@@ -34,7 +34,7 @@ export const handler = async () => {
 }
 
 
-app.post("/home", (req, res) => {
+app.get("/home", (req, res) => {
     console.log("javascript backend test 1")
     https.get("https://letsplaydiplomacy.com/home")
     console.log("javascript backend test 2")
