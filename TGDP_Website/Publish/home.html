@@ -204,7 +204,7 @@ async function send_data(data) {
             body: JSON.stringify(data)
         })
     console.log("response.ok: test 1 ", response.ok)
-    const response2 = await fetch("TGDP_Website/functions/Javascript_Backend.mjs", {
+    const response2 = await fetch("TGDP_Website/.netlify/functions/Javascript_Backend.mjs", {
             method: "POST",
             headers: {
             "Content-Type": "application/json" 
