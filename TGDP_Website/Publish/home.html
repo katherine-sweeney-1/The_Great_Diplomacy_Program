@@ -195,14 +195,23 @@
 */
 async function send_data(data) {
     console.log("testing send data function")
-    const response = await fetch(".netlify/functions/Javascript_Backend.mjs", {
+    //const response = await fetch(".netlify/functions/Javascript_Backend.mjs", {
+    const response = await fetch("TGDP_Website/functions/Javascript_Backend.mjs", {
             method: "POST",
             headers: {
             "Content-Type": "application/json" 
             },
             body: JSON.stringify(data)
         })
-    console.log("response.ok: ", response.ok)
+    console.log("response.ok: test 1 ", response.ok)
+    const response2 = await fetch("TGDP_Website/functions/Javascript_Backend.mjs", {
+            method: "POST",
+            headers: {
+            "Content-Type": "application/json" 
+            },
+            body: JSON.stringify(data)
+        })
+    console.log("response2.ok: test 2 ", response2.ok)
     if (response.ok){
         const information = await response.json();
         console.log("added successfully")
