@@ -3,11 +3,11 @@ const express = require("express");
 const https = require ("https");
 const PORT = 443
 
-app.use(cors());
 app.use(express.json());
 
 "const API_ENDPOINT = 'https://letsplaydiplomacy.com/home'";
 
+/*
 export default async (request, context) => {
   try {
     const response = await fetch(API_ENDPOINT);
@@ -18,12 +18,15 @@ export default async (request, context) => {
     return Response.json({ error: 'Failed fetching data' }, { status: 500 });
   }
 };
+*/
 
 
+app.use(cors({
+    origin: "https:/letsplaydiplomacy.com",
+    methods: ["GET", "POST"],
+    allowedHeaders: ["Content-Type", "X-Custom-Header"]
+}))
 
-var corsOptions = {
-    origin: "https:/letsplaydiplomacy.com"
-}
 app.get("/home", cors(corsOptions), function(req, res, next){
     res.json(({msg: "hello world!!!"}));
 });
