@@ -143,7 +143,7 @@
         }
         return xhr;
     };
-
+/*
     function dataCallback(){
         //check response is ready or not
         if (xhr.readyState == 4 && xhr.status == 200){
@@ -154,7 +154,7 @@
             dataDiv.innerHTML = xhr.responseText;
         }
     }
-
+*/
     function sendDataCallback(){
         console.log("checking if it runs")
         //check response is ready or not
@@ -165,7 +165,7 @@
         if (xhr.status == 201){
             console.log("ready state 201")
         }
-        if (xhr.readyState == 4 && xhr.status == 201){
+        if (xhr.readyState == 4 && xhr.status == 200){
             console.log("user data received!");
             getDate();
             dataDiv = document.getElementById('result-container');
@@ -176,7 +176,7 @@
             console.log(xhr.status);
         }
     };
-
+/*
     function sendData(dataToSend){
         //dataToSend = document.getElementById('data-input').value;
         if (!dataToSend) {
@@ -192,7 +192,7 @@
         // send request over the network
         xhr.send(JSON.stringify({"data 1": dataToSend}));
     };
-
+*/
 async function send_data(data) {
     console.log("testing send data function")
     const response = await fetch(".netlify/functions/Javascript_Backend.mjs", {
