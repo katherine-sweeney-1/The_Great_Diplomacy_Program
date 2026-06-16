@@ -6,6 +6,13 @@ const PORT = 443
 app.use(cors());
 app.use(express.json());
 
+var corsOptions = {
+    origin: "https:/letsplaydiplomacy.com/home"
+}
+app.get("/Home", function(req, res, next){
+    res.json(({msg: "hello world!!!"}));
+});
+
 app.listen(PORT, function(){
     console.log("listening on port 5501");
 });
@@ -27,7 +34,7 @@ export const handler = async () => {
 }
 
 
-app.post("/Home", (req, res) => {
+app.post("/home", (req, res) => {
     console.log("javascript backend test 1")
     https.get("https://letsplaydiplomacy.com/home")
     console.log("javascript backend test 2")
