@@ -6,6 +6,21 @@ const PORT = 443
 app.use(cors());
 app.use(express.json());
 
+"const API_ENDPOINT = 'https://letsplaydiplomacy.com/home'";
+
+export default async (request, context) => {
+  try {
+    const response = await fetch(API_ENDPOINT);
+    const data = await response.json();
+    return Response.json({ data });
+  } catch (error) {
+    console.log(error);
+    return Response.json({ error: 'Failed fetching data' }, { status: 500 });
+  }
+};
+
+
+
 var corsOptions = {
     origin: "https:/letsplaydiplomacy.com"
 }
@@ -34,7 +49,7 @@ export const handler = async () => {
 }
 
 
-app.get("/home", (req, res) => {
+app.post("/home", (req, res) => {
     console.log("javascript backend test 1")
     https.get("https://letsplaydiplomacy.com/home")
     console.log("javascript backend test 2")
