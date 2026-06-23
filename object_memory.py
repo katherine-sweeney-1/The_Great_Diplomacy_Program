@@ -418,3 +418,60 @@ Convoys
                         UK02 (army convoyed)    => succeed
                         Note: destination is occupied by UK06, UK06 has a successful attack, no other attacks on destination 
 """
+
+import requests
+
+def parse_data(contents):
+    unicodes = {}
+    coordinates = {}
+    count = 0
+    #print(contents)
+    #for line in contents:
+    #   print(line)
+    """
+        x = line[0]
+        y = line[2]
+        coordinate = [x, y]
+        unicode = line[1]
+        coordinates[count] = coordinate
+        unicodes[count] = unicode
+        count += 1
+        """
+    return coordinates, unicodes
+
+def retrieve_data(url):
+    data_request = requests.get(url)
+    print(type(data_request))
+    data_request.encoding = "utf-8"
+    print(type(data_request.encoding))
+    contents = data_request.text
+    #decoded_contents = contents.decode("utf-8")
+    print(type(contents))
+    print(contents)
+    coordinates, unicodes = parse_data(data_request)
+    number_data_points = len(coordinates)
+    count = 0
+    while count < number_data_points:
+        coordinate = coordinates[count]
+        unicode = unicodes[count]
+        count += 1
+        print(coordinate)
+        print(unicode)
+        print(" ")
+
+import urllib.request
+import urllib.parse
+link = "https://docs.google.com/document/d/e/2PACX-1vSvM5gDlNvt7npYHhp_XfsJvuntUhq184By5xO_pA4b_gCWeXb6dM6ZxwN8rE6S4ghUsCj2VKR21oEP/pub"
+
+"""
+#with open(link, mode = "r", encoding = "utf-8") as f:
+f = urllib.request.urlopen(link)
+file = f.read()
+file_text = file.decode("utf-8")
+for line in file:
+    print(line)
+print(file)
+"""
+
+
+retrieve_data("https://docs.google.com/document/d/e/2PACX-1vSvM5gDlNvt7npYHhp_XfsJvuntUhq184By5xO_pA4b_gCWeXb6dM6ZxwN8rE6S4ghUsCj2VKR21oEP/pub")
