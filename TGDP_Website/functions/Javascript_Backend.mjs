@@ -1,30 +1,19 @@
 const cors = require("cors");
 const express = require("express");
 const https = require ("https");
+const fetch = require ("node-fetch")
 const PORT = 443
 
 app.use(express.json());
 
 "const API_ENDPOINT = 'https://letsplaydiplomacy.com/home'";
 
-/*
-export default async (request, context) => {
-  try {
-    const response = await fetch(API_ENDPOINT);
-    const data = await response.json();
-    return Response.json({ data });
-  } catch (error) {
-    console.log(error);
-    return Response.json({ error: 'Failed fetching data' }, { status: 500 });
-  }
-};
-*/
-
 
 app.use(cors({
-    origin: "https:/letsplaydiplomacy.com",
+    origin: "https:/letsplaydiplomacy.com/home",
+    //origin: "http://127.0.0.1:5502/TGDP_Website/Publish/home.html",
     methods: ["GET", "POST"],
-    allowedHeaders: ["Content-Type", "X-Custom-Header"]
+    allowedHeaders: ["Content-Type", "Authorization"]
 }))
 
 app.get("/home", cors(corsOptions), function(req, res, next){
