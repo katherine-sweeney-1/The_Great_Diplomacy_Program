@@ -1,7 +1,7 @@
 const cors = require("cors");
 const express = require("express");
 const https = require ("https");
-const fetch = require ("node-fetch")
+//const fetch = require ("node-fetch")
 const PORT = 443
 
 app.use(express.json());
