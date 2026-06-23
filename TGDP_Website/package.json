@@ -20,7 +20,6 @@
     "cors": "^2.8.6",
     "express": "^5.2.1",
     "express-generator": "^11.13.0",
-    "node": "^24.16.0",
     "server": "^0.0.3"
   }
 }
