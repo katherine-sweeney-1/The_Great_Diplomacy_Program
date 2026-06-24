@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html>
 <head>
@@ -195,8 +194,8 @@
 */
 async function send_data(data) {
     console.log("testing send data function")
-    const response = await fetch(".netlify/functions/Javascript_Backend.mjs", {
-    //const response = await fetch("TGDP_Website/functions/Javascript_Backend.mjs", {
+    //const response = await fetch(".netlify/functions/Javascript_Backend.mjs", {
+    const response = await fetch("http://127.0.0.1:5502/TGDP_Website/functions/Javascript_Backend.mjs", {
             method: "POST",
             headers: {
             "Content-Type": "application/json" 
@@ -250,8 +249,8 @@ function retrieve_data () {
         xhr.onreadystatechange = sendDataCallback;
         console.log("test" + data);
         console.log(body)
-        xhr.open("POST", "/.netlify/functions/Javascript_Backend.mjs", true);
-        //xhr.open("POST", "https://127.0.0.1:5502/functions/Javascript_Backend.mjs", true);
+        //xhr.open("POST", "/.netlify/functions/Javascript_Backend.mjs", true);
+        xhr.open("POST", "http://127.0.0.1:5502/TGDP_Website/functions/Javascript_Backend.mjs", true);
         send_data(body);
         /*const response = await fetch("https://127.0.0.1:443/Functions/Javascript_Backend.js", {
             method: "POST",
