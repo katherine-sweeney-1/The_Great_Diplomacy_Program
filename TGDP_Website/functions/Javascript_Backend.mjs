@@ -11,7 +11,7 @@ import https from "https";
 //import http from "http";
 import fetch from "node-fetch"
 const app = express();
-const PORT = 5002
+const PORT = 443
 
 //app.use(express.json());
 
