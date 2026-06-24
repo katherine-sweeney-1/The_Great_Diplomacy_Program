@@ -25,8 +25,8 @@ const corsOptions = {
 app.use(cors(corsOptions));
 
 app.use(cors({
-    //origin: "https://letsplaydiplomacy.com/home",
-    origin: "http://127.0.0.1:5502/TGDP_Website/Publish/home.html",
+    origin: "https://letsplaydiplomacy.com/home",
+    //origin: "http://127.0.0.1:5502/TGDP_Website/Publish/home.html",
     methods: ["GET", "POST"],
     //credentions: true,
     //allowedHeaders: ["Content-Type", "Authorization"]
@@ -36,19 +36,10 @@ app.use(cors({
 
 app.use(function(req, res, next) {
     console.log("does app.use run?")
-    res.setHeader("Access-Control-Allow-Origin", "http://127.0.0.1:5502/TGDP_Website/Publish/home.html");
+    //res.setHeader("Access-Control-Allow-Origin", "http://127.0.0.1:5502/TGDP_Website/Publish/home.html");
+    res.setHeader("Access-Control-Allow-Origin", "https://letsplaydiplomacy.com/home");
     res.setHeader("Access-Control-Allow-Methods", "GET, POST");
     res.setHeader("Access-Control-Allow_Headers", "Content-Type");
-    console.log("doest the res.setHEaders work?");
-    next();
-})
-
-app.use((req, res, next) => {
-    console.log("does app.use run?")
-    res.setHeader("Access-Control-Allow-Origin", "http://127.0.0.1:5502/TGDP_Website/Publish/home.html");
-    res.setHeader("Access-Control-Allow-Methods", "GET, POST");
-    res.setHeader("Access-Control-Allow_Headers", "Content-Type");
-    res.status(405).send("Method Not Allowed");
     console.log("doest the res.setHEaders work?");
     next();
 })
@@ -70,9 +61,6 @@ export const handler = async () => {
 }
 
 app.post("/home", (req, res) => {
-    res.setHeader("Access-Control-Allow-Origin", "http://127.0.0.1:5502/TGDP_Website/Publish/home.html");
-    res.setHeader("Access-Control-Allow-Methods", "GET, POST");
-    res.setHeader("Access-Control-Allow_Headers", "Content-Type");
     console.log("javascript backend test 1")
     https.get("https://letsplaydiplomacy.com/home")
     console.log("javascript backend test 2")
