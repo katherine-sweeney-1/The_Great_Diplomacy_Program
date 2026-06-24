@@ -1,30 +1,59 @@
+/*
 const cors = require("cors");
 const express = require("express");
 const https = require ("https");
+*/
 //const fetch = require ("node-fetch")
-const PORT = 443
+//const PORT = 443
+import cors from "cors";
+import express from "express";
+import https from "https";
+//import http from "http";
+import fetch from "node-fetch"
+const app = express();
+const PORT = 5002
 
-app.use(express.json());
+//app.use(express.json());
 
-"const API_ENDPOINT = 'https://letsplaydiplomacy.com/home'";
+//app.use(cors())
 
+const corsOptions = {
+    origin: "http://127.0.0.1:5502/TGDP_Website/Publish/home.html",
+    methods: ["GET", "POST"], 
+};
+
+app.use(cors(corsOptions));
 
 app.use(cors({
-    origin: "https:/letsplaydiplomacy.com/home",
-    //origin: "http://127.0.0.1:5502/TGDP_Website/Publish/home.html",
+    //origin: "https://letsplaydiplomacy.com/home",
+    origin: "http://127.0.0.1:5502/TGDP_Website/Publish/home.html",
     methods: ["GET", "POST"],
-    allowedHeaders: ["Content-Type", "Authorization"]
-}))
+    //credentions: true,
+    //allowedHeaders: ["Content-Type", "Authorization"]
+}));
 
-app.get("/home", cors(corsOptions), function(req, res, next){
-    res.json(({msg: "hello world!!!"}));
-});
 
-app.listen(PORT, function(){
-    console.log("listening on port 443");
-});
 
-console.log("is the server working");
+app.use(function(req, res, next) {
+    console.log("does app.use run?")
+    res.setHeader("Access-Control-Allow-Origin", "http://127.0.0.1:5502/TGDP_Website/Publish/home.html");
+    res.setHeader("Access-Control-Allow-Methods", "GET, POST");
+    res.setHeader("Access-Control-Allow_Headers", "Content-Type");
+    console.log("doest the res.setHEaders work?");
+    next();
+})
+
+app.use((req, res, next) => {
+    console.log("does app.use run?")
+    res.setHeader("Access-Control-Allow-Origin", "http://127.0.0.1:5502/TGDP_Website/Publish/home.html");
+    res.setHeader("Access-Control-Allow-Methods", "GET, POST");
+    res.setHeader("Access-Control-Allow_Headers", "Content-Type");
+    res.status(405).send("Method Not Allowed");
+    console.log("doest the res.setHEaders work?");
+    next();
+})
+
+//console.log("is the server working");
 
 export const handler = async () => {
     console.log("checking")
@@ -40,8 +69,10 @@ export const handler = async () => {
   }
 }
 
-
 app.post("/home", (req, res) => {
+    res.setHeader("Access-Control-Allow-Origin", "http://127.0.0.1:5502/TGDP_Website/Publish/home.html");
+    res.setHeader("Access-Control-Allow-Methods", "GET, POST");
+    res.setHeader("Access-Control-Allow_Headers", "Content-Type");
     console.log("javascript backend test 1")
     https.get("https://letsplaydiplomacy.com/home")
     console.log("javascript backend test 2")
@@ -70,6 +101,41 @@ app.post("/home", (req, res) => {
         }
     })
 })
+
+app.get("/home", (req, res) => {
+    console.log("javascript backend test 1")
+    https.get("https://letsplaydiplomacy.com/home")
+    console.log("javascript backend test 2")
+    const data_dict = {}
+    const home_url = "https://letsplaydiplomacy.com/home"
+    console.log("checking example save output")
+    const data_button = document.getElementById("data-input-2").value
+    data_button.addEventListener("click", async_ => {
+        try {
+            Promise.all(
+                URLSearchParams.map(async (data_button) => {
+                    const response = await fetch(data_button);
+                }),
+            );
+            console.log("checking")
+            //const response = await fetch ("/TGDP_Home.html")
+            if (! response.ok){
+                throw new Error("Response status: ${response}");
+                }
+            const result = response.json();
+            console.log.result();
+        }
+        catch (error) {
+        console.error(error.message);
+        console.log("compeleted", response);
+        }
+    })
+})
+
+app.listen(PORT, function(){
+    console.log("listening on port 443");
+});
+
 
 async function getPostRequest(){
     const url = "https://letsplaydiplomacy.com/home"
