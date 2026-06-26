@@ -178,6 +178,7 @@ def show_next_turn(event, main_window, canvas, game_objects, current_turn, turns
 # Previous turn button
 def show_previous_turn(event, main_window, canvas, game_objects, current_turn, turns, previous_turn_button, next_turn_button, commanders, treeview, line_width, units, displayed_last_turn):
     if event:
+        displayed_last_turn = False
         current_turn_index = turns.index(current_turn)
         if current_turn_index != 0:
             previous_turn_index = current_turn_index - 1
@@ -286,6 +287,13 @@ draws next turn units with current turn arrows
 
 """
 
-***NEED TO INCORPORATE AND TEST WHEN LAST TURN IS FIRST TURN***
+    ***NEED TO INCORPORATE AND TEST WHEN LAST TURN IS FIRST TURN***
+
+    Currently
+
+        - Last turn shows up without the adjudication of the previous turn's moves
+
+        - When pressing the previous button key, the previous button's arrows do not show
 
 """
+

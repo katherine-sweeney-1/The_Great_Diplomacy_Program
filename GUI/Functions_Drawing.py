@@ -249,6 +249,13 @@ def draw_map_components(canvas, commands, current_turn_index, line_width, units,
         canvas = draw_disbands(canvas, commands, line_width, units)
     if last_turn:
         displayed_last_turn = True
+        """
+        # enable the previous turn button to show arrows for the N - 1 turn
+        if displayed_last_turn == True:
+            displayed_last_turn = False
+        else:
+            displayed_last_turn = True
+        """
     else:
         displayed_last_turn = False
     print("Displayed_last_turn?", displayed_last_turn)
