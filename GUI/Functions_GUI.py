@@ -172,19 +172,27 @@ def show_next_turn(event, main_window, canvas, game_objects, current_turn, turns
             next_turn_index = current_turn_index + 1
         else:
             next_turn_index = current_turn_index
+            displayed_last_turn = True
         next_turn = turns[next_turn_index]
         display_different_turn(main_window, canvas, game_objects, turns, next_turn_button, previous_turn_button, next_turn, commanders, current_turn_index, treeview, line_width, units, displayed_last_turn)
 
 # Previous turn button
 def show_previous_turn(event, main_window, canvas, game_objects, current_turn, turns, previous_turn_button, next_turn_button, commanders, treeview, line_width, units, displayed_last_turn):
     if event:
-        displayed_last_turn = False
+        #displayed_last_turn = False
         current_turn_index = turns.index(current_turn)
         if current_turn_index != 0:
             previous_turn_index = current_turn_index - 1
         else:
             previous_turn_index = current_turn_index
+        print("current turn index", current_turn_index)
+        if current_turn_index == len(turns) - 1 and displayed_last_turn == True:
+            print("if statment worked")
+            previous_turn_index = current_turn_index
+        #displayed_last_turn = False
         previous_turn = turns[previous_turn_index]
+        print(current_turn_index, previous_turn_index, len(turns))
+        print("what is the previous turn's displayed last turn", displayed_last_turn)
         display_different_turn(main_window, canvas, game_objects, turns, next_turn_button, previous_turn_button, previous_turn, commanders, current_turn_index, treeview, line_width, units, displayed_last_turn)
 
 # Retrieve the coordinates of nodes by clicking on map 
@@ -294,6 +302,15 @@ draws next turn units with current turn arrows
         - Last turn shows up without the adjudication of the previous turn's moves
 
         - When pressing the previous button key, the previous button's arrows do not show
+
+    
+    At the last turn
+
+        - I want the next turn button to show no arrows
+
+        - I want the previous turn button to show arrows (i.e. last_turn is true, displayed_last_turn is false)
+
+        - Currently the N - 1 turn shows the N - 1 move for the last turns and I want it to show the N turn
 
 """
 

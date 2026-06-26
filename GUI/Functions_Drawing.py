@@ -240,6 +240,7 @@ def draw_map_components(canvas, commands, current_turn_index, line_width, units,
         if command.original_coastal_location != False:
             command.location = command.original_coastal_location
     canvas = draw_units(canvas, commands, winter_boolean)
+    """
     if winter_boolean == False and displayed_last_turn == False:
         #if last_turn == False:
         canvas = draw_attacks(canvas, commands, line_width)
@@ -247,8 +248,16 @@ def draw_map_components(canvas, commands, current_turn_index, line_width, units,
         canvas = draw_supports(canvas, commands, line_width)
         canvas = draw_retreats(canvas, commands, line_width, units)
         canvas = draw_disbands(canvas, commands, line_width, units)
+    """
+    if winter_boolean == False and displayed_last_turn == False:
+        canvas = draw_attacks(canvas, commands, line_width)
+        canvas = draw_holds(canvas, commands, line_width)
+        canvas = draw_supports(canvas, commands, line_width)
+        canvas = draw_retreats(canvas, commands, line_width, units)
+        canvas = draw_disbands(canvas, commands, line_width, units)
+        
     if last_turn:
-        displayed_last_turn = True
+        #displayed_last_turn = True
         """
         # enable the previous turn button to show arrows for the N - 1 turn
         if displayed_last_turn == True:
