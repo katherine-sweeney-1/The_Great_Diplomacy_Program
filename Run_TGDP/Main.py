@@ -5,7 +5,7 @@ import sys
 sys.path.append("../The_Great_Diplomacy_Program/TGDP_Website")
 
 #run_tgdp(input_data_sample, "9", "1903", False)
-run_tgdp(input_data_6, "6", "1901", True)
+run_tgdp(input_data_6, "6", "1901", False)
 
 """
 

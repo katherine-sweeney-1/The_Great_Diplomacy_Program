@@ -83,6 +83,13 @@ def add_treeview_data(treeview, commanders, commands, current_turn_index):
     treeview.pack()
     return treeview
 
+def determine_if_last_turn(current_turn_index, turns):
+    if current_turn_index == len(turns) - 1:
+        is_last_turn = True
+    else:
+        is_last_turn = False
+    return is_last_turn
+
 # GUI display with buttons for next turn and previous turn
 def set_up_gui():
     main_window = tk.Tk()
@@ -104,7 +111,8 @@ def set_up_gui():
     return main_window, map_image, canvas, next_turn_button, previous_turn_button
 
 # Display the pieces and treeview data
-def display_moves(main_window, map_image, canvas, commands, commanders, current_turn_index, line_width, units, last_turn = None):
+def display_moves(main_window, map_image, canvas, commands, commanders, current_turn_index, line_width, turns, units, displayed_last_turn, last_turn = None):
+    is_last_turn = determine_if_last_turn(current_turn_index, turns)
     canvas.pack(fill = tk.BOTH)
     map_image = ImageTk.PhotoImage(map_image)
     canvas.create_image(0, 0, anchor = tk.NW, image = map_image)
@@ -113,9 +121,10 @@ def display_moves(main_window, map_image, canvas, commands, commanders, current_
     scrollbar = tk.Scrollbar(main_window)
     scrollbar.pack(side = 'right', fill = 'y')
     canvas.image = map_image
-    canvas = draw_map_components(canvas, commands, current_turn_index, line_width, units, last_turn = None)
+    # NEED TO IMPLEMENT DISPLAY LAST TURN HERE
+    canvas, displayed_last_turn = draw_map_components(canvas, commands, current_turn_index, line_width, units, displayed_last_turn, last_turn = is_last_turn)
     treeview = create_treeview(main_window, commanders, commands, current_turn_index)
-    return main_window, treeview, canvas
+    return main_window, treeview, canvas, displayed_last_turn
 
 # Display a static map with a button feature to retrieve coordinates for nodes
 def display_static_map(main_window, map_image, canvas):
@@ -135,42 +144,56 @@ def display_static_map(main_window, map_image, canvas):
     return main_window
 
 # Add treeview data and implement next turn and previous turn buttons
-def display_different_turn(main_window, canvas, game_objects, turns, next_turn_button, previous_turn_button, different_turn, commanders, current_turn_index, treeview, line_width, units):
+def display_different_turn(main_window, canvas, game_objects, turns, next_turn_button, previous_turn_button, different_turn, commanders, current_turn_index, treeview, line_width, units, displayed_last_turn):
     commands, commanders, nodes, units = get_objects(game_objects, different_turn)
+    """
     if current_turn_index % 3 == 1:
         winter_boolean = True
     else:
         winter_boolean = False
+    """
     canvas.delete("draw")
     current_turn_index = turns.index(different_turn)
-    canvas = draw_map_components(canvas, commands, current_turn_index, line_width, units)
+    is_last_turn = determine_if_last_turn(current_turn_index, turns)
+    #print("current turn", current_turn_index)
+    # NEED TO IMPLEMENT DISPLAY LAST TURN HERE
+    canvas, displayed_last_turn = draw_map_components(canvas, commands, current_turn_index, line_width, units, displayed_last_turn, last_turn = is_last_turn)
     for item in treeview.get_children():
         treeview.delete(item)
     add_treeview_data(treeview, commanders, commands, current_turn_index)
-    next_turn_button.bind("<Button-1>", lambda event: show_next_turn(event, main_window, canvas, game_objects, different_turn, turns, next_turn_button, previous_turn_button, commanders, treeview, line_width, units))
-    previous_turn_button.bind("<Button-1>", lambda event: show_previous_turn(event, main_window, canvas, game_objects, different_turn, turns, previous_turn_button, next_turn_button, commanders, treeview, line_width, units))
+    next_turn_button.bind("<Button-1>", lambda event: show_next_turn(event, main_window, canvas, game_objects, different_turn, turns, next_turn_button, previous_turn_button, commanders, treeview, line_width, units, displayed_last_turn))
+    previous_turn_button.bind("<Button-1>", lambda event: show_previous_turn(event, main_window, canvas, game_objects, different_turn, turns, previous_turn_button, next_turn_button, commanders, treeview, line_width, units, displayed_last_turn))
 
 # Next turn button
-def show_next_turn(event, main_window, canvas, game_objects, current_turn, turns, next_turn_button, previous_turn_button, commanders, treeview, line_width, units):
+def show_next_turn(event, main_window, canvas, game_objects, current_turn, turns, next_turn_button, previous_turn_button, commanders, treeview, line_width, units, displayed_last_turn):
     if event:
         current_turn_index = turns.index(current_turn)
         if current_turn_index != len(turns) - 1:
             next_turn_index = current_turn_index + 1
         else:
             next_turn_index = current_turn_index
+            displayed_last_turn = True
         next_turn = turns[next_turn_index]
-        display_different_turn(main_window, canvas, game_objects, turns, next_turn_button, previous_turn_button, next_turn, commanders, current_turn_index, treeview, line_width, units)
+        display_different_turn(main_window, canvas, game_objects, turns, next_turn_button, previous_turn_button, next_turn, commanders, current_turn_index, treeview, line_width, units, displayed_last_turn)
 
 # Previous turn button
-def show_previous_turn(event, main_window, canvas, game_objects, current_turn, turns, previous_turn_button, next_turn_button, commanders, treeview, line_width, units):
+def show_previous_turn(event, main_window, canvas, game_objects, current_turn, turns, previous_turn_button, next_turn_button, commanders, treeview, line_width, units, displayed_last_turn):
     if event:
+        #displayed_last_turn = False
         current_turn_index = turns.index(current_turn)
         if current_turn_index != 0:
             previous_turn_index = current_turn_index - 1
         else:
             previous_turn_index = current_turn_index
+        print("current turn index", current_turn_index)
+        if current_turn_index == len(turns) - 1 and displayed_last_turn == True:
+            print("if statment worked")
+            previous_turn_index = current_turn_index
+        #displayed_last_turn = False
         previous_turn = turns[previous_turn_index]
-        display_different_turn(main_window, canvas, game_objects, turns, next_turn_button, previous_turn_button, previous_turn, commanders, current_turn_index, treeview, line_width, units)
+        print(current_turn_index, previous_turn_index, len(turns))
+        print("what is the previous turn's displayed last turn", displayed_last_turn)
+        display_different_turn(main_window, canvas, game_objects, turns, next_turn_button, previous_turn_button, previous_turn, commanders, current_turn_index, treeview, line_width, units, displayed_last_turn)
 
 # Retrieve the coordinates of nodes by clicking on map 
 def retrieve_node_coordinates():
@@ -187,10 +210,10 @@ def assign_neighbor_coordinates():
     nodes_data_main = get_nodes_data_dictionary(data_nodes)
     get_territories_with_neighbors_coordinates(nodes_data_main, coordinates_file, territory_neighbor_coordinates)
 
-def convert_map_to_png(main_window, canvas, commands, commanders, game_and_turn_string, game_number_string, map_image, count, line_width, units, last_turn_boolean):
+def convert_map_to_png(main_window, canvas, commands, commanders, game_and_turn_string, game_number_string, map_image, count, line_width, turns, units, displayed_last_turn, last_turn_boolean):
     map_width = map_image.width
     map_height = map_image.height
-    main_window, treeview, canvas = display_moves(main_window, map_image, canvas, commands, commanders, count, line_width, units, last_turn = last_turn_boolean)
+    main_window, treeview, canvas, displayed_last_turn = display_moves(main_window, map_image, canvas, commands, commanders, count, line_width, turns, units, displayed_last_turn, last_turn = last_turn_boolean)
     file_name_ps = "GUI/" + game_and_turn_string + ".ps"
     file_name_png = game_and_turn_string + ".png"
     canvas.pack()
@@ -209,7 +232,7 @@ def convert_map_to_png(main_window, canvas, commands, commanders, game_and_turn_
     canvas.delete("draw")
 
 # Save the map images with moves as png files
-def save_images(game_objects, game_number_string, start_game_year, line_width):
+def save_images(game_objects, game_number_string, start_game_year, line_width, turns, displayed_last_turn):
     count = 0
     main_window, map_image, canvas, next_turn_button, previous_turn_button = set_up_gui()
     for turn in game_objects:
@@ -231,14 +254,16 @@ def save_images(game_objects, game_number_string, start_game_year, line_width):
         game_season = game_season.lower()
         game_and_turn_string = "game" + str(game_number_string) + "_" + str(game_year) + "_" + game_season
         commands, commanders, nodes, units = get_objects(game_objects, turn)
-        convert_map_to_png(main_window, canvas, commands, commanders, game_and_turn_string, game_number_string, map_image, count, line_width, units, last_turn_boolean)
+        convert_map_to_png(main_window, canvas, commands, commanders, game_and_turn_string, game_number_string, map_image, count, line_width, turns, units, displayed_last_turn, last_turn_boolean)
         count += 1
         if count == len(game_objects):
-            convert_map_to_png(main_window, canvas, commands, commanders, game_and_turn_string, game_number_string, map_image, count, line_width, units, last_turn_boolean)
+            convert_map_to_png(main_window, canvas, commands, commanders, game_and_turn_string, game_number_string, map_image, count, line_width, turns, units, displayed_last_turn, last_turn_boolean)
+            # NEED TO IMPLEMENT DRAWING LAST TURN WITHOUT ARROWS
             last_turn_boolean = True
             main_window.quit()
 # Run function
 def run_gui(game_objects, game_number_string, start_game_year, save_images_boolean):
+    displayed_last_turn = False
     line_width = 2
     turns = []
     for turn in game_objects:
@@ -246,13 +271,13 @@ def run_gui(game_objects, game_number_string, start_game_year, save_images_boole
     first_turn = turns[0]
     current_turn_index = turns.index(first_turn)
     if save_images_boolean:
-        save_images(game_objects, game_number_string, start_game_year, line_width)
+        save_images(game_objects, game_number_string, start_game_year, line_width, turns, displayed_last_turn)
     else:
         commands, commanders, nodes, units = get_objects(game_objects, first_turn)
         main_window, map_image, canvas, next_turn_button, previous_turn_button = set_up_gui()
-        main_window, treeview, canvas = display_moves(main_window, map_image, canvas, commands, commanders, current_turn_index, line_width, units)
-        next_turn_button.bind("<Button-1>", lambda event: show_next_turn(main_window, event, canvas, game_objects, first_turn, turns, next_turn_button, previous_turn_button, commanders, treeview, line_width, units))
-        previous_turn_button.bind("<Button-1>", lambda event: show_previous_turn(main_window, event, canvas, game_objects, first_turn, turns, previous_turn_button, next_turn_button, commanders, treeview, line_width, units))
+        main_window, treeview, canvas, displayed_last_turn = display_moves(main_window, map_image, canvas, commands, commanders, current_turn_index, line_width, turns, units, displayed_last_turn)
+        next_turn_button.bind("<Button-1>", lambda event: show_next_turn(main_window, event, canvas, game_objects, first_turn, turns, next_turn_button, previous_turn_button, commanders, treeview, line_width, units, displayed_last_turn))
+        previous_turn_button.bind("<Button-1>", lambda event: show_previous_turn(main_window, event, canvas, game_objects, first_turn, turns, previous_turn_button, next_turn_button, commanders, treeview, line_width, units, displayed_last_turn))
         main_window.mainloop()
 
 """
@@ -267,3 +292,25 @@ draws next turn units with current turn arrows
 
 
 """
+
+"""
+
+    ***NEED TO INCORPORATE AND TEST WHEN LAST TURN IS FIRST TURN***
+
+    Currently
+
+        - Last turn shows up without the adjudication of the previous turn's moves
+
+        - When pressing the previous button key, the previous button's arrows do not show
+
+    
+    At the last turn
+
+        - I want the next turn button to show no arrows
+
+        - I want the previous turn button to show arrows (i.e. last_turn is true, displayed_last_turn is false)
+
+        - Currently the N - 1 turn shows the N - 1 move for the last turns and I want it to show the N turn
+
+"""
+
