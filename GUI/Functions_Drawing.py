@@ -227,7 +227,7 @@ def draw_disbands(canvas, commands, line_width, units):
     return canvas
 
 # Draw the units and movements 
-def draw_map_components(canvas, commands, current_turn_index, line_width, units, last_turn = None):
+def draw_map_components(canvas, commands, current_turn_index, line_width, units, displayed_last_turn, last_turn = None):
     if current_turn_index % 3 == 2:
         winter_boolean = True
     else:
@@ -240,15 +240,25 @@ def draw_map_components(canvas, commands, current_turn_index, line_width, units,
         if command.original_coastal_location != False:
             command.location = command.original_coastal_location
     canvas = draw_units(canvas, commands, winter_boolean)
-    if winter_boolean == False or last_turn == False:
+    if winter_boolean == False and displayed_last_turn == False:
+        #if last_turn == False:
         canvas = draw_attacks(canvas, commands, line_width)
         canvas = draw_holds(canvas, commands, line_width)
         canvas = draw_supports(canvas, commands, line_width)
         canvas = draw_retreats(canvas, commands, line_width, units)
         canvas = draw_disbands(canvas, commands, line_width, units)
-    return canvas
+    if last_turn:
+        displayed_last_turn = True
+    else:
+        displayed_last_turn = False
+    print("Displayed_last_turn?", displayed_last_turn)
+    return canvas, displayed_last_turn
 
 """
 probably fix last turn issue probably in line 238
 
+"""
+
+"""
+currently need to display latest turn for submission 
 """
