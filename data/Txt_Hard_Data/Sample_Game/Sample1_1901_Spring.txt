@@ -1,0 +1,22 @@
+UK
+Mercy
+F BAL C Fin - Ber  SUCCEEDS
+F BOT C Fin - Ber  SUCCEEDS
+F ENG C Lon - Pic  FAILS
+A Fin - Ber  FAILS
+A Hol S Kie  FAILS
+F Kie S Fin - Ber  FAILS
+A Lon - Pic  FAILS
+F Stp/nc H  SUCCEEDS
+
+TU
+Michael
+F ADR S Ven  SUCCEEDS
+F AEG - ION  SUCCEEDS
+A Arm S Rum - Sev  SUCCEEDS
+A Bud - Rum  SUCCEEDS
+F Bul/ec S Bud - Rum  SUCCEEDS
+A Gal - Ukr  FAILS
+F Nap H  SUCCEEDS
+A Rum - Sev  SUCCEEDS
+A Ven H  SUCCEEDS
