@@ -199,7 +199,7 @@ def draw_supports(canvas, commands, line_width):
 def draw_retreats(canvas, commands, line_width, units):
     for command_id in commands:
         command = commands[command_id]
-        if command.succeed == False and command.retreat == True and command_id in units.keys():
+        if command.succeed == False and command.needs_retreat == True and command_id in units.keys():
             location_coordinate = command.location.coordinate
             retreat_coordinate = units[command_id].location.coordinate
             offset_retreat_coordinate = get_offset_destination(location_coordinate, retreat_coordinate, 2)

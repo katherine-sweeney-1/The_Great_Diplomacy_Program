@@ -44,7 +44,10 @@ def run_tgdp(input_data, game_number_string, start_game_year, save_images_boolea
         print(" ")
         """
         # retrieve nodes and units for winter season
-        db_table = yield_table(processed_commands, game_and_turn_string)
+        #
+        # NEED TO ADD CMD_OUTCOME_LOCATION FOR TABLE TO WORK
+        #
+        #db_table = yield_table(processed_commands, game_and_turn_string)
         objects["Commands"] = commands
         objects["Commanders"] = commanders
         objects["Nodes"] = nodes
@@ -59,7 +62,7 @@ def run_tgdp(input_data, game_number_string, start_game_year, save_images_boolea
     for command_id in processed_commands:
         processed_command = processed_commands[command_id]
         processed_command.location = units[command_id].location
-    
+
 """
 
 Game 1 starts at year 1903

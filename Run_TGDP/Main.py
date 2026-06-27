@@ -6,8 +6,8 @@ sys.path.append("../The_Great_Diplomacy_Program/TGDP_Website")
 
 #run_tgdp(input_data_sample, "9", "1903", False)
 
-#run_tgdp(input_data_8, "8", "1901", False)
-run_tgdp(input_data_sample, "9", "1901", False)
+run_tgdp(input_data_8, "8", "1901", False)
+#run_tgdp(input_data_sample, "9", "1901", False)
 """
 
 Arguments:
