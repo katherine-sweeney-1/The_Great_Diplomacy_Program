@@ -185,14 +185,14 @@ def show_previous_turn(event, main_window, canvas, game_objects, current_turn, t
             previous_turn_index = current_turn_index - 1
         else:
             previous_turn_index = current_turn_index
+        """
         print("current turn index", current_turn_index)
         if current_turn_index == len(turns) - 1 and displayed_last_turn == True:
             print("if statment worked")
             previous_turn_index = current_turn_index
+        """
         #displayed_last_turn = False
         previous_turn = turns[previous_turn_index]
-        print(current_turn_index, previous_turn_index, len(turns))
-        print("what is the previous turn's displayed last turn", displayed_last_turn)
         display_different_turn(main_window, canvas, game_objects, turns, next_turn_button, previous_turn_button, previous_turn, commanders, current_turn_index, treeview, line_width, units, displayed_last_turn)
 
 # Retrieve the coordinates of nodes by clicking on map 

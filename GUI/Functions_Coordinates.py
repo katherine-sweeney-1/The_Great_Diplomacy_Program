@@ -94,7 +94,7 @@ def assign_coordinates_to_nodes(nodes, coordinate_file, coastal_coordinate_file)
             node = nodes[coastal_id]
             with  open (coastal_coordinate_file, "r") as file_input:
                 for line in file_input:
-                    if line[0:6] == node_id:
+                    if line[0:6] == coastal_id:
                         coordinates = line[7:-1]
                         coordinates = coordinates.split(" ")
                         x_coordinate = coordinates[0][1:-1]
@@ -102,7 +102,7 @@ def assign_coordinates_to_nodes(nodes, coordinate_file, coastal_coordinate_file)
                         y_coordinate = coordinates[1][:-1]
                         y_coordinate = int(y_coordinate)
                         coordinates = (x_coordinate, y_coordinate)
-                        node.assign_coordinates(coordinates) 
+                        node.assign_coordinates(coordinates)
         else:
             continue
     return nodes

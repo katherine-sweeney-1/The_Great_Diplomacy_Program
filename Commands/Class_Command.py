@@ -77,8 +77,8 @@ class Command ():
         return self.original_support_destination
     
     def assign_retreat_disband(self, retreat_boolean):
-        self.retreat = retreat_boolean
-        return self.retreat
+        self.needs_retreat = retreat_boolean
+        return self.needs_retreat
     
     def assign_retreat_nodes(self, retreat_options):
         self.retreat_nodes = retreat_options

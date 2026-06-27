@@ -30,10 +30,12 @@ def run_tgdp(input_data, game_number_string, start_game_year, save_images_boolea
             case 1:
                 game_season = "Fall"
         game_and_turn_string = "Game" + str(game_number_string) + "_" + str(game_year) + "_" + game_season
-        #print(game_and_turn_string)
+        print(game_and_turn_string)
         commanders_data = input_data[commands_data]
         parsed_cmds, parsed_units = parse_commands_and_units(commands_data)
         commands, commanders, nodes, units = create_objects(data_nodes, data_coastal, data_fleet_coastal, data_fleet_special_coastal, commanders_data, parsed_units, parsed_cmds)
+        #for node_id in nodes:
+        #    print(node_id)
         commands, processed_commands, nodes, units = run_processing(commands, commanders, nodes, units)
         """
         for command_id in commands:
@@ -42,7 +44,10 @@ def run_tgdp(input_data, game_number_string, start_game_year, save_images_boolea
         print(" ")
         """
         # retrieve nodes and units for winter season
-        db_table = yield_table(processed_commands, game_and_turn_string)
+        #
+        # NEED TO ADD CMD_OUTCOME_LOCATION FOR TABLE TO WORK
+        #
+        #db_table = yield_table(processed_commands, game_and_turn_string)
         objects["Commands"] = commands
         objects["Commanders"] = commanders
         objects["Nodes"] = nodes
@@ -57,7 +62,7 @@ def run_tgdp(input_data, game_number_string, start_game_year, save_images_boolea
     for command_id in processed_commands:
         processed_command = processed_commands[command_id]
         processed_command.location = units[command_id].location
-    
+
 """
 
 Game 1 starts at year 1903

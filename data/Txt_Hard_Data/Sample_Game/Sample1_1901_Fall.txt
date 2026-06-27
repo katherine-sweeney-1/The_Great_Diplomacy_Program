@@ -1,0 +1,23 @@
+FR
+Katherine
+A Bel S Ruh  FAILS
+F Bre - ENG  FAILS
+A Mar - Bur  SUCCEEDS
+A Mun - Boh  SUCCEEDS
+A Pie H  SUCCEEDS
+A Ruh S Bel  FAILS
+F Spa/sc - MAO  SUCCEEDS
+F Tun - TYS  SUCCEEDS
+
+TU
+Michael
+F ADR S Tri - Ven  SUCCEEDS
+A Ank H  SUCCEEDS
+A Bud H  SUCCEEDS
+F Bul/ec - BLA  FAILS
+F ION - Nap  SUCCEEDS
+A Ser - Rum  SUCCEEDS
+F Smy - AEG  SUCCEEDS
+A Tri - Ven  SUCCEEDS
+A Vie - Gal  SUCCEEDS
+

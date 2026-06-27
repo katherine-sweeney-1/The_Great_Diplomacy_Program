@@ -199,7 +199,7 @@ def draw_supports(canvas, commands, line_width):
 def draw_retreats(canvas, commands, line_width, units):
     for command_id in commands:
         command = commands[command_id]
-        if command.succeed == False and command.retreat == True and command_id in units.keys():
+        if command.succeed == False and command.needs_retreat == True and command_id in units.keys():
             location_coordinate = command.location.coordinate
             retreat_coordinate = units[command_id].location.coordinate
             offset_retreat_coordinate = get_offset_destination(location_coordinate, retreat_coordinate, 2)
@@ -249,7 +249,7 @@ def draw_map_components(canvas, commands, current_turn_index, line_width, units,
         canvas = draw_retreats(canvas, commands, line_width, units)
         canvas = draw_disbands(canvas, commands, line_width, units)
     """
-    if winter_boolean == False and displayed_last_turn == False:
+    if winter_boolean == False:# and displayed_last_turn == False:
         canvas = draw_attacks(canvas, commands, line_width)
         canvas = draw_holds(canvas, commands, line_width)
         canvas = draw_supports(canvas, commands, line_width)
@@ -267,7 +267,6 @@ def draw_map_components(canvas, commands, current_turn_index, line_width, units,
         """
     else:
         displayed_last_turn = False
-    print("Displayed_last_turn?", displayed_last_turn)
     return canvas, displayed_last_turn
 
 """
