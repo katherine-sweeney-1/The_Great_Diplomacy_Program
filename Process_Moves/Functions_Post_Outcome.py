@@ -111,17 +111,17 @@ def process_outcomes(commands, nodes, units):
 # get outcome locations for processed commands
 # takes processed commands and processed units as input
 # creates processed commands and processed units with new information
-def determine_if_retreats(commands, units):
+def determine_if_retreats(commands):
     for command_id in commands:
         command = commands[command_id]
-        outcome_node = command.location
+        #outcome_node = command.location
         #displacing_attack = False
         # CHECK: is command.convoy = False necessary? 
         if command.location == command.origin and command.origin != command.destination and command.convoy == False:
             if command.succeed == True:
                 displacing_attack = False
                 retreat = False
-                outcome_node = command.destination
+                #outcome_node = command.destination
             else:
                 displacing_attack, retreat = check_displacement_attacks(command, command_id, commands)
         elif command.location == command.origin and command.origin == command.destination:
@@ -136,8 +136,26 @@ def determine_if_retreats(commands, units):
         command.assign_retreat_disband(retreat)
         if retreat == True:
             print(command_id, command.needs_retreat)
-    return commands, units
+    return commands
 
+"""
+
+determine the outcome nodes
+assumes that input for retreats is already given (e.g. UK01 retreats to Den)
+
+"""
+def determine_outcome_nodes(commands):
+    for command_id in commands:
+        command = commands[command_id]
+        if command.chosen_retreat == False:
+            outcome_node = command.location
+            if command.location == command.origin and command.origin != command.destination and command.convoy == False:
+                if command.succeed == True:
+                    outcome_node = command.destination
+        else:
+            outcome_node = command.chosen_retreat
+
+                
 # check if unit is displaced by an attack
 def check_displacement_attacks(command, command_id, commands):
     displacing_attack = False
@@ -187,15 +205,6 @@ def get_retreats(processed_commands, processed_nodes, processed_units):
             command.assign_retreat_nodes(retreat_options)
     return processed_units
 
-"""
-
-FOR RETREAT OBJECTS
-
-    - Need to assign location: units.assign_location ()
-
-    - Assign outcome node as location, origin, and destination for every non-retreat command
-
-"""
 # process outcomes
 def process_outcomes(commands, nodes, units):
     processed_units = units.copy()
@@ -204,7 +213,7 @@ def process_outcomes(commands, nodes, units):
     #for unit_id in units:
     #    unit = units[unit_id]
     #    unit.assign_original_location(unit.location)
-    commands, units = determine_if_retreats(commands, units)
+    commands = determine_if_retreats(commands)
     processed_nodes, processed_units = assign_occupied(nodes, processed_units)
     processed_units = get_retreats(commands, processed_nodes, processed_units)
     """
@@ -226,3 +235,68 @@ def process_outcomes(commands, nodes, units):
     """
     return commands, processed_commands, nodes, processed_nodes, units, processed_units
     return commands, processed_commands, nodes, processed_nodes, units, processed_units_with_disbands
+
+
+"""
+
+What I want 
+
+    - Spring/Fall turn:
+
+        - retreat options
+
+        - same location, origin, and destination as input for commands
+
+    - Spring/Fall Retreat turn:
+
+        - chosen retreats given as input 
+
+        - units that need to be disbanded are disbanded
+
+        - chosen retreats that choose disband are disbanded 
+
+        - retreating commands have same location and origin and chosen retreat as destination
+
+        - other commands have outcome node as location, origin, and destination
+
+
+"""
+
+
+"""
+
+GAME 8 
+
+    - SPRING 1904 SHOULD HAVE NO RETREAT OPTIONS AND SHOULD DISBAND FOR ALL THREE UNITS
+
+    - FALL 1904 KIE NEEDS TO DISBAND
+
+    - FALL 1905 HOL NEEDS TO DISBAND
+
+    - SPRING 1911 BRE NEEDS TO DISBAND
+
+    - FALL 1912 MOS NEEDS TO DISBAND
+
+    - SPRING 1913 RUH NEEDS TO DISBAND
+
+    - FALL 1913 SIL NEEDS TO DISBAND
+
+    - SPRING 1914 WES NEEDS TO DISBAND
+
+    - FALL 1914 MAR NEEDS TO DISBAND
+
+NEED TO DEBUG if two units only have one retreat option
+
+    - units of same country
+
+    - units of different countries
+
+    - e.g. game 8 fall 1914
+
+FOR RETREAT OBJECTS
+
+    - Need to assign location: units.assign_location ()
+
+    - Assign outcome node as location, origin, and destination for every non-retreat command
+
+"""
