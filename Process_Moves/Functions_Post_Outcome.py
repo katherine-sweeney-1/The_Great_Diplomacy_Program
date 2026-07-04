@@ -144,13 +144,21 @@ determine the outcome nodes
 assumes that input for retreats is already given (e.g. UK01 retreats to Den)
 
 """
-def assign_unit_outcome_location(commands, processed_units):
+def assign_unit_outcome_location(commands, processed_units, have_retreats_boolean):
     for command_id in commands:
         command = commands[command_id]
         outcome_node = command.location
-        if command.location == command.origin and command.origin != command.destination and command.convoy == False:
-            if command.succeed == True:
-                outcome_node = command.destination
+        if have_retreats_boolean:
+            #print("checking")
+            if command.chosen_retreat != False:
+
+                print("yes", command.chosen_retreat)
+            else:
+                print("what is going on", command_id, command.chosen_retreat)
+        else:
+            if command.location == command.origin and command.origin != command.destination and command.convoy == False:
+                if command.succeed == True:
+                    outcome_node = command.destination
         processed_units[command_id].assign_location(outcome_node, False, False)
     return processed_units
 
@@ -204,6 +212,7 @@ def get_retreats(processed_commands, processed_nodes, processed_units):
 
 # process outcomes
 def process_outcomes(commands, commanders, nodes, units):
+    have_retreats_boolean = False
     processed_commands = commands.copy()
     processed_commanders = commanders.copy()
     processed_nodes = nodes.copy()
@@ -212,7 +221,7 @@ def process_outcomes(commands, commanders, nodes, units):
     #    unit = units[unit_id]
     #    unit.assign_original_location(unit.location)
     commands = determine_if_retreats(commands)
-    processed_units = assign_unit_outcome_location(commands, processed_units)
+    processed_units = assign_unit_outcome_location(commands, processed_units, False)
     processed_nodes, processed_units = assign_occupied(nodes, processed_units)
     #for node_id in processed_nodes:
     #    print(node_id, nodes[node_id].is_occupied)
@@ -240,28 +249,31 @@ def process_outcomes(commands, commanders, nodes, units):
 
 
 # command.retreat_nodes => gives options for retreats
-def get_retreats_from_input(commands, nodes):
-    for command_id in commands:
-        command = commands[command_id]
+def get_retreats_from_input(processed_commands, processed_nodes):
+    for command_id in processed_commands:
+        command = processed_commands[command_id]
         if command.needs_retreat == True and len(command.retreat_nodes) > 0:
             print("choose a retreat option: ", command.retreat_nodes)
             retreat_node_string = input()
-            if retreat_node_string in nodes.keys():
+            if retreat_node_string in processed_nodes.keys():
                 command.assign_chosen_retreat(retreat_node_string)
+                print("HELP", command.chosen_retreat)
             else:
-                print("invalid node")
+                command.assign_chosen_retreat(False)
         else:
             command.assign_chosen_retreat(False)
-       
-
-
+        #print("chosen retreat", command_id, command.chosen_retreat)
+    return processed_commands
+    
 
 def process_retreat_turns(commands, commanders, nodes, units):
     processed_commands = commands.copy()
     processed_commanders = commanders.copy()
     processed_nodes = nodes.copy()
     processed_units = units.copy()
-    get_retreats_from_input(processed_commands, processed_nodes)
+    processed_commands = get_retreats_from_input(processed_commands, processed_nodes)
+    processed_units = assign_unit_outcome_location(processed_commands, processed_units, True)
+    processed_nodes, processed_units = assign_occupied(processed_nodes, processed_units)
 
 
 
