@@ -168,7 +168,6 @@ def check_displacement_attacks(command, command_id, commands):
                         #outcome_node = command.location
                         displacing_attack = potential_attack
                         retreat = True
-                    #if potential_attack.strength > command.strength and potential_attack.succeed == True:        retreat = True
                         break
                     else:
                         retreat = False
@@ -178,7 +177,6 @@ def check_displacement_attacks(command, command_id, commands):
                 retreat = False
         else:
             retreat = False
-            #outcome_node = command.location
     return displacing_attack, retreat
 
 # get retreat nodes for processed commands
@@ -242,11 +240,29 @@ def process_outcomes(commands, commanders, nodes, units):
 
 
 # command.retreat_nodes => gives options for retreats
-def get_retreats_from_input(commands):
+def get_retreats_from_input(commands, nodes):
     for command_id in commands:
         command = commands[command_id]
-        if command.needs_retreat == True:
+        if command.needs_retreat == True and len(command.retreat_nodes) > 0:
             print("choose a retreat option: ", command.retreat_nodes)
+            retreat_node_string = input()
+            if retreat_node_string in nodes.keys():
+                command.assign_chosen_retreat(retreat_node_string)
+            else:
+                print("invalid node")
+        else:
+            command.assign_chosen_retreat(False)
+       
+
+
+
+def process_retreat_turns(commands, commanders, nodes, units):
+    processed_commands = commands.copy()
+    processed_commanders = commanders.copy()
+    processed_nodes = nodes.copy()
+    processed_units = units.copy()
+    get_retreats_from_input(processed_commands, processed_nodes)
+
 
 
 
