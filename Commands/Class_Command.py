@@ -44,10 +44,6 @@ class Command ():
         self.succeed = cmd_valid_boolean
         return self.succeed
     
-    def retreat_boolean(self, possible_retreat):
-        self.retreat = possible_retreat
-        return self.retreat
-    
     def assign_outcome_location(self, node):
         self.outcome_location = node
         return self.outcome_location
@@ -76,6 +72,10 @@ class Command ():
         self.original_support_destination = original_support_destination_node
         return self.original_support_destination
     
+    def retreat_boolean(self, possible_retreat):
+        self.retreat = possible_retreat
+        return self.retreat
+    
     def assign_retreat_disband(self, retreat_boolean):
         self.needs_retreat = retreat_boolean
         return self.needs_retreat
@@ -91,6 +91,10 @@ class Command ():
     def assign_winter_location (self, winter_location_node):
         self.winter_location = winter_location_node
         return self.winter_location
+    
+    def assign_chosen_retreat(self, string):
+        self.chosen_retreat = string
+        return self.chosen_retreat
     
     def print_statement(self):
         print("command for unit {}, country {} has commander {}".format(self.unit.id, self.country, self.human.human))
