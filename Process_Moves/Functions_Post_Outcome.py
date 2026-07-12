@@ -151,7 +151,7 @@ def assign_unit_location(commands, processed_units, have_retreats_boolean):
         if have_retreats_boolean:
             # units requiring retreat have their location become their chosen retreat node
             if command.chosen_retreat != False:
-                processed_units[command_id].assign_location(command.chosen_retreat)
+                processed_units[command_id].assign_location(command.chosen_retreat, False, False)
             # units that require a retreat and do not have a retreat node are disbanded 
             else:
                 processed_units.pop(command_id)
@@ -159,13 +159,13 @@ def assign_unit_location(commands, processed_units, have_retreats_boolean):
             if command.location == command.origin and command.origin != command.destination and command.convoy == False:
                 # successful attacks have their location become the original command's destination
                 if command.succeed == True:
-                    processed_units[command_id].assign_location(command.destination)
+                    processed_units[command_id].assign_location(command.destination, False, False)
                 # unsuccessful attacks that do not retreat remain on their location
                 else:
-                    processed_units[command_id].assign_location(command.location)
+                    processed_units[command_id].assign_location(command.location, False, False)
             # supports, holds, and convoys that do not retreat remain on their location
             else:
-                processed_units[command_id].assign_location(command.location)
+                processed_units[command_id].assign_location(command.location, False, False)
     return processed_units
 
                 
