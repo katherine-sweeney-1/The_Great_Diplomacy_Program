@@ -104,9 +104,11 @@ def run_tgdp(input_data, game_number_string, start_game_year, save_images_boolea
     for game_and_turn_string in turns_objects:
         commands = turns_objects[game_and_turn_string]["Commands"]
     gui = run_gui(turns_objects, str(game_number_string), start_game_year, save_images_boolean)
+    """
     for command_id in processed_commands:
         processed_command = processed_commands[command_id]
         processed_command.location = units[command_id].location
+    """
 
 
 
