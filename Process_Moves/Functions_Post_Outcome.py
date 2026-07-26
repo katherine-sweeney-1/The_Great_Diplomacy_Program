@@ -144,18 +144,59 @@ determine the outcome nodes
 assumes that input for retreats is already given (e.g. UK01 retreats to Den)
 
 """
+
+def assign_location_for_non_retreats(command, command_id, processed_units):
+    if command.location == command.origin and command.origin != command.destination and command.convoy == False:
+        # successful attacks have their location become the original command's destination
+        if command.succeed == True:
+            processed_units[command_id].assign_location(command.destination, False, False)
+        # unsuccessful attacks that do not retreat remain on their location
+        else:
+            processed_units[command_id].assign_location(command.location, False, False)
+    # supports, holds, and convoys that do not retreat remain on their location
+    else:
+        processed_units[command_id].assign_location(command.location, False, False)
+    return processed_units
+
 def assign_unit_location(commands, processed_units, have_retreats_boolean):
     for command_id in commands:
         command = commands[command_id]
-        outcome_node = command.location
+        #outcome_node = command.location
+        """
+        if have_retreats_boolean and command.needs_retreat == True:
+            if command.chosen_retreat != False:
+                print("chosen retreat checking", command.chosen_retreat)
+        """
         if have_retreats_boolean:
+            if command.needs_retreat == True:
+                if command.chosen_retreat != False:
+                    for retreat_node in command.retreat_nodes:
+                        #print("checking retreat nodes and chosen retreat")
+                        #print(retreat_node, command.chosen_retreat.name)
+                        if command.chosen_retreat.name == retreat_node:
+                            valid_retreat_choice = True
+                            break
+                        else:
+                            valid_retreat_choice = False
+                    if valid_retreat_choice == True:
+                        processed_units[command_id].assign_location(command.chosen_retreat, False, False)
+                    else:
+                        processed_units.pop(command_id)
+                else:
+                    processed_units.pop(command_id)
+            else:
+                processed_units = assign_location_for_non_retreats(command, command_id, processed_units)
+            """
             # units requiring retreat have their location become their chosen retreat node
             if command.chosen_retreat != False:
                 processed_units[command_id].assign_location(command.chosen_retreat, False, False)
             # units that require a retreat and do not have a retreat node are disbanded 
             else:
                 processed_units.pop(command_id)
+            """
         else:
+            processed_units = assign_location_for_non_retreats(command, command_id, processed_units)
+            """
             if command.location == command.origin and command.origin != command.destination and command.convoy == False:
                 # successful attacks have their location become the original command's destination
                 if command.succeed == True:
@@ -166,6 +207,7 @@ def assign_unit_location(commands, processed_units, have_retreats_boolean):
             # supports, holds, and convoys that do not retreat remain on their location
             else:
                 processed_units[command_id].assign_location(command.location, False, False)
+            """
     return processed_units
 
                 
@@ -272,6 +314,40 @@ def get_retreats_from_input(processed_commands, processed_nodes):
         #print("chosen retreat", command_id, command.chosen_retreat)
     return processed_commands
     
+def update_processed_commands(processed_commands, processed_nodes, processed_units):
+    eliminated_commands_ids = []
+    #print(processed_units)
+    #print(processed_units.keys())
+    for command_id in processed_commands:
+        if command_id not in processed_units.keys():
+            print(command_id)
+            eliminated_commands_ids.append(command_id)
+    for each_id in eliminated_commands_ids:
+        processed_commands.pop(each_id)
+    print("eliminated commands: ", eliminated_commands_ids)
+    print(" ")
+    for command_id in processed_commands:
+        command = processed_commands[command_id]
+        location_string = processed_units[command_id].location.name
+        #command.assign_location(command.location.name, processed_units)
+        if command.chosen_retreat != False:
+            chosen_retreat_string = command.chosen_retreat.name
+            #print("retreat string", command.chosen_retreat.name)
+            command.assign_location(command.location.name, processed_nodes)
+            command.assign_origin(chosen_retreat_string, processed_nodes)
+            command.assign_destination(chosen_retreat_string, processed_nodes)
+            print("retreats", command_id, command.location.name, command.origin.name, command.destination.name)
+        else:
+            location_string = processed_units[command_id].location.name
+            command.assign_location(location_string, processed_nodes)
+            command.assign_origin(location_string, processed_nodes)
+            command.assign_destination(location_string, processed_nodes)
+            print("non retreats", command_id, command.location.name, command.origin.name, command.destination.name)
+    print(" ")
+    # command.assign_location(self, location_string, nodes)
+
+    #print(processed_commands.keys())
+    return processed_commands
 
 def process_retreat_turns(commands, commanders, nodes, units):
     processed_commands = commands.copy()
@@ -279,18 +355,33 @@ def process_retreat_turns(commands, commanders, nodes, units):
     processed_nodes = nodes.copy()
     processed_units = units.copy()
     processed_commands = get_retreats_from_input(processed_commands, processed_nodes)
+    #print("before anything", processed_units)
     processed_units = assign_unit_location(processed_commands, processed_units, True)
+    #print("assign unit location", processed_units)
     processed_nodes, processed_units = assign_occupied(processed_nodes, processed_units)
+    #print("assign occupied", processed_units)
+    processed_commands = update_processed_commands(processed_commands, processed_nodes, processed_units)
+    #for command_id in processed_commands:
+    #    print(command_id, processed_commands[command_id].location.name)
+
     """
     next need to update commands location, origin, and destination align with units' location
     also need to remove commands that disband
     
+
+    command.assign_location(self, location_string, nodes)
+
+    
+    Fix at the end: change command.retreat_nodes to command.retreat_node_strings
+
     """
 
 
 
 
 """
+
+Issue with 1904 Spring and input for non-node => disbands show up on map with >
 
 What I want 
 
@@ -313,6 +404,10 @@ What I want
         - other commands have outcome node as location, origin, and destination
 
         - if multiple units retreat to the same territory, both disband 
+        
+            - Game 8 Spring 1908
+
+            - Game 8 Fall 1914
 
 """
 
