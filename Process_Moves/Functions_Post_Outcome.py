@@ -161,15 +161,24 @@ def assign_location_for_non_retreats(command, command_id, processed_units):
 def assign_unit_location(commands, processed_units, have_retreats_boolean):
     for command_id in commands:
         command = commands[command_id]
-        outcome_node = command.location
-
+        #outcome_node = command.location
+        """
         if have_retreats_boolean and command.needs_retreat == True:
             if command.chosen_retreat != False:
                 print("chosen retreat checking", command.chosen_retreat)
+        """
         if have_retreats_boolean:
             if command.needs_retreat == True:
                 if command.chosen_retreat != False:
-                    if command.chosen_retreat in command.retreat_nodes:
+                    for retreat_node in command.retreat_nodes:
+                        #print("checking retreat nodes and chosen retreat")
+                        #print(retreat_node, command.chosen_retreat.name)
+                        if command.chosen_retreat.name == retreat_node:
+                            valid_retreat_choice = True
+                            break
+                        else:
+                            valid_retreat_choice = False
+                    if valid_retreat_choice == True:
                         processed_units[command_id].assign_location(command.chosen_retreat, False, False)
                     else:
                         processed_units.pop(command_id)
@@ -320,13 +329,17 @@ def update_processed_commands(processed_commands, processed_nodes, processed_uni
     for command_id in processed_commands:
         command = processed_commands[command_id]
         location_string = processed_units[command_id].location.name
-        command.assign_location (location_string, processed_nodes)
-        if command.retreat_boolean == True and command.chosen_retreat != False:
+        #command.assign_location(command.location.name, processed_units)
+        if command.chosen_retreat != False:
             chosen_retreat_string = command.chosen_retreat.name
+            #print("retreat string", command.chosen_retreat.name)
+            command.assign_location(command.location.name, processed_nodes)
             command.assign_origin(chosen_retreat_string, processed_nodes)
-            command.destination(chosen_retreat_string, processed_nodes)
+            command.assign_destination(chosen_retreat_string, processed_nodes)
             print("retreats", command_id, command.location.name, command.origin.name, command.destination.name)
         else:
+            location_string = processed_units[command_id].location.name
+            command.assign_location(location_string, processed_nodes)
             command.assign_origin(location_string, processed_nodes)
             command.assign_destination(location_string, processed_nodes)
             print("non retreats", command_id, command.location.name, command.origin.name, command.destination.name)
@@ -357,6 +370,9 @@ def process_retreat_turns(commands, commanders, nodes, units):
     
 
     command.assign_location(self, location_string, nodes)
+
+    
+    Fix at the end: change command.retreat_nodes to command.retreat_node_strings
 
     """
 
