@@ -29,8 +29,8 @@ def determine_if_retreats(commands):
         #command.assign_outcome_location(outcome_node)
         command.assign_displacing_attack(displacing_attack)
         command.assign_retreat_disband(retreat)
-        if retreat == True:
-            print(command_id, command.needs_retreat)
+        #if retreat == True:
+        #    print(command_id, command.needs_retreat)
     return commands
 
 """
@@ -88,7 +88,6 @@ def check_displacement_attacks(command, command_id, commands):
             if potential_attack.destination.name == command.location.name:
                 if potential_attack.location == potential_attack.origin and potential_attack.origin != potential_attack.destination:
                     if potential_attack.succeed == True:
-                        #outcome_node = command.location
                         displacing_attack = potential_attack
                         retreat = True
                         break
@@ -161,7 +160,7 @@ def get_retreats_from_input(processed_commands, processed_nodes):
     for command_id in processed_commands:
         command = processed_commands[command_id]
         if command.needs_retreat == True and len(command.retreat_nodes) > 0:
-            print("choose a retreat option: ", command.retreat_nodes)
+            print("choose a retreat option: ", command_id, command.retreat_nodes)
             retreat_node_string = input()
             if retreat_node_string in processed_nodes.keys():
                 retreat_node = processed_nodes[retreat_node_string]
@@ -176,7 +175,7 @@ def update_processed_commands(processed_commands, processed_nodes, processed_uni
     eliminated_commands_ids = []
     for command_id in processed_commands:
         if command_id not in processed_units.keys():
-            print(command_id)
+            #print(command_id)
             eliminated_commands_ids.append(command_id)
     for each_id in eliminated_commands_ids:
         processed_commands.pop(each_id)
@@ -209,8 +208,11 @@ def process_retreat_turns(commands, commanders, nodes, units):
     processed_commands = update_processed_commands(processed_commands, processed_nodes, processed_units)
     #for command_id in processed_commands:
     #    print(command_id, processed_commands[command_id].location.name)
+    return processed_commands, processed_commanders, processed_nodes, processed_units
 
-    """
+
+
+"""
     next need to update commands location, origin, and destination align with units' location
     also need to remove commands that disband
     
@@ -220,7 +222,13 @@ def process_retreat_turns(commands, commanders, nodes, units):
     
     Fix at the end: change command.retreat_nodes to command.retreat_node_strings
 
-    """
+    Need to update commanders
+
+    I think nodes and units are updated 
+
+    add disband option for retreats
+
+"""
 
 
 
