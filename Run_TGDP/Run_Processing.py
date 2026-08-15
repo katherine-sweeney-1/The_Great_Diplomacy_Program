@@ -19,6 +19,6 @@ def run_processing(commands, commanders, nodes, units):
 
 
 def run_post_processing(commands, commanders, nodes, units):
-    commands = process_retreat_turns(commands, commanders, nodes, units)
+    commands, commanders, nodes, units = process_retreat_turns(commands, commanders, nodes, units)
     #commands, commanders, nodes, units = process_outcomes(commands, commanders, nodes, units)
     return commands, commanders, nodes, units
