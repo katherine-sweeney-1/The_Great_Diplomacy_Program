@@ -185,7 +185,7 @@ def update_processed_commands(processed_commands, processed_nodes, processed_uni
         if command.chosen_retreat != False:
             chosen_retreat_string = command.chosen_retreat.name
             command.assign_location(command.location.name, processed_nodes)
-            command.assign_origin(chosen_retreat_string, processed_nodes)
+            command.assign_origin(command.location.name, processed_nodes)
             command.assign_destination(chosen_retreat_string, processed_nodes)
         else:
             location_string = processed_units[command_id].location.name
@@ -227,6 +227,8 @@ def process_retreat_turns(commands, commanders, nodes, units):
     I think nodes and units are updated 
 
     add disband option for retreats
+
+    need to incorporate special coasts
 
 """
 
