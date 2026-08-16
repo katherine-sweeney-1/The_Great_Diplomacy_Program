@@ -99,14 +99,14 @@ def run_tgdp(input_data, game_number_string, start_game_year, save_images_boolea
             command = commands[command_id]
             print(command_id, command.location.name, command.origin.name, command.destination.name, command.succeed)
         print(" ")
-        
+        """
         #print(processed_commands)
         print("Retreat Turns for Fall and Spring")
         for p_command_id in processed_commands:
             p_command = processed_commands[p_command_id]
             print(p_command_id, p_command.location.name, p_command.origin.name, p_command.destination.name, p_command.succeed)
         print(" ")
-        """
+        
         # retrieve nodes and units for winter season
         #
         # NEED TO ADD CMD_OUTCOME_LOCATION FOR TABLE TO WORK

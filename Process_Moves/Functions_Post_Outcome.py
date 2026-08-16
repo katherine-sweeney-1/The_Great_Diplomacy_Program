@@ -54,14 +54,22 @@ def assign_unit_location(commands, processed_units, have_retreats_boolean):
         if have_retreats_boolean:
             if command.needs_retreat == True:
                 if command.chosen_retreat != False:
-                    for retreat_node in command.retreat_nodes:
-                        if command.chosen_retreat.name == retreat_node:
-                            valid_retreat_choice = True
-                            break
-                        else:
-                            valid_retreat_choice = False
+                    valid_retreat_choice = check_valid_retreat_choice(command)
                     if valid_retreat_choice == True:
-                        processed_units[command_id].assign_location(command.chosen_retreat, False, False)
+                        commands_length = len(commands)
+                        count = 0
+                        for other_command_id in commands:
+                            other_command = commands[other_command_id]
+                            if other_command.needs_retreat == True and other_command.chosen_retreat != False:
+                                other_valid_retreat_choice = check_valid_retreat_choice(command)
+                                if other_valid_retreat_choice == True:
+                                    if command.chosen_retreat.name == other_command.chosen_retreat.name:
+                                        processed_units.pop(command_id)
+                                        break
+                                    elif command.chosen_retreat.name != other_command.chosen_retreat.name and count == commands_length:
+                                        processed_units[command_id].assign_location(command.chosen_retreat, False, False)
+                            # might need to add units with same retreat choice disbands here
+                    # if more than one comand has the same retreat option, the unit disbands
                     else:
                         processed_units.pop(command_id)
                 else:
@@ -72,6 +80,14 @@ def assign_unit_location(commands, processed_units, have_retreats_boolean):
             processed_units = assign_location_for_non_retreats(command, command_id, processed_units)
     return processed_units
 
+def check_valid_retreat_choice(command):
+    for retreat_node in command.retreat_nodes:
+        if command.chosen_retreat.name == retreat_node:
+            valid_retreat_choice = True
+            break
+        else:
+            valid_retreat_choice = False
+    return valid_retreat_choice
                 
 # check if unit is displaced by an attack
 def check_displacement_attacks(command, command_id, commands):
