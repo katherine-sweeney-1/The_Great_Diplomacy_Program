@@ -124,37 +124,6 @@ def get_retreats(processed_commands, processed_nodes, processed_units):
             command.assign_retreat_nodes(retreat_options)
     return processed_units
 
-# process outcomes
-def process_outcomes(commands, commanders, nodes, units):
-    have_retreats_boolean = False
-    processed_commands = commands.copy()
-    processed_commanders = commanders.copy()
-    processed_nodes = nodes.copy()
-    processed_units = units.copy()
-    commands = determine_if_retreats(commands)
-    processed_units = assign_unit_location(commands, processed_units, False)
-    processed_nodes, processed_units = assign_occupied(nodes, processed_units)
-    processed_units = get_retreats(commands, processed_nodes, processed_units)
-    """
-    for unit_id in processed_units:
-        command = commands[unit_id]
-        processed_unit = processed_units[unit_id]
-        if command.needs_retreat:
-            if command.needs_retreat == True and len(command.retreat_nodes) > 0:
-                retreat_choice = command.retreat_nodes[0]
-                retreat_node = processed_nodes[retreat_choice]
-                processed_unit.assign_location(retreat_node, False, False)
-    processed_units_with_disbands = processed_units.copy()
-    for unit_id in processed_units:
-        command = commands[unit_id]
-        if command.needs_retreat == True:
-            if len(command.retreat_nodes) == 0:
-                processed_commands.pop(unit_id)
-                processed_units_with_disbands.pop(unit_id)
-    """
-    return commands
-
-
 # command.retreat_nodes => gives options for retreats
 def get_retreats_from_input(processed_commands, processed_nodes):
     for command_id in processed_commands:
@@ -193,6 +162,36 @@ def update_processed_commands(processed_commands, processed_nodes, processed_uni
             command.assign_origin(location_string, processed_nodes)
             command.assign_destination(location_string, processed_nodes)
     return processed_commands
+
+# process outcomes
+def process_outcomes(commands, commanders, nodes, units):
+    have_retreats_boolean = False
+    processed_commands = commands.copy()
+    processed_commanders = commanders.copy()
+    processed_nodes = nodes.copy()
+    processed_units = units.copy()
+    commands = determine_if_retreats(commands)
+    processed_units = assign_unit_location(commands, processed_units, False)
+    processed_nodes, processed_units = assign_occupied(nodes, processed_units)
+    processed_units = get_retreats(commands, processed_nodes, processed_units)
+    """
+    for unit_id in processed_units:
+        command = commands[unit_id]
+        processed_unit = processed_units[unit_id]
+        if command.needs_retreat:
+            if command.needs_retreat == True and len(command.retreat_nodes) > 0:
+                retreat_choice = command.retreat_nodes[0]
+                retreat_node = processed_nodes[retreat_choice]
+                processed_unit.assign_location(retreat_node, False, False)
+    processed_units_with_disbands = processed_units.copy()
+    for unit_id in processed_units:
+        command = commands[unit_id]
+        if command.needs_retreat == True:
+            if len(command.retreat_nodes) == 0:
+                processed_commands.pop(unit_id)
+                processed_units_with_disbands.pop(unit_id)
+    """
+    return commands
 
 def process_retreat_turns(commands, commanders, nodes, units):
     processed_commands = commands.copy()
@@ -241,17 +240,8 @@ Issue with 1904 Spring and input for non-node => disbands show up on map with >
 
 What I want 
 
-    - Spring/Fall turn:
-
-        - retreat options
-
-        - same location, origin, and destination as input for commands
 
     - Spring/Fall Retreat turn:
-
-        - chosen retreats given as input 
-
-        - units that need to be disbanded are disbanded
 
         - chosen retreats that choose disband are disbanded 
 
@@ -259,7 +249,7 @@ What I want
 
         - other commands have outcome node as location, origin, and destination
 
-        - if multiple units retreat to the same territory, both disband 
+        - if multiple units retreat to the same territory, both disband for both units of the same country and of different countries
         
             - Game 8 Spring 1908
 
