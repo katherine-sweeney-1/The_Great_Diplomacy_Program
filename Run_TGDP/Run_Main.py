@@ -1,3 +1,4 @@
+import copy
 import sys
 sys.path.append("../The_Great_Diplomacy_Program/Parse")
 from Parse_Objects import parse_commands_and_units
@@ -78,22 +79,33 @@ def run_tgdp(input_data, game_number_string, start_game_year, save_images_boolea
         commanders_data = input_data[commands_data]
         parsed_cmds, parsed_units = parse_commands_and_units(commands_data)
         commands, commanders, nodes, units = create_objects(data_nodes, data_coastal, data_fleet_coastal, data_fleet_special_coastal, commanders_data, parsed_units, parsed_cmds)
-
         #commands, processed_commands, nodes, units = run_processing(commands, commanders, nodes, units)
         commands = run_processing(commands, commanders, nodes, units)
-        processed_commands, processed_commanders, processed_nodes, processed_units = run_post_processing(commands, commanders, nodes, units)
-        
+        """
         for command_id in commands:
             command = commands[command_id]
             print(command_id, command.location.name, command.origin.name, command.destination.name, command.succeed)
         print(" ")
+        """
+        processed_commands = copy.deepcopy(commands)
+        processed_commanders = copy.deepcopy(commanders)
+        processed_nodes = copy.deepcopy(nodes)
+        processed_units = copy.deepcopy(units)
+
+        processed_commands, processed_commanders, processed_nodes, processed_units = run_post_processing(processed_commands, processed_commanders, processed_nodes, processed_units)
+        """
+        print("checking")
+        for command_id in commands:
+            command = commands[command_id]
+            print(command_id, command.location.name, command.origin.name, command.destination.name, command.succeed)
+        print(" ")
+        """
         #print(processed_commands)
         print("Retreat Turns for Fall and Spring")
         for p_command_id in processed_commands:
             p_command = processed_commands[p_command_id]
             print(p_command_id, p_command.location.name, p_command.origin.name, p_command.destination.name, p_command.succeed)
         print(" ")
-        
         
         # retrieve nodes and units for winter season
         #
