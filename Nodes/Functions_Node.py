@@ -126,8 +126,10 @@ def assign_occupied(nodes, units):
     for node_id in nodes:
         nodes[node_id].assign_occupied(False)
     for unit_id in units:
+        #print("checking,", unit_id)
         occupied_node = units[unit_id].location
         occupied_node.assign_occupied(units[unit_id])
+        #print("Is occupied inside nodes function?", occupied_node.is_occupied)
     return nodes, units
 
 def create_graph (nodes):
