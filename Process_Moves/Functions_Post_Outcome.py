@@ -1,3 +1,4 @@
+import copy
 import sys
 import os
 sys.path.append(os.path.join("/home/katherine/Documents/The-Great-Diplomacy-Program/Nodes"))
@@ -190,20 +191,42 @@ def process_outcomes(commands, commanders, nodes, units):
     return commands
 
 def process_retreat_turns(commands, commanders, nodes, units):
+    processed_commands = copy.deepcopy(commands)
+    processed_commanders = copy.deepcopy(commanders)
+    processed_nodes = copy.deepcopy(nodes)
+    processed_units = copy.deepcopy(units)
+    """
     processed_commands = commands.copy()
     processed_commanders = commanders.copy()
     processed_nodes = nodes.copy()
     processed_units = units.copy()
+    """
     processed_commands = get_retreats_from_input(processed_commands, processed_nodes)
     #print("before anything", processed_units)
     processed_units = assign_unit_location(processed_commands, processed_units, True)
     #print("assign unit location", processed_units)
+    """
+    for unit_id in processed_units:
+        print("units before assign occupied", unit_id, processed_units[unit_id].location.name, processed_units[unit_id].location)
+    print(processed_units)
+    print(" ")
+    """
     processed_nodes, processed_units = assign_occupied(processed_nodes, processed_units)
     #print("assign occupied", processed_units)
+    
+    for node_id in processed_nodes:
+        print("nodes", node_id, nodes[node_id].is_occupied)
+        print("processed_nodes", node_id, processed_nodes[node_id].is_occupied)
+    
     processed_commands = update_processed_commands(processed_commands, processed_nodes, processed_units)
+    """
     for command_id in processed_commands:
         print(command_id, processed_commands[command_id].destination.name)
         print(command_id, processed_units[command_id].location.name)
+    
+    for node_id in processed_nodes:
+        print("checking outside nodes functions", node_id, processed_nodes[node_id].is_occupied)
+    """
     return processed_commands, processed_commanders, processed_nodes, processed_units
 
 
