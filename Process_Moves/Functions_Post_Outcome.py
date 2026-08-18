@@ -60,7 +60,8 @@ def assign_unit_location(commands, processed_units, have_retreats_boolean):
                         count = 0
                         for other_command_id in commands:
                             other_command = commands[other_command_id]
-                            if other_command.needs_retreat == True and other_command.chosen_retreat != False:
+                            if command != other_command and other_command.needs_retreat == True and other_command.chosen_retreat != False:
+                                print("checking", command_id, other_command_id)
                                 other_valid_retreat_choice = check_valid_retreat_choice(command)
                                 if other_valid_retreat_choice == True:
                                     if command.chosen_retreat.name == other_command.chosen_retreat.name:
@@ -84,6 +85,7 @@ def check_valid_retreat_choice(command):
     for retreat_node in command.retreat_nodes:
         if command.chosen_retreat.name == retreat_node:
             valid_retreat_choice = True
+            #print(command.unit.id, "YESSSS")
             break
         else:
             valid_retreat_choice = False
@@ -199,8 +201,9 @@ def process_retreat_turns(commands, commanders, nodes, units):
     processed_nodes, processed_units = assign_occupied(processed_nodes, processed_units)
     #print("assign occupied", processed_units)
     processed_commands = update_processed_commands(processed_commands, processed_nodes, processed_units)
-    #for command_id in processed_commands:
-    #    print(command_id, processed_commands[command_id].location.name)
+    for command_id in processed_commands:
+        print(command_id, processed_commands[command_id].destination.name)
+        print(command_id, processed_units[command_id].location.name)
     return processed_commands, processed_commanders, processed_nodes, processed_units
 
 
@@ -214,12 +217,6 @@ def process_retreat_turns(commands, commanders, nodes, units):
     need to incorporate special coasts
 
     Chosen retreats that choose disband are disbanded 
-
-    If multiple units retreat to the same territory, both disband for both units of the same country and of different countries
-        
-        - Game 8 Spring 1908
-
-        - Game 8 Fall 1914
 
     Fix at the end: Change command.retreat_nodes to command.retreat_node_strings
 
