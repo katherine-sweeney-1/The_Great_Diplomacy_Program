@@ -4,9 +4,30 @@ import os
 sys.path.append(os.path.join("/home/katherine/Documents/The-Great-Diplomacy-Program/Nodes"))
 from Functions_Node import assign_occupied
 
-# get outcome locations for processed commands
-# takes processed commands and processed units as input
-# creates processed commands and processed units with new information
+# Checks if unit is displaced by an attack
+def check_displacement_attacks(command, command_id, commands):
+    displacing_attack = False
+    # determine if any commands displace the unsuccessful command
+    for potential_attack_id in commands:
+        potential_attack = commands[potential_attack_id]
+        if potential_attack_id != command_id:
+            if potential_attack.destination.name == command.location.name:
+                if potential_attack.location == potential_attack.origin and potential_attack.origin != potential_attack.destination:
+                    if potential_attack.succeed == True:
+                        displacing_attack = potential_attack
+                        retreat = True
+                        break
+                    else:
+                        retreat = False
+                else:
+                    retreat = False
+            else:
+                retreat = False
+        else:
+            retreat = False
+    return displacing_attack, retreat
+
+# Determines whether a unit needs to retreat 
 def determine_if_retreats(commands):
     for command_id in commands:
         command = commands[command_id]
@@ -29,13 +50,19 @@ def determine_if_retreats(commands):
         #    print(command_id, command.needs_retreat)
     return commands
 
-"""
+# Determine the outcome nodes
+# Assumes that input for retreats is already given (e.g. UK01 retreats to Den)
+def check_valid_retreat_choice(command):
+    for retreat_node in command.retreat_nodes:
+        if command.chosen_retreat.name == retreat_node:
+            valid_retreat_choice = True
+            #print(command.unit.id, "YESSSS")
+            break
+        else:
+            valid_retreat_choice = False
+    return valid_retreat_choice
 
-determine the outcome nodes
-assumes that input for retreats is already given (e.g. UK01 retreats to Den)
-
-"""
-
+# Assign the new location for units that don't retreat based on the previous turn's outcome
 def assign_location_for_non_retreats(command, command_id, processed_units):
     if command.location == command.origin and command.origin != command.destination and command.convoy == False:
         # successful attacks have their location become the original command's destination
@@ -49,6 +76,8 @@ def assign_location_for_non_retreats(command, command_id, processed_units):
         processed_units[command_id].assign_location(command.location, False, False)
     return processed_units
 
+# Assign the location for all units
+# Includes units that retreat, units that disband, and units that do not retreat or disband
 def assign_unit_location(commands, processed_units, have_retreats_boolean):
     for command_id in commands:
         command = commands[command_id]
@@ -82,40 +111,7 @@ def assign_unit_location(commands, processed_units, have_retreats_boolean):
             processed_units = assign_location_for_non_retreats(command, command_id, processed_units)
     return processed_units
 
-def check_valid_retreat_choice(command):
-    for retreat_node in command.retreat_nodes:
-        if command.chosen_retreat.name == retreat_node:
-            valid_retreat_choice = True
-            #print(command.unit.id, "YESSSS")
-            break
-        else:
-            valid_retreat_choice = False
-    return valid_retreat_choice
-                
-# check if unit is displaced by an attack
-def check_displacement_attacks(command, command_id, commands):
-    displacing_attack = False
-    # determine if any commands displace the unsuccessful command
-    for potential_attack_id in commands:
-        potential_attack = commands[potential_attack_id]
-        if potential_attack_id != command_id:
-            if potential_attack.destination.name == command.location.name:
-                if potential_attack.location == potential_attack.origin and potential_attack.origin != potential_attack.destination:
-                    if potential_attack.succeed == True:
-                        displacing_attack = potential_attack
-                        retreat = True
-                        break
-                    else:
-                        retreat = False
-                else:
-                    retreat = False
-            else:
-                retreat = False
-        else:
-            retreat = False
-    return displacing_attack, retreat
-
-# get retreat nodes for processed commands
+# Get retreat nodes for processed commands
 def get_retreats(processed_commands, processed_nodes, processed_units):
     for unit_id in processed_units:
         unit = processed_units[unit_id]
@@ -138,6 +134,7 @@ def get_retreats(processed_commands, processed_nodes, processed_units):
             command.assign_retreat_nodes(retreat_options)
     return processed_units
 
+"""
 # command.retreat_nodes => gives options for retreats
 def get_retreats_from_input(processed_commands, processed_nodes):
     for command_id in processed_commands:
@@ -153,7 +150,9 @@ def get_retreats_from_input(processed_commands, processed_nodes):
         else:
             command.assign_chosen_retreat(False)
     return processed_commands
-    
+"""
+
+"""
 def update_processed_commands(processed_commands, processed_nodes, processed_units):
     eliminated_commands_ids = []
     for command_id in processed_commands:
@@ -176,8 +175,9 @@ def update_processed_commands(processed_commands, processed_nodes, processed_uni
             command.assign_origin(location_string, processed_nodes)
             command.assign_destination(location_string, processed_nodes)
     return processed_commands
+"""
 
-# process outcomes
+# Process outcomes
 def process_outcomes(commands, commanders, nodes, units):
     have_retreats_boolean = False
     processed_commands = copy.deepcopy(commands)
@@ -190,34 +190,29 @@ def process_outcomes(commands, commanders, nodes, units):
     processed_units = get_retreats(processed_commands, processed_nodes, processed_units)
     return processed_commands
 
+"""
 def process_retreat_turns(commands, commanders, nodes, units):
     processed_commands = copy.deepcopy(commands)
     processed_commanders = copy.deepcopy(commanders)
     processed_nodes = copy.deepcopy(nodes)
     processed_units = copy.deepcopy(units)
-    """
-    processed_commands = commands.copy()
-    processed_commanders = commanders.copy()
-    processed_nodes = nodes.copy()
-    processed_units = units.copy()
-    """
     processed_commands = get_retreats_from_input(processed_commands, processed_nodes)
     #print("before anything", processed_units)
     processed_units = assign_unit_location(processed_commands, processed_units, True)
     #print("assign unit location", processed_units)
-    """
-    for unit_id in processed_units:
-        print("units before assign occupied", unit_id, processed_units[unit_id].location.name, processed_units[unit_id].location)
-    print(processed_units)
-    print(" ")
-    """
+    
+    #for unit_id in processed_units:
+    #    print("units before assign occupied", unit_id, processed_units[unit_id].location.name, processed_units[unit_id].location)
+    #print(processed_units)
+    #print(" ")
+    
     processed_nodes, processed_units = assign_occupied(processed_nodes, processed_units)
     #print("assign occupied", processed_units)
-    """
-    for node_id in processed_nodes:
-        print("nodes", node_id, nodes[node_id].is_occupied)
-        print("processed_nodes", node_id, processed_nodes[node_id].is_occupied)
-    """
+    
+    #for node_id in processed_nodes:
+    #    print("nodes", node_id, nodes[node_id].is_occupied)
+    #    print("processed_nodes", node_id, processed_nodes[node_id].is_occupied)
+    
     processed_commands = update_processed_commands(processed_commands, processed_nodes, processed_units)
     
     for command_id in processed_commands:
@@ -229,8 +224,7 @@ def process_retreat_turns(commands, commanders, nodes, units):
     
     return processed_commands, processed_commanders, processed_nodes, processed_units
 
-
-
+"""
 """
 
     Need to update commanders
