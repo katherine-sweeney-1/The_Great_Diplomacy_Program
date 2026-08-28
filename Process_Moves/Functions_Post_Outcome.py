@@ -149,6 +149,7 @@ def process_outcomes(commands, commanders, nodes, units):
     #for unit_id in processed_units:
     #    print("check", unit_id, processed_units[unit_id].location.name)
     processed_nodes, processed_units = assign_occupied(processed_nodes, processed_units)
+    """
     for unit_id in units:
         print(unit_id, units[unit_id].location.name, "occupied?", units[unit_id].location.is_occupied)
     for node_id in processed_nodes:
@@ -159,5 +160,6 @@ def process_outcomes(commands, commanders, nodes, units):
         print(node_id, processed_nodes[node_id].is_occupied, "checking regular nodes")
         if processed_nodes[node_id].is_occupied:
             print(node_id)
+    """
     processed_units = get_retreats(processed_commands, processed_nodes, processed_units)
     return processed_commands
