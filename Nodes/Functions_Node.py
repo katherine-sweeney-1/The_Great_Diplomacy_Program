@@ -128,9 +128,36 @@ def assign_occupied(nodes, units):
     for unit_id in units:
         #print("checking,", unit_id)
         occupied_node = units[unit_id].location
+        print(occupied_node == units[unit_id].location)
+        print("!!!", occupied_node.is_occupied)
         occupied_node.assign_occupied(units[unit_id])
-        #print("Is occupied inside nodes function?", occupied_node.is_occupied)
+        print("???", occupied_node.is_occupied)
+
+        print("occupied_node.is_occupied", unit_id, occupied_node.is_occupied)
+    print(" ")
+    print()
+    print(" ")
+    for node_id in nodes:
+        print("    ")
+        print("checking", node_id, nodes[node_id].is_occupied)
+
+
+    """
+    
+    mercy highlighting hortcuts keyboard shortcuts
+    
+
+    STOPPING POINT: 
+    
+    nodes do not have is_occupied outside of for loop 
+    this issue only applies to post processing
+    may be an issue with the copies/deepcopies given that's the big change
+
+    """
     return nodes, units
+
+
+
 
 def create_graph (nodes):
     territory_graph = GraphVisualization()

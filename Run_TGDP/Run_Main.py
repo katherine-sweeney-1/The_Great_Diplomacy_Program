@@ -92,7 +92,7 @@ def run_tgdp(input_data, game_number_string, start_game_year, save_images_boolea
         processed_nodes = copy.deepcopy(nodes)
         processed_units = copy.deepcopy(units)
 
-        processed_commands, processed_commanders, processed_nodes, processed_units = run_post_processing(processed_commands, processed_commanders, processed_nodes, processed_units)
+        #processed_commands, processed_commanders, processed_nodes, processed_units = run_post_processing(processed_commands, processed_commanders, processed_nodes, processed_units)
         """
         print("checking")
         for command_id in commands:
@@ -101,12 +101,13 @@ def run_tgdp(input_data, game_number_string, start_game_year, save_images_boolea
         print(" ")
         """
         #print(processed_commands)
+        """
         print("Retreat Turns for Fall and Spring")
         for p_command_id in processed_commands:
             p_command = processed_commands[p_command_id]
             print(p_command_id, p_command.location.name, p_command.origin.name, p_command.destination.name, p_command.succeed)
         print(" ")
-        
+        """
         # retrieve nodes and units for winter season
         #
         # NEED TO ADD CMD_OUTCOME_LOCATION FOR TABLE TO WORK
@@ -122,7 +123,7 @@ def run_tgdp(input_data, game_number_string, start_game_year, save_images_boolea
         count += 1
     for game_and_turn_string in turns_objects:
         commands = turns_objects[game_and_turn_string]["Commands"]
-    gui = run_gui(turns_objects, str(game_number_string), start_game_year, save_images_boolean)
+    #gui = run_gui(turns_objects, str(game_number_string), start_game_year, save_images_boolean)
     """
     for command_id in processed_commands:
         processed_command = processed_commands[command_id]
