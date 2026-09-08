@@ -127,7 +127,9 @@ def assign_occupied(nodes, units):
         nodes[node_id].assign_occupied(False)
     for unit_id in units:
         #print("checking,", unit_id)
-        occupied_node = units[unit_id].location
+        occupied_node_name = units[unit_id].location.name
+        occupied_node = nodes[occupied_node_name]
+        print("type for occupied node", occupied_node.name, type(occupied_node))
         print(occupied_node == units[unit_id].location)
         print("!!!", occupied_node.is_occupied)
         occupied_node.assign_occupied(units[unit_id])
