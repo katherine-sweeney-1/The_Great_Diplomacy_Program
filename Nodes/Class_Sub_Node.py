@@ -30,7 +30,11 @@ class Coastal_Node (Node):
             self.parent_status = self.assign_parent_status(occupying_unit)
             self.sibling.is_occupied = 1
         return self
-            
+
+    def assign_daughter_occupied(self, occupying_unit):
+        self.is_daughter_occupied = occupying_unit
+        return self.is_daughter_occupied
+
     def print_statements(self):
         print("node {} has parent node {} and sibling node {}".format(self.name, self.parent.name, self.sibling.name))
         print("occupied {}, {}, {}".format(self.is_occupied, self.parent.is_occupied, self.sibling.is_occupied))
