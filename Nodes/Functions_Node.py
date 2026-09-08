@@ -85,28 +85,6 @@ def create_nodes(nodes_data, nodes_data_coastal, nodes_data_fleet_coastal, nodes
             """
     return nodes
 
-"""
-# Coastal nodes occupied status
-def assign_occ_coastal(nodes):
-    for node_id in nodes:
-        if isinstance (nodes[node_id], Coastal_Node):
-            parent_occ = False
-            if isinstance(nodes[node_id].is_occupied, Unit):
-                node = nodes[each_id[:3]]
-                print("check 0", node.name)
-                nodes[node_id].assign_occ_to_family(parent_occ, node)
-        elif len(node_id[:3]) > 0:
-            if isinstance(nodes[node_id].is_occupied, Unit):
-                parent_occ = True
-                for each_id in nodes:
-                    if each_id[:3] in node_id and each_id != node_id:
-                        node = nodes[each_id[:3]]
-                        print("check", each_id, node_id, node.name)
-                        nodes[each_id].assign_occ_to_family(parent_occ, node)
-                        #nodes[node].assign_parent_status(node)
-    return nodes
-"""
-
 # Coastal nodes occupied status
 def assign_occ_coastal(nodes):
     for node_id in nodes:
@@ -119,6 +97,11 @@ def assign_occ_coastal(nodes):
                 occupying_unit = nodes[node_id].is_occupied
                 nodes[node_id].assign_occ_to_family(parent_occupied, parent_node, occupying_unit)
                 parent_node.assign_parent_status(occupying_unit)
+                nodes[node_id].assign_daughter_occupied(occupying_unit)
+                print("CHECKING PARENTS", parent_node.name, parent_node.is_occupied, parent_node.parent_status.id)
+                print("CHECKING DAUGHTER NODE", node_id, nodes[node_id].is_occupied, nodes[node_id].is_daughter_occupied.id)
+                print("CHECKING SIBLING NODE", nodes[node_id].sibling.name, nodes[node_id].sibling.is_occupied)
+                print(" ")
     return nodes
 
 # Nodes occupied status
@@ -126,40 +109,10 @@ def assign_occupied(nodes, units):
     for node_id in nodes:
         nodes[node_id].assign_occupied(False)
     for unit_id in units:
-        #print("checking,", unit_id)
         occupied_node_name = units[unit_id].location.name
         occupied_node = nodes[occupied_node_name]
-        print("type for occupied node", occupied_node.name, type(occupied_node))
-        print(occupied_node == units[unit_id].location)
-        print("!!!", occupied_node.is_occupied)
         occupied_node.assign_occupied(units[unit_id])
-        print("???", occupied_node.is_occupied)
-
-        print("occupied_node.is_occupied", unit_id, occupied_node.is_occupied)
-    print(" ")
-    print()
-    print(" ")
-    for node_id in nodes:
-        print("    ")
-        print("checking", node_id, nodes[node_id].is_occupied)
-
-
-    """
-    
-    mercy highlighting hortcuts keyboard shortcuts
-    
-
-    STOPPING POINT: 
-    
-    nodes do not have is_occupied outside of for loop 
-    this issue only applies to post processing
-    may be an issue with the copies/deepcopies given that's the big change
-
-    """
     return nodes, units
-
-
-
 
 def create_graph (nodes):
     territory_graph = GraphVisualization()
