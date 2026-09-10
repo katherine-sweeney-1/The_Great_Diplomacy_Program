@@ -87,18 +87,13 @@ def run_retreat_turns(commands, commanders, nodes, units):
     """
     processed_commands = update_processed_commands(processed_commands, processed_nodes, processed_units)
     
-    for command_id in processed_commands:
-        print(command_id, processed_commands[command_id].destination.name)
-        print(command_id, processed_units[command_id].location.name)
-    
-    for node_id in processed_nodes:
-        print("checking outside nodes functions", node_id, processed_nodes[node_id].is_occupied)
-    
     return processed_commands, processed_commanders, processed_nodes, processed_units
 
 
 
 """
+
+    SPA SAYS FALSE FOR OCCUPIED WHEN I WANT SPA AS ONE AND SPA-SC WITH UNIT
 
     Need to update commanders
 

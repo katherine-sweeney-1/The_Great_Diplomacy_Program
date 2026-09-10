@@ -98,10 +98,10 @@ def assign_occ_coastal(nodes):
                 nodes[node_id].assign_occ_to_family(parent_occupied, parent_node, occupying_unit)
                 parent_node.assign_parent_status(occupying_unit)
                 nodes[node_id].assign_daughter_occupied(occupying_unit)
-                print("CHECKING PARENTS", parent_node.name, parent_node.is_occupied, parent_node.parent_status.id)
-                print("CHECKING DAUGHTER NODE", node_id, nodes[node_id].is_occupied, nodes[node_id].is_daughter_occupied.id)
-                print("CHECKING SIBLING NODE", nodes[node_id].sibling.name, nodes[node_id].sibling.is_occupied)
-                print(" ")
+                #print("CHECKING PARENTS", parent_node.name, parent_node.is_occupied, parent_node.parent_status.id)
+                #print("CHECKING DAUGHTER NODE", node_id, nodes[node_id].is_occupied, nodes[node_id].is_daughter_occupied.id)
+                #print("CHECKING SIBLING NODE", nodes[node_id].sibling.name, nodes[node_id].sibling.is_occupied)
+                #print(" ")
     return nodes
 
 # Nodes occupied status

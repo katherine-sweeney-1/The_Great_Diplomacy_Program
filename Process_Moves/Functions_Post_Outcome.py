@@ -114,7 +114,7 @@ def assign_unit_location(commands, processed_units, have_retreats_boolean):
 
 
 # Get retreat nodes for processed commands
-def get_retreats(processed_commands, processed_nodes, processed_units):
+def get_retreats(commands, nodes, units, processed_commands, processed_nodes, processed_units):
     for unit_id in processed_units:
         unit = processed_units[unit_id]
         command = processed_commands[unit_id]
@@ -123,9 +123,28 @@ def get_retreats(processed_commands, processed_nodes, processed_units):
             retreat_options = []
             for neighbor_id in neighbors:
                 neighbor = processed_nodes[neighbor_id]
+                #print(unit_id, neighbor.name)
+                print(unit_id, neighbor.name, neighbor.is_occupied)
                 if neighbor.is_occupied:
                     continue
                 else:
+                    """
+                    displacing_attack_node = False
+                    previously_occupied_neighbors = units[unit_id].location.neighbors
+                    for previously_occupied_neighbor in previously_occupied_neighbors:
+                        if neighbor.is_occupied:
+                            possible_attack_unit = neighbor.is_occupied
+                            possible_attack_id = possible_attack_unit.id
+                            possible_attack = commands[possible_attack_id]
+                            if possible_attack.location == possible_attack.origin and possible_attack.origin != possible_attack.destination:
+                                if possible_attack.destination == command.location and possible_attack.succeed == True:
+                                    displacing_attack_node = neighbor
+                                    break
+                    """
+                    """
+                    was neighbor occupied
+                    was the occupying unit attacking
+                    """
                     #print(unit_id, neighbor_id, command.displacing_attack.location.name, "uh")
                     if command.displacing_attack == False or neighbor != command.displacing_attack.location:
                         if unit.type == "army" and neighbor.node_type == "Land":
@@ -135,6 +154,7 @@ def get_retreats(processed_commands, processed_nodes, processed_units):
                         elif neighbor.node_type == "Coast":
                             retreat_options.append(neighbor_id)
             command.assign_retreat_nodes(retreat_options)
+            print(unit_id, command.retreat_nodes)
     return processed_units
 
 # Process outcomes
@@ -154,5 +174,11 @@ def process_outcomes(commands, commanders, nodes, units):
     NEED TO ASSIGN OCCUPIED COASTAL
     
     """
-    processed_units = get_retreats(processed_commands, processed_nodes, processed_units)
+    processed_units = get_retreats(nodes, processed_commands, processed_nodes, processed_units)
     return processed_commands
+
+"""
+
+spring 1902 GE05 says Ven is a retreat option when the attack is from Ven
+fall 1902 AU02 same issue
+"""

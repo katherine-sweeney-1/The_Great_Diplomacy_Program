@@ -14,7 +14,7 @@ run_tgdp(input_data_8, "8", "1901", False)
 Arguments:
 
     1. Input data file
-
+    
     2. Game number
     
 
@@ -23,5 +23,4 @@ Arguments:
     4. Boolean => save images (True), run GUI (False)
 
 """
-
 

@@ -92,7 +92,7 @@ def run_tgdp(input_data, game_number_string, start_game_year, save_images_boolea
         processed_nodes = copy.deepcopy(nodes)
         processed_units = copy.deepcopy(units)
 
-        #processed_commands, processed_commanders, processed_nodes, processed_units = run_post_processing(processed_commands, processed_commanders, processed_nodes, processed_units)
+        processed_commands, processed_commanders, processed_nodes, processed_units = run_post_processing(processed_commands, processed_commanders, processed_nodes, processed_units)
         """
         print("checking")
         for command_id in commands:
