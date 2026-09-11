@@ -174,7 +174,7 @@ def process_outcomes(commands, commanders, nodes, units):
     NEED TO ASSIGN OCCUPIED COASTAL
     
     """
-    processed_units = get_retreats(nodes, processed_commands, processed_nodes, processed_units)
+    processed_units = get_retreats(commands, nodes, units, processed_commands, processed_nodes, processed_units)
     return processed_commands
 
 """
