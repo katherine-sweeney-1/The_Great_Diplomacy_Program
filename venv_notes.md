@@ -83,3 +83,6 @@ Other CS things to learn:
     - shells
 
     - kernels
+
+
+contourpy
